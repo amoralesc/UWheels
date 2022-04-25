@@ -29,4 +29,3 @@ _El equipo de ABMODEL está conformado por:_
 ---
 
 ⌨️ con ❤️ por [ABMODEL](https://github.com/orgs/IntroCompuMovil202210J/teams/abmodel) 😊
-
