@@ -2,6 +2,7 @@ package com.abmodel.uwheels
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI.setupActionBarWithNavController
@@ -16,6 +17,11 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
 	private lateinit var navController: NavController
 
 	override fun onCreate(savedInstanceState: Bundle?) {
+		// Handle the splash screen transition.
+		// TODO: The splash screen can be further customized
+		// to be shown while the app is loading data.
+		val splashScreen = installSplashScreen()
+
 		super.onCreate(savedInstanceState)
 
 		// Retrieve NavController from the NavHostFragment

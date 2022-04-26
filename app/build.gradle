@@ -47,6 +47,9 @@ dependencies {
 
 	implementation 'androidx.fragment:fragment:1.4.1'
 
+	// Splash screens
+	implementation 'androidx.core:core-splashscreen:1.0.0-beta02'
+
 	// Lifecycle libraries
 	implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.1'
 	implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.4.1'
