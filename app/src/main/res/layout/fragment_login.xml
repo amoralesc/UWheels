@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:id="@+id/container"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:background="@drawable/gradient_brand"
+	android:clipToPadding="false"
+	android:paddingHorizontal="@dimen/login_horizontal_margin"
+	android:paddingVertical="@dimen/side_margin"
+	tools:context=".ui.login.LoginFragment">
+
+	<androidx.constraintlayout.widget.Guideline
+		android:id="@+id/guidelineHorizontalDivider"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:orientation="horizontal"
+		app:layout_constraintGuide_percent="0.58" />
+
+	<TextView
+		android:id="@+id/textLogin"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:text="@string/login"
+		android:textAppearance="@style/TextAppearance.MaterialComponents.Headline3"
+		android:textColor="@color/white"
+		app:layout_constraintBottom_toTopOf="@+id/buttonLoginGoogle"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toTopOf="parent"
+		app:layout_constraintVertical_bias="0.6" />
+
+	<Button
+		android:id="@+id/buttonLoginGoogle"
+		android:layout_width="0dp"
+		android:layout_height="wrap_content"
+		android:layout_marginBottom="@dimen/margin_between_elements"
+		android:text="@string/login_with_google"
+		app:layout_constraintBottom_toTopOf="@+id/textLoginAccount"
+		app:layout_constraintEnd_toStartOf="@id/buttonLoginFacebook"
+		app:layout_constraintHorizontal_weight="0.8"
+		app:layout_constraintStart_toStartOf="parent" />
+
+	<Button
+		android:id="@+id/buttonLoginFacebook"
+		android:layout_width="0dp"
+		android:layout_height="wrap_content"
+		android:text="F"
+		app:layout_constraintBottom_toBottomOf="@id/buttonLoginGoogle"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintHorizontal_weight="0.2"
+		app:layout_constraintStart_toEndOf="@id/buttonLoginGoogle"
+		app:layout_constraintTop_toTopOf="@id/buttonLoginGoogle" />
+
+	<TextView
+		android:id="@+id/textLoginAccount"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginBottom="@dimen/margin_between_elements"
+		android:text="@string/login_with_account"
+		app:layout_constraintBottom_toTopOf="@+id/email"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent" />
+
+	<EditText
+		android:id="@+id/email"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_marginBottom="@dimen/margin_between_elements"
+		android:ems="10"
+		android:hint="@string/email"
+		android:inputType="textEmailAddress"
+		android:minHeight="48dp"
+		app:layout_constraintBottom_toTopOf="@+id/layoutPassword"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent" />
+	
+	<com.google.android.material.textfield.TextInputLayout
+		android:id="@+id/layoutPassword"
+		style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_marginBottom="@dimen/margin_between_elements"
+		app:layout_constraintBottom_toTopOf="@+id/guidelineHorizontalDivider"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent">
+
+		<com.google.android.material.textfield.TextInputEditText
+			android:id="@+id/password"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:hint="@string/password"
+			android:inputType="textPassword"
+			android:textColorHighlight="@color/black"
+			android:textColorHint="@color/black" />
+
+	</com.google.android.material.textfield.TextInputLayout>
+
+	<!--
+		<EditText
+			android:id="@+id/password"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginBottom="@dimen/margin_between_elements"
+			android:ems="10"
+			android:hint="Password"
+			android:inputType="textPassword"
+			android:minHeight="48dp"
+			app:layout_constraintBottom_toTopOf="@+id/guidelineHorizontalDivider"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintHorizontal_bias="0.5"
+			app:layout_constraintStart_toStartOf="parent" />
+	-->
+
+	<Button
+		android:id="@+id/buttonLogin"
+		style="@style/Widget.UWheels.ButtonPrimary.Medium"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:text="@string/login"
+		app:backgroundTint="@null"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toTopOf="@+id/guidelineHorizontalDivider" />
+
+	<TextView
+		android:id="@+id/forgotPassword"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginTop="8dp"
+		android:text="@string/forgot_your_password"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintHorizontal_bias="0.5"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toBottomOf="@+id/buttonLogin" />
+
+	<TextView
+		android:id="@+id/textOr"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginTop="@dimen/margin_between_elements"
+		android:text="@string/or"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintHorizontal_bias="0.5"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toBottomOf="@+id/forgotPassword" />
+
+	<Button
+		android:id="@+id/buttonSignUp"
+		style="@style/Widget.UWheels.ButtonPrimary.Medium"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_marginTop="@dimen/margin_between_elements"
+		android:text="@string/sign_up"
+		app:backgroundTint="@null"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toBottomOf="@+id/textOr" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,17 @@
+<resources>
+	<!-- Default margins. -->
+	<dimen name="side_margin">16dp</dimen>
+
+	<!-- Style dimens -->
+	<!-- Text size -->
+	<dimen name="text_size_medium">18sp</dimen>
+
+	<!-- Buttons -->
+	<dimen name="button_inset">6dp</dimen>
+	<dimen name="button_radius">12dp</dimen>
+
+	<!-- Login fragment margins -->
+	<dimen name="login_horizontal_margin">40dp</dimen>
+	<dimen name="margin_between_elements">16dp</dimen>
+
+</resources>
