@@ -12,6 +12,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.widget.Toast
+import androidx.navigation.fragment.findNavController
 import com.abmodel.uwheels.R
 import com.abmodel.uwheels.databinding.FragmentLoginBinding
 
@@ -36,19 +37,26 @@ class LoginFragment : Fragment() {
 
 	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 		super.onViewCreated(view, savedInstanceState)
-		loginViewModel = ViewModelProvider(this, LoginViewModelFactory())
-			.get(LoginViewModel::class.java)
+		loginViewModel = ViewModelProvider(
+			this, LoginViewModelFactory()
+		)[LoginViewModel::class.java]
 
 		val usernameEditText = binding.email
 		val passwordEditText = binding.password
 		val loginButton = binding.buttonLogin
+
+		binding.apply {
+			buttonSignUp.setOnClickListener {
+				findNavController().navigate(R.id.action_loginFragment_to_signUpFragment)
+			}
+		}
 
 		loginViewModel.loginFormState.observe(viewLifecycleOwner,
 			Observer { loginFormState ->
 				if (loginFormState == null) {
 					return@Observer
 				}
-				loginButton.isEnabled = loginFormState.isDataValid
+				// loginButton.isEnabled = loginFormState.isDataValid
 				loginFormState.usernameError?.let {
 					// usernameEditText.error = getString(it)
 				}

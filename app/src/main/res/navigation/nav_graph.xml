@@ -14,5 +14,19 @@
 		android:id="@+id/loginFragment"
 		android:name="com.abmodel.uwheels.ui.login.LoginFragment"
 		android:label="fragment_login"
-		tools:layout="@layout/fragment_login" />
+		tools:layout="@layout/fragment_login" >
+		<action
+			android:id="@+id/action_loginFragment_to_signUpFragment"
+			app:destination="@id/signUpFragment" />
+	</fragment>
+	<fragment
+		android:id="@+id/signUpFragment"
+		android:name="com.abmodel.uwheels.ui.signup.SignUpFragment"
+		android:label="fragment_sign_up"
+		tools:layout="@layout/fragment_sign_up" >
+		<action
+			android:id="@+id/action_signUpFragment_to_loginFragment"
+			app:destination="@id/loginFragment"
+			app:popUpTo="@id/loginFragment" />
+	</fragment>
 </navigation>

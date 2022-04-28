@@ -63,7 +63,7 @@
 		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintStart_toEndOf="@id/buttonLoginGoogle"
 		app:layout_constraintTop_toTopOf="@id/buttonLoginGoogle"
-		tools:ignore="RtlSymmetry,ImageContrastCheck" />
+		tools:ignore="RtlSymmetry,ImageContrastCheck,TouchTargetSizeCheck" />
 
 	<TextView
 		android:id="@+id/textLoginAccount"
@@ -74,13 +74,12 @@
 		android:text="@string/login_with_account"
 		android:textColor="@color/white"
 		android:textSize="14sp"
-		app:layout_constraintBottom_toTopOf="@id/layoutEmail"
+		app:layout_constraintBottom_toTopOf="@id/layoutName"
 		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintStart_toStartOf="parent" />
 
-
 	<com.google.android.material.textfield.TextInputLayout
-		android:id="@+id/layoutEmail"
+		android:id="@+id/layoutName"
 		style="@style/Widget.UWheels.TextInputLayout.OutlinedBox.Light"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"

@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:id="@+id/frameLayout"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:background="@drawable/gradient_brand"
+	android:clipToPadding="false"
+	android:paddingHorizontal="@dimen/squeezed_horizontal_margin"
+	android:paddingVertical="@dimen/side_margin"
+	tools:context=".ui.signup.SignUpFragment">
+
+	<androidx.constraintlayout.widget.Guideline
+		android:id="@+id/guidelineHorizontalStart"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:orientation="horizontal"
+		app:layout_constraintGuide_percent="0.26" />
+
+	<TextView
+		android:id="@+id/textSignUp"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:fontFamily="@font/poppins_medium"
+		android:text="@string/sign_up"
+		android:textAppearance="@style/TextAppearance.MaterialComponents.Headline3"
+		android:textColor="@color/white"
+		app:layout_constraintBottom_toTopOf="@+id/guidelineHorizontalStart"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toTopOf="parent" />
+
+	<com.google.android.material.textfield.TextInputLayout
+		android:id="@+id/layoutName"
+		style="@style/Widget.UWheels.TextInputLayout.OutlinedBox.Light"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:theme="@style/Widget.UWheels.TextInputLayout.OutlinedBox.Light"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toTopOf="@id/guidelineHorizontalStart">
+
+		<com.google.android.material.textfield.TextInputEditText
+			android:id="@+id/name"
+			style="@style/Widget.UWheels.TextInputEditText.OutlinedBox.Light"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:hint="@string/name"
+			android:inputType="textPersonName" />
+
+	</com.google.android.material.textfield.TextInputLayout>
+
+	<com.google.android.material.textfield.TextInputLayout
+		android:id="@+id/layoutLastName"
+		style="@style/Widget.UWheels.TextInputLayout.OutlinedBox.Light"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_marginTop="@dimen/margin_between_elements"
+		android:theme="@style/Widget.UWheels.TextInputLayout.OutlinedBox.Light"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toBottomOf="@id/layoutName">
+
+		<com.google.android.material.textfield.TextInputEditText
+			android:id="@+id/lastName"
+			style="@style/Widget.UWheels.TextInputEditText.OutlinedBox.Light"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:hint="@string/last_name"
+			android:inputType="textPersonName" />
+
+	</com.google.android.material.textfield.TextInputLayout>
+
+	<com.google.android.material.textfield.TextInputLayout
+		android:id="@+id/layoutPhoneNumber"
+		style="@style/Widget.UWheels.TextInputLayout.OutlinedBox.Light"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_marginTop="@dimen/margin_between_elements"
+		android:theme="@style/Widget.UWheels.TextInputLayout.OutlinedBox.Light"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toBottomOf="@id/layoutLastName">
+
+		<com.google.android.material.textfield.TextInputEditText
+			android:id="@+id/phoneNumber"
+			style="@style/Widget.UWheels.TextInputEditText.OutlinedBox.Light"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:hint="@string/phone_number"
+			android:inputType="phone" />
+
+	</com.google.android.material.textfield.TextInputLayout>
+
+	<com.google.android.material.textfield.TextInputLayout
+		android:id="@+id/layoutEmail"
+		style="@style/Widget.UWheels.TextInputLayout.OutlinedBox.Light"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_marginTop="@dimen/margin_between_elements"
+		android:theme="@style/Widget.UWheels.TextInputLayout.OutlinedBox.Light"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toBottomOf="@id/layoutPhoneNumber">
+
+		<com.google.android.material.textfield.TextInputEditText
+			android:id="@+id/email"
+			style="@style/Widget.UWheels.TextInputEditText.OutlinedBox.Light"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:hint="@string/email"
+			android:inputType="textEmailAddress" />
+
+	</com.google.android.material.textfield.TextInputLayout>
+
+	<com.google.android.material.textfield.TextInputLayout
+		android:id="@+id/layoutPassword"
+		style="@style/Widget.UWheels.TextInputLayout.OutlinedBox.Light"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_marginTop="@dimen/margin_between_elements"
+		android:theme="@style/Widget.UWheels.TextInputLayout.OutlinedBox.Light"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toBottomOf="@id/layoutEmail"
+		app:passwordToggleEnabled="true"
+		app:passwordToggleTint="@color/white">
+
+		<com.google.android.material.textfield.TextInputEditText
+			android:id="@+id/password"
+			style="@style/Widget.UWheels.TextInputEditText.OutlinedBox.Light"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:hint="@string/password"
+			android:inputType="textPassword" />
+
+	</com.google.android.material.textfield.TextInputLayout>
+
+	<com.google.android.material.textfield.TextInputLayout
+		android:id="@+id/layoutPasswordAgain"
+		style="@style/Widget.UWheels.TextInputLayout.OutlinedBox.Light"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_marginTop="@dimen/margin_between_elements"
+		android:theme="@style/Widget.UWheels.TextInputLayout.OutlinedBox.Light"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toBottomOf="@id/layoutPassword"
+		app:passwordToggleEnabled="true"
+		app:passwordToggleTint="@color/white">
+
+		<com.google.android.material.textfield.TextInputEditText
+			android:id="@+id/passwordAgain"
+			style="@style/Widget.UWheels.TextInputEditText.OutlinedBox.Light"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:hint="@string/password"
+			android:inputType="textPassword" />
+
+	</com.google.android.material.textfield.TextInputLayout>
+
+	<Button
+		android:id="@+id/buttonSignUp"
+		style="@style/Widget.UWheels.ButtonPrimary.Medium"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_marginTop="@dimen/margin_between_elements"
+		android:text="@string/sign_up"
+		app:backgroundTint="@null"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toBottomOf="@id/layoutPasswordAgain" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
