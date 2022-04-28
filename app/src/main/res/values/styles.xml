@@ -56,6 +56,7 @@
 		<item name="hintEnabled">false</item>
 		<item name="colorControlActivated">@color/white</item>
 		<item name="colorControlNormal">@color/white</item>
+		<item name="android:textAppearance">@style/Widget.MaterialComponents.Button.OutlinedButton</item>
 	</style>
 
 	<style name="Widget.UWheels.TextInputEditText.OutlinedBox.Light" parent="">

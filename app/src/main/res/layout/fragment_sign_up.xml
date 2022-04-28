@@ -12,11 +12,11 @@
 	tools:context=".ui.signup.SignUpFragment">
 
 	<androidx.constraintlayout.widget.Guideline
-		android:id="@+id/guidelineHorizontalStart"
+		android:id="@+id/guidelineHorizontalMiddle"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		android:orientation="horizontal"
-		app:layout_constraintGuide_percent="0.26" />
+		app:layout_constraintGuide_percent="0.6" />
 
 	<TextView
 		android:id="@+id/textSignUp"
@@ -26,20 +26,22 @@
 		android:text="@string/sign_up"
 		android:textAppearance="@style/TextAppearance.MaterialComponents.Headline3"
 		android:textColor="@color/white"
-		app:layout_constraintBottom_toTopOf="@+id/guidelineHorizontalStart"
+		app:layout_constraintBottom_toTopOf="@id/layoutName"
 		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintStart_toStartOf="parent"
-		app:layout_constraintTop_toTopOf="parent" />
+		app:layout_constraintTop_toTopOf="parent"
+		app:layout_constraintVertical_bias="0.6" />
 
 	<com.google.android.material.textfield.TextInputLayout
 		android:id="@+id/layoutName"
 		style="@style/Widget.UWheels.TextInputLayout.OutlinedBox.Light"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
+		android:layout_marginBottom="@dimen/margin_between_elements"
 		android:theme="@style/Widget.UWheels.TextInputLayout.OutlinedBox.Light"
+		app:layout_constraintBottom_toTopOf="@id/layoutLastName"
 		app:layout_constraintEnd_toEndOf="parent"
-		app:layout_constraintStart_toStartOf="parent"
-		app:layout_constraintTop_toTopOf="@id/guidelineHorizontalStart">
+		app:layout_constraintStart_toStartOf="parent">
 
 		<com.google.android.material.textfield.TextInputEditText
 			android:id="@+id/name"
@@ -56,11 +58,11 @@
 		style="@style/Widget.UWheels.TextInputLayout.OutlinedBox.Light"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
-		android:layout_marginTop="@dimen/margin_between_elements"
+		android:layout_marginBottom="@dimen/margin_between_elements"
 		android:theme="@style/Widget.UWheels.TextInputLayout.OutlinedBox.Light"
+		app:layout_constraintBottom_toTopOf="@id/layoutPhoneNumber"
 		app:layout_constraintEnd_toEndOf="parent"
-		app:layout_constraintStart_toStartOf="parent"
-		app:layout_constraintTop_toBottomOf="@id/layoutName">
+		app:layout_constraintStart_toStartOf="parent">
 
 		<com.google.android.material.textfield.TextInputEditText
 			android:id="@+id/lastName"
@@ -77,11 +79,11 @@
 		style="@style/Widget.UWheels.TextInputLayout.OutlinedBox.Light"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
-		android:layout_marginTop="@dimen/margin_between_elements"
+		android:layout_marginBottom="@dimen/margin_between_elements"
 		android:theme="@style/Widget.UWheels.TextInputLayout.OutlinedBox.Light"
+		app:layout_constraintBottom_toTopOf="@id/layoutEmail"
 		app:layout_constraintEnd_toEndOf="parent"
-		app:layout_constraintStart_toStartOf="parent"
-		app:layout_constraintTop_toBottomOf="@id/layoutLastName">
+		app:layout_constraintStart_toStartOf="parent">
 
 		<com.google.android.material.textfield.TextInputEditText
 			android:id="@+id/phoneNumber"
@@ -98,11 +100,11 @@
 		style="@style/Widget.UWheels.TextInputLayout.OutlinedBox.Light"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
-		android:layout_marginTop="@dimen/margin_between_elements"
+		android:layout_marginBottom="@dimen/margin_between_elements"
 		android:theme="@style/Widget.UWheels.TextInputLayout.OutlinedBox.Light"
+		app:layout_constraintBottom_toTopOf="@id/guidelineHorizontalMiddle"
 		app:layout_constraintEnd_toEndOf="parent"
-		app:layout_constraintStart_toStartOf="parent"
-		app:layout_constraintTop_toBottomOf="@id/layoutPhoneNumber">
+		app:layout_constraintStart_toStartOf="parent">
 
 		<com.google.android.material.textfield.TextInputEditText
 			android:id="@+id/email"
@@ -119,11 +121,10 @@
 		style="@style/Widget.UWheels.TextInputLayout.OutlinedBox.Light"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
-		android:layout_marginTop="@dimen/margin_between_elements"
 		android:theme="@style/Widget.UWheels.TextInputLayout.OutlinedBox.Light"
 		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintStart_toStartOf="parent"
-		app:layout_constraintTop_toBottomOf="@id/layoutEmail"
+		app:layout_constraintTop_toBottomOf="@id/guidelineHorizontalMiddle"
 		app:passwordToggleEnabled="true"
 		app:passwordToggleTint="@color/white">
 
@@ -155,7 +156,7 @@
 			style="@style/Widget.UWheels.TextInputEditText.OutlinedBox.Light"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:hint="@string/password"
+			android:hint="@string/password_again"
 			android:inputType="textPassword" />
 
 	</com.google.android.material.textfield.TextInputLayout>
@@ -166,6 +167,7 @@
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
 		android:layout_marginTop="@dimen/margin_between_elements"
+		android:contentDescription="@string/press_to_sign_up"
 		android:text="@string/sign_up"
 		app:backgroundTint="@null"
 		app:layout_constraintEnd_toEndOf="parent"

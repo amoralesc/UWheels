@@ -11,11 +11,11 @@
 	tools:context=".ui.login.LoginFragment">
 
 	<androidx.constraintlayout.widget.Guideline
-		android:id="@+id/guidelineHorizontalDivider"
+		android:id="@+id/guidelineHorizontalMiddle"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		android:orientation="horizontal"
-		app:layout_constraintGuide_percent="0.58" />
+		app:layout_constraintGuide_percent="0.6" />
 
 	<TextView
 		android:id="@+id/textLogin"
@@ -106,7 +106,7 @@
 		android:layout_height="wrap_content"
 		android:layout_marginBottom="@dimen/margin_between_elements"
 		android:theme="@style/Widget.UWheels.TextInputLayout.OutlinedBox.Light"
-		app:layout_constraintBottom_toTopOf="@id/guidelineHorizontalDivider"
+		app:layout_constraintBottom_toTopOf="@id/guidelineHorizontalMiddle"
 		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintStart_toStartOf="parent"
 		app:passwordToggleEnabled="true"
@@ -132,7 +132,7 @@
 		app:backgroundTint="@null"
 		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintStart_toStartOf="parent"
-		app:layout_constraintTop_toTopOf="@id/guidelineHorizontalDivider" />
+		app:layout_constraintTop_toTopOf="@id/guidelineHorizontalMiddle" />
 
 	<TextView
 		android:id="@+id/forgotPassword"
@@ -167,6 +167,7 @@
 		style="@style/Widget.UWheels.ButtonPrimary.Medium"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
+		android:contentDescription="@string/press_to_sign_up"
 		android:layout_marginTop="@dimen/margin_between_elements"
 		android:text="@string/sign_up"
 		app:backgroundTint="@null"
