@@ -50,10 +50,10 @@ class LoginFragment : Fragment() {
 				}
 				loginButton.isEnabled = loginFormState.isDataValid
 				loginFormState.usernameError?.let {
-					usernameEditText.error = getString(it)
+					// usernameEditText.error = getString(it)
 				}
 				loginFormState.passwordError?.let {
-					passwordEditText.error = getString(it)
+					// passwordEditText.error = getString(it)
 				}
 			})
 

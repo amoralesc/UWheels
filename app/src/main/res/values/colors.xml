@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
 	<color name="color_brand_start">#E300FF</color>
 	<color name="color_brand_end">#7700C5</color>
 	<color name="color_brand_blend">#AD00E2</color>
@@ -13,8 +14,14 @@
 	<color name="color_on_secondary">@color/black</color>
 
 	<color name="black">#FF000000</color>
-	<color name="white">#FFFFFFFF</color>
 	<color name="dark_gray">#303030</color>
+
+	<color name="white">#FFFFFFFF</color>
+	<color name="white_80">#CCFFFFFF</color>
+	<color name="white_60">#99FFFFFF</color>
+	<color name="white_40">#66FFFFFF</color>
+	<color name="white_20">#33FFFFFF</color>
+
 
 	<color name="purple_200">#FFBB86FC</color>
 	<color name="purple_500">#FF6200EE</color>

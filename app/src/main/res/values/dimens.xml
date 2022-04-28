@@ -1,17 +1,28 @@
 <resources>
+	<dimen name="x1">8dp</dimen>
+	<dimen name="x2">16dp</dimen>
+	<dimen name="x3">24dp</dimen>
+	<dimen name="x4">32dp</dimen>
+
 	<!-- Default margins. -->
 	<dimen name="side_margin">16dp</dimen>
+	<dimen name="squeezed_horizontal_margin">40dp</dimen>
+	<dimen name="margin_between_elements">16dp</dimen>
+	<dimen name="margin_between_elements_short">8dp</dimen>
+
+	<dimen name="min_height_view">48dp</dimen>
 
 	<!-- Style dimens -->
 	<!-- Text size -->
 	<dimen name="text_size_medium">18sp</dimen>
 
+	<!-- Shapes -->
+	<dimen name="button_corner_radius">12dp</dimen>
+
 	<!-- Buttons -->
 	<dimen name="button_inset">6dp</dimen>
-	<dimen name="button_radius">12dp</dimen>
+
 
 	<!-- Login fragment margins -->
-	<dimen name="login_horizontal_margin">40dp</dimen>
-	<dimen name="margin_between_elements">16dp</dimen>
 
 </resources>

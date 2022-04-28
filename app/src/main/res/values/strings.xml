@@ -10,7 +10,7 @@
 	<string name="login_with_account">or login with your account</string>
 	<string name="email">Email</string>
 	<string name="password">Password</string>
-	<string name="forgot_your_password">Forgot your password?</string>
+	<string name="forgot_your_password"><u>Forgot your password?</u></string>
 	<string name="or">or</string>
 	<string name="sign_up">Sign Up</string>
 
@@ -18,4 +18,6 @@
 	<string name="invalid_username">Not a valid username</string>
 	<string name="invalid_password">Password must be >5 characters</string>
 	<string name="login_failed">"Login failed"</string>
+	<string name="login_with_facebook">Login with Facebook</string>
+	<string name="press_to_login">Press to login</string>
 </resources>
