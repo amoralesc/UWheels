@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content"
+	android:foreground="?attr/selectableItemBackground"
+	android:orientation="horizontal"
+	android:padding="8dp"
+	android:paddingEnd="0dp"
+	tools:ignore="RtlSymmetry">
+
+	<ImageView
+		android:id="@+id/imageFilePreview"
+		android:layout_width="60dp"
+		android:layout_height="60dp"
+		android:scaleType="fitCenter"
+		app:layout_constraintBottom_toBottomOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toTopOf="parent"
+		tools:ignore="ContentDescription,ImageContrastCheck"
+		tools:srcCompat="@drawable/ic_file" />
+
+	<ImageButton
+		android:id="@+id/buttonRemove"
+		android:layout_width="@dimen/min_size_clickable"
+		android:layout_height="@dimen/min_size_clickable"
+		android:background="@null"
+		android:contentDescription="@string/press_to_remove"
+		android:scaleType="center"
+		app:layout_constraintBottom_toBottomOf="parent"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintTop_toTopOf="parent"
+		app:srcCompat="@drawable/ic_close"
+		app:tint="@color/dark_gray" />
+
+	<EditText
+		android:id="@+id/fileName"
+		android:layout_width="0dp"
+		android:layout_height="wrap_content"
+		android:layout_marginStart="@dimen/margin_between_elements_short"
+		android:ems="10"
+		android:hint="@string/file_name"
+		android:importantForAutofill="no"
+		android:inputType="text"
+		android:minHeight="@dimen/min_size_clickable"
+		android:textColor="@color/dark_gray"
+		app:layout_constraintBottom_toBottomOf="parent"
+		app:layout_constraintEnd_toStartOf="@+id/buttonRemove"
+		app:layout_constraintStart_toEndOf="@+id/imageFilePreview"
+		app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

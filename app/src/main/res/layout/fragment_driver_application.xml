@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:background="@drawable/gradient_brand"
+	android:padding="@dimen/margin_large"
+	tools:context=".ui.driver.apply.DriverApplicationFragment">
+
+	<TextView
+		android:id="@+id/textTitle"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:fontFamily="@font/poppins_medium"
+		android:textAppearance="?textAppearanceHeadline4"
+		android:textColor="@color/white"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toTopOf="parent"
+		tools:layout_editor_absoluteX="166dp"
+		tools:layout_editor_absoluteY="57dp"
+		tools:text="Driver's license" />
+
+	<TextView
+		android:id="@+id/textDescription"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_marginTop="@dimen/margin_between_elements_short"
+		android:textAppearance="?textAppearanceBody1"
+		android:textColor="@color/white"
+		android:textSize="18sp"
+		app:layout_constraintTop_toBottomOf="@id/textTitle"
+		tools:text="Upload your driver's license. Both sides must be visible" />
+
+	<TextView
+		android:id="@+id/textSupportedFiles"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_marginTop="@dimen/margin_between_elements_short"
+		android:textAppearance="?textAppearanceBody1"
+		android:textColor="@color/white"
+		android:textSize="18sp"
+		app:layout_constraintTop_toBottomOf="@id/textDescription"
+		tools:text="@string/supported_files" />
+
+	<androidx.constraintlayout.widget.ConstraintLayout
+		android:layout_width="match_parent"
+		android:layout_height="0dp"
+		android:layout_marginVertical="@dimen/margin_between_elements"
+		android:background="?colorSecondary"
+		android:elevation="2dp"
+		android:orientation="vertical"
+		android:paddingHorizontal="16dp"
+		android:paddingTop="16dp"
+		app:layout_constraintBottom_toTopOf="@id/buttonBack"
+		app:layout_constraintTop_toBottomOf="@id/textSupportedFiles">
+
+		<Button
+			android:id="@+id/buttonUpload"
+			android:layout_width="0dp"
+			android:layout_height="wrap_content"
+			android:layout_marginEnd="@dimen/margin_between_elements"
+			android:fontFamily="@font/poppins_medium"
+			android:text="@string/upload"
+			app:icon="@drawable/ic_file_upload"
+			app:layout_constraintEnd_toStartOf="@id/buttonCamera"
+			app:layout_constraintHorizontal_weight="0.5"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toTopOf="parent" />
+
+		<Button
+			android:id="@+id/buttonCamera"
+			android:layout_width="0dp"
+			android:layout_height="wrap_content"
+			android:fontFamily="@font/poppins_medium"
+			android:text="@string/camera"
+			app:icon="@drawable/ic_camera"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintHorizontal_weight="0.5"
+			app:layout_constraintStart_toEndOf="@id/buttonUpload"
+			app:layout_constraintTop_toTopOf="parent" />
+
+		<androidx.recyclerview.widget.RecyclerView
+			android:layout_width="match_parent"
+			android:layout_height="0dp"
+			android:layout_marginTop="@dimen/margin_between_elements_short"
+			android:clipToPadding="false"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toBottomOf="@id/buttonUpload"
+			tools:itemCount="7"
+			tools:listitem="@layout/uploaded_file_list_item" />
+
+	</androidx.constraintlayout.widget.ConstraintLayout>
+
+	<Button
+		android:id="@+id/buttonBack"
+		style="@style/Widget.UWheels.ButtonPrimary.Medium"
+		android:layout_width="0dp"
+		android:layout_height="wrap_content"
+		android:layout_marginEnd="@dimen/margin_between_elements_short"
+		android:elevation="4dp"
+		android:text="@string/back"
+		app:layout_constraintBottom_toBottomOf="parent"
+		app:layout_constraintEnd_toStartOf="@id/buttonNext"
+		app:layout_constraintHorizontal_weight="0.5"
+		app:layout_constraintStart_toStartOf="parent" />
+
+	<Button
+		android:id="@+id/buttonNext"
+		style="@style/Widget.UWheels.ButtonPrimary.Medium"
+		android:layout_width="0dp"
+		android:layout_height="wrap_content"
+		android:layout_marginStart="@dimen/margin_between_elements_short"
+		android:elevation="4dp"
+		android:text="@string/next"
+		app:layout_constraintBottom_toBottomOf="parent"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintHorizontal_weight="0.5"
+		app:layout_constraintStart_toEndOf="@id/buttonBack" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

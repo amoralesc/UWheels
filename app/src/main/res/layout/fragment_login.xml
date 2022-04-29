@@ -6,7 +6,7 @@
 	android:layout_height="match_parent"
 	android:background="@drawable/gradient_brand"
 	android:clipToPadding="false"
-	android:paddingHorizontal="@dimen/squeezed_horizontal_margin"
+	android:paddingHorizontal="@dimen/squeezed_margin"
 	android:paddingVertical="@dimen/side_margin"
 	tools:context=".ui.login.LoginFragment">
 
@@ -58,6 +58,7 @@
 		android:contentDescription="@string/login_with_facebook"
 		android:paddingVertical="8dp"
 		android:scaleType="fitCenter"
+		android:elevation="2dp"
 		android:src="@drawable/ic_facebook_logo"
 		app:layout_constraintBottom_toBottomOf="@id/buttonLoginGoogle"
 		app:layout_constraintEnd_toEndOf="parent"
@@ -129,7 +130,6 @@
 		android:layout_height="wrap_content"
 		android:contentDescription="@string/press_to_login"
 		android:text="@string/login"
-		app:backgroundTint="@null"
 		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintStart_toStartOf="parent"
 		app:layout_constraintTop_toTopOf="@id/guidelineHorizontalMiddle" />
@@ -170,7 +170,6 @@
 		android:contentDescription="@string/press_to_sign_up"
 		android:layout_marginTop="@dimen/margin_between_elements"
 		android:text="@string/sign_up"
-		app:backgroundTint="@null"
 		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintStart_toStartOf="parent"
 		app:layout_constraintTop_toBottomOf="@id/textOr" />

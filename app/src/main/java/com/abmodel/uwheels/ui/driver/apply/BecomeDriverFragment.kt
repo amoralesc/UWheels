@@ -1,16 +1,15 @@
-package com.abmodel.uwheels.ui.signup
+package com.abmodel.uwheels.ui.driver.apply
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.webkit.MimeTypeMap
-import com.abmodel.uwheels.databinding.FragmentSignUpBinding
+import com.abmodel.uwheels.databinding.FragmentBecomeDriverBinding
 
-class SignUpFragment : Fragment() {
+class BecomeDriverFragment : Fragment() {
 
-	private var _binding: FragmentSignUpBinding? = null
+	private var _binding: FragmentBecomeDriverBinding? = null
 
 	// This property is only valid between onCreateView and onDestroyView.
 	private val binding get() = _binding!!
@@ -20,7 +19,7 @@ class SignUpFragment : Fragment() {
 		savedInstanceState: Bundle?
 	): View {
 
-		_binding = FragmentSignUpBinding.inflate(inflater, container, false)
+		_binding = FragmentBecomeDriverBinding.inflate(inflater, container, false)
 		return binding.root
 	}
 

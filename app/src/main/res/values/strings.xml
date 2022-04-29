@@ -1,5 +1,6 @@
 <resources>
-	<string name="app_name">UWheels</string>
+	<string name="app_name" translatable="false">UWheels</string>
+
 	<!-- TODO: Remove or change this placeholder text -->
 	<string name="hello_blank_fragment">Hello blank fragment</string>
 
@@ -29,4 +30,15 @@
 	<string name="phone_number">Phone Number</string>
 	<string name="cancel">Cancel</string>
 	<string name="password_again">Password again</string>
+	<string name="title_uwheels_community">UWheels Community</string>
+	<string name="become_driver_prompt">Our community is made up of drivers and passengers. At the moment, you make part of the passengers, but you can apply to become a driver!\n\nTo apply, you will need:\n- A valid driver license\n- Proof of ownership of your vehicle\n- Pictures of your vehicle\n- Valid driver\'s insurance</string>
+	<string name="want_become_driver">I want to be a driver</string>
+	<string name="continue_as_passenger">Continue as passenger</string>
+	<string name="press_to_remove">Press here to remove</string>
+	<string name="file_name">File name</string>
+	<string name="supported_files"><b>Supported files:</b> %s</string>
+	<string name="back">Back</string>
+	<string name="next">Next</string>
+	<string name="upload">Upload</string>
+	<string name="camera">Camera</string>
 </resources>

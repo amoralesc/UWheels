@@ -29,6 +29,7 @@
 			 that gives it a rounded-corners shape
 			 and a solid color	-->
 		<item name="android:background">@drawable/button_primary_background</item>
+		<item name="backgroundTint">@null</item>
 	</style>
 
 	<style name="Widget.UWheels.ButtonPrimary.Medium">
@@ -37,7 +38,7 @@
 
 	<!-- Outlined button -->
 	<style name="Widget.UWheels.Button.OutlinedButton" parent="Widget.MaterialComponents.Button.OutlinedButton">
-		<item name="android:minHeight">@dimen/min_height_view</item>
+		<item name="android:minHeight">@dimen/min_size_clickable</item>
 
 		<item name="cornerRadius">@dimen/button_corner_radius</item>
 		<item name="strokeWidth">1.5dp</item>

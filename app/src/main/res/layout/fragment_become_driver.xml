@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:background="@drawable/gradient_brand"
+	android:clipToPadding="false"
+	android:paddingHorizontal="@dimen/squeezed_margin"
+	android:paddingVertical="@dimen/side_margin"
+	tools:context=".ui.driver.apply.BecomeDriverFragment">
+
+	<androidx.constraintlayout.widget.Guideline
+		android:id="@+id/guidelineHorizontalMiddle"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:orientation="horizontal"
+		app:layout_constraintGuide_percent="0.5" />
+
+	<TextView
+		android:id="@+id/textUWheelsCommunity"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:fontFamily="@font/poppins_medium"
+		android:text="@string/title_uwheels_community"
+		android:textAlignment="center"
+		android:textAppearance="@style/TextAppearance.MaterialComponents.Headline3"
+		android:textColor="@color/white"
+		app:layout_constraintBottom_toTopOf="@+id/textBecomeDriverPrompt"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toTopOf="parent"
+		app:layout_constraintVertical_bias="0.6"
+		app:lineHeight="56sp" />
+
+	<TextView
+		android:id="@+id/textBecomeDriverPrompt"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:fontFamily="@font/poppins"
+		android:text="@string/become_driver_prompt"
+		android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+		android:textColor="@color/white"
+		app:layout_constraintBottom_toTopOf="@+id/guidelineHorizontalMiddle"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toTopOf="@+id/guidelineHorizontalMiddle" />
+
+	<Button
+		android:id="@+id/buttonBecomeDriver"
+		style="@style/Widget.UWheels.ButtonPrimary.Medium"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_marginTop="32dp"
+		android:contentDescription="@string/press_to_sign_up"
+		android:text="@string/want_become_driver"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toBottomOf="@id/textBecomeDriverPrompt" />
+
+	<Button
+		android:id="@+id/buttonContinuePassenger"
+		style="@style/Widget.UWheels.ButtonPrimary.Medium"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_marginTop="@dimen/margin_between_elements"
+		android:contentDescription="@string/press_to_sign_up"
+		android:text="@string/continue_as_passenger"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toBottomOf="@id/buttonBecomeDriver" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
