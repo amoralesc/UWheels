@@ -1,19 +1,19 @@
-package com.abmodel.uwheels.ui
+package com.abmodel.uwheels.ui.passenger
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.abmodel.uwheels.databinding.FragmentHomeBinding
+import com.abmodel.uwheels.databinding.FragmentPassengerHomeBinding
 
 /**
- * The landing page of the app.
+ * The landing page of the app for a passenger user.
  */
 class HomeFragment : Fragment() {
 
 	// Binding objects to access the view elements
-	private var _binding: FragmentHomeBinding? = null
+	private var _binding: FragmentPassengerHomeBinding? = null
 	private val binding get() = _binding!!
 
 	override fun onCreateView(
@@ -22,7 +22,7 @@ class HomeFragment : Fragment() {
 		savedInstanceState: Bundle?
 	): View {
 		// Inflate the layout and binding for this fragment
-		_binding = FragmentHomeBinding.inflate(inflater, container, false)
+		_binding = FragmentPassengerHomeBinding.inflate(inflater, container, false)
 		return binding.root
 	}
 

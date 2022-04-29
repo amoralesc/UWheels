@@ -41,4 +41,10 @@
 	<string name="next">Next</string>
 	<string name="upload">Upload</string>
 	<string name="camera">Camera</string>
+	<string name="profile_is_verified">This profile is verified</string>
+	<string name="press_open_profile">Press to open the profile</string>
+	<string name="greeting_name">Hello, %s</string>
+	<string name="driver_mode">Driver mode</string>
+	<string name="see_your_rides">See your rides</string>
+	<string name="see_your_contacts">See your contacts</string>
 </resources>

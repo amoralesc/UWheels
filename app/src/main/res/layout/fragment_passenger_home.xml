@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:background="?colorSecondary"
+	android:padding="@dimen/side_margin"
+	tools:context=".ui.passenger.HomeFragment">
+
+	<TextView
+		android:id="@+id/textName"
+		android:layout_width="0dp"
+		android:layout_height="wrap_content"
+		android:layout_marginStart="8dp"
+		android:layout_marginTop="8dp"
+		android:ellipsize="end"
+		android:fontFamily="@font/poppins_medium"
+		android:maxLines="1"
+		android:text="@string/greeting_name"
+		android:textAlignment="viewStart"
+		android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
+		android:textColor="@color/dark_gray"
+		android:textSize="20sp"
+		app:layout_constraintEnd_toStartOf="@id/layoutImageProfile"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toTopOf="@+id/layoutImageProfile" />
+
+	<androidx.constraintlayout.widget.ConstraintLayout
+		android:id="@+id/layoutImageProfile"
+		android:layout_width="90dp"
+		android:layout_height="90dp"
+		android:layout_marginStart="8dp"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintTop_toTopOf="parent">
+
+		<com.google.android.material.imageview.ShapeableImageView
+			android:id="@+id/imageProfile"
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			android:clickable="true"
+			android:contentDescription="@string/press_open_profile"
+			android:focusable="true"
+			android:padding="5dp"
+			app:layout_constraintBottom_toTopOf="parent"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toTopOf="parent"
+			app:srcCompat="@drawable/ic_account_circle" />
+
+		<ImageView
+			android:id="@+id/isVerifiedCheckmark"
+			android:layout_width="40dp"
+			android:layout_height="40dp"
+			android:contentDescription="@string/profile_is_verified"
+			android:elevation="2dp"
+			app:layout_constraintBottom_toBottomOf="parent"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:srcCompat="@drawable/ic_checkmark" />
+
+	</androidx.constraintlayout.widget.ConstraintLayout>
+
+	<com.google.android.material.switchmaterial.SwitchMaterial
+		android:id="@+id/switchDriverMode"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginBottom="8dp"
+		android:elevation="4dp"
+		app:layout_constraintBottom_toBottomOf="@id/layoutImageProfile"
+		app:layout_constraintStart_toStartOf="parent" />
+
+	<TextView
+		android:id="@+id/textDriverMode"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginStart="@dimen/margin_between_elements_short"
+		android:fontFamily="@font/poppins"
+		android:text="@string/driver_mode"
+		android:textAppearance="?textAppearanceBody1"
+		android:textColor="@color/dark_gray"
+		app:layout_constraintBottom_toBottomOf="@id/switchDriverMode"
+		app:layout_constraintStart_toEndOf="@id/switchDriverMode"
+		app:layout_constraintTop_toTopOf="@id/switchDriverMode" />
+
+	<FrameLayout
+		android:id="@+id/alertBubbleRides"
+		android:layout_width="28dp"
+		android:layout_height="28dp"
+		android:layout_marginEnd="@dimen/margin_between_elements"
+		android:elevation="5dp"
+		app:layout_constraintBottom_toBottomOf="@id/buttonRides"
+		app:layout_constraintEnd_toEndOf="@id/buttonRides"
+		app:layout_constraintTop_toTopOf="@id/buttonRides">
+
+		<TextView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_gravity="center"
+			android:elevation="1dp"
+			android:fontFamily="monospace"
+			android:textAlignment="center"
+			android:textColor="@color/white"
+			android:textSize="17sp"
+			android:textStyle="bold"
+			tools:text="1" />
+
+		<ImageView
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			app:srcCompat="@drawable/ic_circle"
+			app:tint="@color/red"
+			tools:ignore="ContentDescription" />
+
+	</FrameLayout>
+
+	<Button
+		android:id="@+id/buttonRides"
+		style="@style/Widget.UWheels.ButtonPrimary.Medium"
+		android:layout_width="match_parent"
+		android:layout_height="60dp"
+		android:layout_marginTop="@dimen/margin_between_elements"
+		android:contentDescription="@string/press_to_sign_up"
+		android:elevation="4dp"
+		android:text="@string/see_your_rides"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toBottomOf="@id/layoutImageProfile" />
+
+	<FrameLayout
+		android:id="@+id/alertBubbleContacts"
+		android:layout_width="28dp"
+		android:layout_height="28dp"
+		android:layout_marginEnd="@dimen/margin_between_elements"
+		android:elevation="5dp"
+		app:layout_constraintBottom_toBottomOf="@id/buttonContacts"
+		app:layout_constraintEnd_toEndOf="@id/buttonContacts"
+		app:layout_constraintTop_toTopOf="@id/buttonContacts">
+
+		<TextView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_gravity="center"
+			android:elevation="1dp"
+			android:fontFamily="monospace"
+			android:textAlignment="center"
+			android:textColor="@color/white"
+			android:textSize="17sp"
+			android:textStyle="bold"
+			tools:text="1" />
+
+		<ImageView
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			app:srcCompat="@drawable/ic_circle"
+			app:tint="@color/red"
+			tools:ignore="ContentDescription" />
+
+	</FrameLayout>
+
+	<Button
+		android:id="@+id/buttonContacts"
+		style="@style/Widget.UWheels.ButtonPrimary.Medium"
+		android:layout_width="match_parent"
+		android:layout_height="60dp"
+		android:layout_marginTop="8dp"
+		android:contentDescription="@string/press_to_sign_up"
+		android:elevation="4dp"
+		android:text="@string/see_your_contacts"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toBottomOf="@id/buttonRides" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
