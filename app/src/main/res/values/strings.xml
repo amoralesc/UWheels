@@ -45,6 +45,10 @@
 	<string name="press_open_profile">Press to open the profile</string>
 	<string name="greeting_name">Hello, %s</string>
 	<string name="driver_mode">Driver mode</string>
-	<string name="see_your_rides">See your rides</string>
-	<string name="see_your_contacts">See your contacts</string>
+	<string name="my_rides">My rides</string>
+	<string name="my_contacts">My contacts</string>
+	<string name="chats">Chats</string>
+	<string name="settings">Settings</string>
+	<string name="look_for_ride">Look for a ride</string>
+	<string name="create_ride">Create a ride</string>
 </resources>
