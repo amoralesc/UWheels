@@ -52,12 +52,13 @@
 	<!-- TextInputLayout OutlinedBox -->
 	<!-- Light (brighter color) -->
 	<style name="Widget.UWheels.TextInputLayout.OutlinedBox.Light" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-		<item name="boxStrokeColor">@color/text_input_stroke_light</item>
+		<item name="boxStrokeColor">@color/text_input_light_color_state_list</item>
 		<item name="android:textColorHint">@color/white_80</item>
 		<item name="hintEnabled">false</item>
 		<item name="colorControlActivated">@color/white</item>
 		<item name="colorControlNormal">@color/white</item>
-		<item name="android:textAppearance">@style/Widget.MaterialComponents.Button.OutlinedButton</item>
+		<item name="android:textAppearance">@style/Widget.MaterialComponents.Button.OutlinedButton
+		</item>
 	</style>
 
 	<style name="Widget.UWheels.TextInputEditText.OutlinedBox.Light" parent="">
@@ -71,4 +72,10 @@
 		<item name="android:textCursorDrawable">@null</item>
 	</style>
 
+	<!-- Chips -->
+	<style name="Widget.UWheels.Chip.Choice" parent="Widget.MaterialComponents.Chip.Choice">
+		<!-- Chip background color selector -->
+		<item name="android:textColor">@color/chip_text_color_state_list</item>
+		<item name="chipBackgroundColor">@color/chip_color_state_list</item>
+	</style>
 </resources>

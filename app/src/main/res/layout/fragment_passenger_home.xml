@@ -188,7 +188,7 @@
 		android:elevation="4dp"
 		android:gravity="center_vertical"
 		android:text="@string/chats"
-		app:icon="@drawable/ic_message"
+		app:icon="@drawable/ic_chats_padded"
 		app:iconPadding="@dimen/margin_between_elements"
 		app:iconSize="24dp"
 		app:iconTint="@color/color_brand_blend"

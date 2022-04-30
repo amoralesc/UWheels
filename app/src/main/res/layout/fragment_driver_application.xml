@@ -17,8 +17,6 @@
 		android:textColor="@color/white"
 		app:layout_constraintStart_toStartOf="parent"
 		app:layout_constraintTop_toTopOf="parent"
-		tools:layout_editor_absoluteX="166dp"
-		tools:layout_editor_absoluteY="57dp"
 		tools:text="Driver's license" />
 
 	<TextView

@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:background="?colorSecondary"
+	android:paddingHorizontal="24dp"
+	android:paddingVertical="24dp"
+	tools:context=".ui.passenger.rides.MyRidesFragment">
+
+	<!--
+	<Button
+		android:id="@+id/buttonBack"
+		style="@style/Widget.UWheels.ButtonPrimary.Medium"
+		android:layout_width="50dp"
+		android:layout_height="48dp"
+		android:paddingHorizontal="10dp"
+		android:elevation="4dp"
+		app:icon="@drawable/ic_back"
+		app:iconSize="28dp"
+		app:iconPadding="0dp"
+		app:iconTint="@color/dark_gray"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toTopOf="parent" />
+-->
+
+	<include
+		android:id="@+id/buttonBack"
+		layout="@layout/button_back"
+		android:layout_width="50dp"
+		android:layout_height="48dp"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toTopOf="parent" />
+
+	<TextView
+		android:id="@+id/textTitle"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:fontFamily="@font/poppins_medium"
+		android:text="@string/my_rides"
+		android:textAppearance="?textAppearanceHeadline4"
+		android:textColor="@color/dark_gray"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toBottomOf="@+id/buttonBack" />
+
+	<com.google.android.material.chip.ChipGroup
+		android:id="@+id/chips"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		app:checkedChip="@id/chipActive"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toBottomOf="@+id/textTitle"
+		app:selectionRequired="true"
+		app:singleSelection="true">
+
+		<com.google.android.material.chip.Chip
+			android:id="@+id/chipActive"
+			style="@style/Widget.UWheels.Chip.Choice"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="@string/active" />
+
+		<com.google.android.material.chip.Chip
+			android:id="@+id/chipRequested"
+			style="@style/Widget.UWheels.Chip.Choice"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="@string/requested" />
+
+		<com.google.android.material.chip.Chip
+			android:id="@+id/chipCompleted"
+			style="@style/Widget.UWheels.Chip.Choice"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="@string/completed" />
+
+	</com.google.android.material.chip.ChipGroup>
+
+	<androidx.recyclerview.widget.RecyclerView
+		android:layout_width="match_parent"
+		android:layout_height="0dp"
+		android:layout_marginTop="@dimen/margin_between_elements"
+		app:layout_constraintBottom_toBottomOf="parent"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toBottomOf="@+id/chips" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
