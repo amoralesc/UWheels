@@ -21,9 +21,6 @@ Este proyecto está construido con tecnologías Firebase y de Google Maps Platfo
 
 1. Contar con Android Studio y el plugin de Kotlin instalado.
 2. Crear o contar con una cuenta de Google Cloud Platform con facturación activada.
-3. Crear un nuevo proyecto en Google Cloud.
-4. Habilitar las APIs de Google Maps Platform y tomar nota de la clave API.
-5. Crear un nuevo proyecto de Firebase a partir del proyecto Google Cloud del paso 4.
 
 ### Pasos de instalación 📚
 
