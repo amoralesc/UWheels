@@ -3,6 +3,7 @@ plugins {
 	id 'org.jetbrains.kotlin.android'
 	id 'com.google.android.libraries.mapsplatform.secrets-gradle-plugin'
 	id 'kotlin-kapt'
+	id 'com.google.gms.google-services'
 }
 
 android {
@@ -76,7 +77,11 @@ dependencies {
 	// Decoding Android Directions API response
 	implementation 'com.google.maps.android:android-maps-utils:2.3.0'
 
+	// Firebase BoM
+	implementation platform('com.google.firebase:firebase-bom:29.3.1')
 
+	// Firebase auth
+	implementation 'com.google.firebase:firebase-auth-ktx'
 
 	// Unit testing
 	testImplementation 'junit:junit:4.13.2'
