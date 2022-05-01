@@ -50,24 +50,24 @@
 		android:orientation="vertical"
 		android:paddingHorizontal="16dp"
 		android:paddingTop="16dp"
-		app:layout_constraintBottom_toTopOf="@id/buttonBack"
+		app:layout_constraintBottom_toTopOf="@id/back"
 		app:layout_constraintTop_toBottomOf="@id/textSupportedFiles">
 
 		<Button
-			android:id="@+id/buttonUpload"
+			android:id="@+id/upload"
 			android:layout_width="0dp"
 			android:layout_height="wrap_content"
 			android:layout_marginEnd="@dimen/margin_between_elements"
 			android:fontFamily="@font/poppins_medium"
 			android:text="@string/upload"
 			app:icon="@drawable/ic_upload_padded"
-			app:layout_constraintEnd_toStartOf="@id/buttonCamera"
+			app:layout_constraintEnd_toStartOf="@id/camera"
 			app:layout_constraintHorizontal_weight="0.5"
 			app:layout_constraintStart_toStartOf="parent"
 			app:layout_constraintTop_toTopOf="parent" />
 
 		<Button
-			android:id="@+id/buttonCamera"
+			android:id="@+id/camera"
 			android:layout_width="0dp"
 			android:layout_height="wrap_content"
 			android:fontFamily="@font/poppins_medium"
@@ -75,24 +75,25 @@
 			app:icon="@drawable/ic_camera_padded"
 			app:layout_constraintEnd_toEndOf="parent"
 			app:layout_constraintHorizontal_weight="0.5"
-			app:layout_constraintStart_toEndOf="@id/buttonUpload"
+			app:layout_constraintStart_toEndOf="@id/upload"
 			app:layout_constraintTop_toTopOf="parent" />
 
 		<androidx.recyclerview.widget.RecyclerView
+			android:id="@+id/files"
 			android:layout_width="match_parent"
 			android:layout_height="0dp"
 			android:layout_marginTop="@dimen/margin_between_elements_short"
 			android:clipToPadding="false"
 			app:layout_constraintEnd_toEndOf="parent"
 			app:layout_constraintStart_toStartOf="parent"
-			app:layout_constraintTop_toBottomOf="@id/buttonUpload"
+			app:layout_constraintTop_toBottomOf="@id/upload"
 			tools:itemCount="7"
 			tools:listitem="@layout/uploaded_file_list_item" />
 
 	</androidx.constraintlayout.widget.ConstraintLayout>
 
 	<Button
-		android:id="@+id/buttonBack"
+		android:id="@+id/back"
 		style="@style/Widget.UWheels.ButtonPrimary.Medium"
 		android:layout_width="0dp"
 		android:layout_height="wrap_content"
@@ -100,12 +101,12 @@
 		android:elevation="4dp"
 		android:text="@string/back"
 		app:layout_constraintBottom_toBottomOf="parent"
-		app:layout_constraintEnd_toStartOf="@id/buttonNext"
+		app:layout_constraintEnd_toStartOf="@id/next"
 		app:layout_constraintHorizontal_weight="0.5"
 		app:layout_constraintStart_toStartOf="parent" />
 
 	<Button
-		android:id="@+id/buttonNext"
+		android:id="@+id/next"
 		style="@style/Widget.UWheels.ButtonPrimary.Medium"
 		android:layout_width="0dp"
 		android:layout_height="wrap_content"
@@ -115,6 +116,6 @@
 		app:layout_constraintBottom_toBottomOf="parent"
 		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintHorizontal_weight="0.5"
-		app:layout_constraintStart_toEndOf="@id/buttonBack" />
+		app:layout_constraintStart_toEndOf="@id/back" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

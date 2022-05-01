@@ -5,15 +5,15 @@
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
 	android:background="?colorSecondary"
-	android:paddingHorizontal="24dp"
 	android:paddingVertical="24dp"
-	tools:context=".ui.passenger.contacts.ContactsFragment">
+	tools:context=".ui.chat.ChatsFragment">
 
 	<include
 		android:id="@+id/back"
 		layout="@layout/button_back_item"
 		android:layout_width="50dp"
 		android:layout_height="48dp"
+		android:layout_marginStart="24dp"
 		app:layout_constraintStart_toStartOf="parent"
 		app:layout_constraintTop_toTopOf="parent" />
 
@@ -21,47 +21,22 @@
 		android:id="@+id/textTitle"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
+		android:layout_marginStart="24dp"
 		android:fontFamily="@font/poppins_medium"
-		android:text="@string/contacts"
+		android:text="@string/chats"
 		android:textAppearance="?textAppearanceHeadline4"
 		android:textColor="@color/dark_gray"
 		app:layout_constraintStart_toStartOf="parent"
 		app:layout_constraintTop_toBottomOf="@id/back" />
 
-	<com.google.android.material.chip.ChipGroup
-		android:id="@+id/chips"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		app:checkedChip="@id/chipContacts"
-		app:layout_constraintStart_toStartOf="parent"
-		app:layout_constraintTop_toBottomOf="@id/textTitle"
-		app:selectionRequired="true"
-		app:singleSelection="true">
-
-		<com.google.android.material.chip.Chip
-			android:id="@+id/chipContacts"
-			style="@style/Widget.UWheels.Chip.Choice"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:text="@string/contacts" />
-
-		<com.google.android.material.chip.Chip
-			android:id="@+id/chipRequests"
-			style="@style/Widget.UWheels.Chip.Choice"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:text="@string/requests" />
-
-	</com.google.android.material.chip.ChipGroup>
-
 	<androidx.recyclerview.widget.RecyclerView
-		android:id="@+id/contacts"
+		android:id="@+id/chats"
 		android:layout_width="match_parent"
 		android:layout_height="0dp"
 		android:layout_marginTop="@dimen/margin_between_elements"
 		app:layout_constraintBottom_toBottomOf="parent"
 		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintStart_toStartOf="parent"
-		app:layout_constraintTop_toBottomOf="@id/chips" />
+		app:layout_constraintTop_toBottomOf="@id/textTitle" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

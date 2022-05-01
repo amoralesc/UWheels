@@ -54,4 +54,9 @@
 	<string name="active">Active</string>
 	<string name="requested">Requested</string>
 	<string name="completed">Completed</string>
+	<string name="contacts">Contacts</string>
+	<string name="requests">Requests</string>
+	<string name="go_back">Go back</string>
+	<string name="send">Send</string>
+	<string name="hint_input">Type a message…</string>
 </resources>

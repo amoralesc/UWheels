@@ -27,7 +27,7 @@
 -->
 
 	<include
-		android:id="@+id/buttonBack"
+		android:id="@+id/back"
 		layout="@layout/button_back_item"
 		android:layout_width="50dp"
 		android:layout_height="48dp"
@@ -43,7 +43,7 @@
 		android:textAppearance="?textAppearanceHeadline4"
 		android:textColor="@color/dark_gray"
 		app:layout_constraintStart_toStartOf="parent"
-		app:layout_constraintTop_toBottomOf="@+id/buttonBack" />
+		app:layout_constraintTop_toBottomOf="@id/back" />
 
 	<com.google.android.material.chip.ChipGroup
 		android:id="@+id/chips"
@@ -51,7 +51,7 @@
 		android:layout_height="wrap_content"
 		app:checkedChip="@id/chipActive"
 		app:layout_constraintStart_toStartOf="parent"
-		app:layout_constraintTop_toBottomOf="@+id/textTitle"
+		app:layout_constraintTop_toBottomOf="@id/textTitle"
 		app:selectionRequired="true"
 		app:singleSelection="true">
 
@@ -79,13 +79,14 @@
 	</com.google.android.material.chip.ChipGroup>
 
 	<androidx.recyclerview.widget.RecyclerView
+		android:id="@+id/rides"
 		android:layout_width="match_parent"
 		android:layout_height="0dp"
 		android:layout_marginTop="@dimen/margin_between_elements"
 		app:layout_constraintBottom_toBottomOf="parent"
 		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintStart_toStartOf="parent"
-		app:layout_constraintTop_toBottomOf="@+id/chips" />
+		app:layout_constraintTop_toBottomOf="@id/chips" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
