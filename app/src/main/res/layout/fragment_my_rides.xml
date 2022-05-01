@@ -10,6 +10,7 @@
 	tools:context=".ui.passenger.rides.MyRidesFragment">
 
 	<!--
+	TODO: Remove this if included button back item works
 	<Button
 		android:id="@+id/buttonBack"
 		style="@style/Widget.UWheels.ButtonPrimary.Medium"
@@ -27,7 +28,7 @@
 
 	<include
 		android:id="@+id/buttonBack"
-		layout="@layout/button_back"
+		layout="@layout/button_back_item"
 		android:layout_width="50dp"
 		android:layout_height="48dp"
 		app:layout_constraintStart_toStartOf="parent"

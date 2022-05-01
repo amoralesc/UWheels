@@ -148,7 +148,8 @@
 		app:iconSize="24dp"
 		app:layout_constraintBottom_toBottomOf="@+id/buttonRides"
 		app:layout_constraintEnd_toEndOf="@+id/buttonRides"
-		app:layout_constraintTop_toTopOf="@+id/buttonRides" />
+		app:layout_constraintTop_toTopOf="@+id/buttonRides"
+		tools:visibility="visible" />
 
 	<Button
 		android:id="@+id/buttonContacts"

@@ -1,16 +1,16 @@
-package com.abmodel.uwheels.ui.passenger.rides
+package com.abmodel.uwheels.ui.passenger.contacts
 
-import android.os.Bundle
 import androidx.fragment.app.Fragment
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.abmodel.uwheels.databinding.FragmentMyRidesBinding
+import com.abmodel.uwheels.databinding.FragmentPassengerContactsBinding
 
-class MyRidesFragment : Fragment() {
+class ContactsFragment : Fragment() {
 
 	// Binding objects to access the view elements
-	private var _binding: FragmentMyRidesBinding? = null
+	private var _binding: FragmentPassengerContactsBinding? = null
 	private val binding get() = _binding!!
 
 	override fun onCreateView(
@@ -19,7 +19,7 @@ class MyRidesFragment : Fragment() {
 		savedInstanceState: Bundle?
 	): View {
 		// Inflate the layout and binding for this fragment
-		_binding = FragmentMyRidesBinding.inflate(inflater, container, false)
+		_binding = FragmentPassengerContactsBinding.inflate(inflater, container, false)
 		return binding.root
 	}
 
