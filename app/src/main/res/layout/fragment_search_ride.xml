@@ -50,7 +50,7 @@
 				android:layout_height="4dp"
 				android:layout_gravity="center_horizontal"
 				app:srcCompat="@color/color_secondary_variant"
-				tools:ignore="ContentDescription" />
+				tools:ignore="ContentDescription,ImageContrastCheck" />
 
 			<com.google.android.material.chip.ChipGroup
 				android:id="@+id/chips_ride_type"

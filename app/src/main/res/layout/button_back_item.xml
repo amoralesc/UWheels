@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Button xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
 	style="@style/Widget.UWheels.ButtonPrimary.Medium"
+	android:layout_width="50dp"
+	android:layout_height="48dp"
+	android:elevation="4dp"
+	android:paddingHorizontal="10dp"
 	app:icon="@drawable/ic_back"
 	app:iconPadding="0dp"
 	app:iconSize="28dp"
 	app:iconTint="@color/dark_gray"
-	android:layout_width="50dp"
-	android:layout_height="48dp"
-	android:elevation="4dp"
-	android:paddingHorizontal="10dp" />
+	tools:ignore="SpeakableTextPresentCheck" />

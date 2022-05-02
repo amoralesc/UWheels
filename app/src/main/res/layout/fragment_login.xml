@@ -11,28 +11,28 @@
 	tools:context=".ui.login.LoginFragment">
 
 	<androidx.constraintlayout.widget.Guideline
-		android:id="@+id/guidelineHorizontalMiddle"
+		android:id="@+id/guide_horizontal_middle"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		android:orientation="horizontal"
 		app:layout_constraintGuide_percent="0.6" />
 
 	<TextView
-		android:id="@+id/textLogin"
+		android:id="@+id/title_login"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		android:fontFamily="@font/poppins_medium"
 		android:text="@string/login"
 		android:textAppearance="@style/TextAppearance.MaterialComponents.Headline3"
 		android:textColor="@color/white"
-		app:layout_constraintBottom_toTopOf="@id/buttonLoginGoogle"
+		app:layout_constraintBottom_toTopOf="@id/login_google"
 		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintStart_toStartOf="parent"
 		app:layout_constraintTop_toTopOf="parent"
 		app:layout_constraintVertical_bias="0.6" />
 
 	<Button
-		android:id="@+id/buttonLoginGoogle"
+		android:id="@+id/login_google"
 		style="@style/Widget.UWheels.Button.OutlinedButton"
 		android:layout_width="0dp"
 		android:layout_height="52dp"
@@ -45,12 +45,12 @@
 		app:iconPadding="@dimen/margin_between_elements"
 		app:iconSize="26dp"
 		app:iconTint="@null"
-		app:layout_constraintBottom_toTopOf="@id/textLoginAccount"
-		app:layout_constraintEnd_toStartOf="@id/buttonLoginFacebook"
+		app:layout_constraintBottom_toTopOf="@id/text_login_account"
+		app:layout_constraintEnd_toStartOf="@id/login_facebook"
 		app:layout_constraintStart_toStartOf="parent" />
 
 	<ImageButton
-		android:id="@+id/buttonLoginFacebook"
+		android:id="@+id/login_facebook"
 		android:layout_width="wrap_content"
 		android:layout_height="0dp"
 		android:adjustViewBounds="true"
@@ -60,14 +60,14 @@
 		android:scaleType="fitCenter"
 		android:elevation="2dp"
 		android:src="@drawable/ic_facebook_logo"
-		app:layout_constraintBottom_toBottomOf="@id/buttonLoginGoogle"
+		app:layout_constraintBottom_toBottomOf="@id/login_google"
 		app:layout_constraintEnd_toEndOf="parent"
-		app:layout_constraintStart_toEndOf="@id/buttonLoginGoogle"
-		app:layout_constraintTop_toTopOf="@id/buttonLoginGoogle"
+		app:layout_constraintStart_toEndOf="@id/login_google"
+		app:layout_constraintTop_toTopOf="@id/login_google"
 		tools:ignore="RtlSymmetry,ImageContrastCheck,TouchTargetSizeCheck" />
 
 	<TextView
-		android:id="@+id/textLoginAccount"
+		android:id="@+id/text_login_account"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		android:layout_marginBottom="@dimen/margin_between_elements"
@@ -75,18 +75,18 @@
 		android:text="@string/login_with_account"
 		android:textColor="@color/white"
 		android:textSize="14sp"
-		app:layout_constraintBottom_toTopOf="@id/layoutName"
+		app:layout_constraintBottom_toTopOf="@id/name_layout"
 		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintStart_toStartOf="parent" />
 
 	<com.google.android.material.textfield.TextInputLayout
-		android:id="@+id/layoutName"
+		android:id="@+id/name_layout"
 		style="@style/Widget.UWheels.TextInputLayout.OutlinedBox.Light"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
 		android:layout_marginBottom="@dimen/margin_between_elements"
 		android:theme="@style/Widget.UWheels.TextInputLayout.OutlinedBox.Light"
-		app:layout_constraintBottom_toTopOf="@id/layoutPassword"
+		app:layout_constraintBottom_toTopOf="@id/password_layout"
 		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintStart_toStartOf="parent">
 
@@ -101,13 +101,13 @@
 	</com.google.android.material.textfield.TextInputLayout>
 
 	<com.google.android.material.textfield.TextInputLayout
-		android:id="@+id/layoutPassword"
+		android:id="@+id/password_layout"
 		style="@style/Widget.UWheels.TextInputLayout.OutlinedBox.Light"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
 		android:layout_marginBottom="@dimen/margin_between_elements"
 		android:theme="@style/Widget.UWheels.TextInputLayout.OutlinedBox.Light"
-		app:layout_constraintBottom_toTopOf="@id/guidelineHorizontalMiddle"
+		app:layout_constraintBottom_toTopOf="@id/guide_horizontal_middle"
 		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintStart_toStartOf="parent"
 		app:passwordToggleEnabled="true"
@@ -124,7 +124,7 @@
 	</com.google.android.material.textfield.TextInputLayout>
 
 	<Button
-		android:id="@+id/buttonLogin"
+		android:id="@+id/login"
 		style="@style/Widget.UWheels.ButtonPrimary.Medium"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
@@ -132,10 +132,10 @@
 		android:text="@string/login"
 		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintStart_toStartOf="parent"
-		app:layout_constraintTop_toTopOf="@id/guidelineHorizontalMiddle" />
+		app:layout_constraintTop_toTopOf="@id/guide_horizontal_middle" />
 
 	<TextView
-		android:id="@+id/forgotPassword"
+		android:id="@+id/forgot_password"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		android:layout_marginTop="@dimen/margin_between_elements_short"
@@ -146,10 +146,10 @@
 		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintHorizontal_bias="0.5"
 		app:layout_constraintStart_toStartOf="parent"
-		app:layout_constraintTop_toBottomOf="@id/buttonLogin" />
+		app:layout_constraintTop_toBottomOf="@id/login" />
 
 	<TextView
-		android:id="@+id/textOr"
+		android:id="@+id/text_or"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		android:layout_marginTop="@dimen/margin_between_elements"
@@ -160,10 +160,10 @@
 		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintHorizontal_bias="0.5"
 		app:layout_constraintStart_toStartOf="parent"
-		app:layout_constraintTop_toBottomOf="@id/forgotPassword" />
+		app:layout_constraintTop_toBottomOf="@id/forgot_password" />
 
 	<Button
-		android:id="@+id/buttonSignUp"
+		android:id="@+id/sign_up"
 		style="@style/Widget.UWheels.ButtonPrimary.Medium"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
@@ -172,6 +172,6 @@
 		android:text="@string/sign_up"
 		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintStart_toStartOf="parent"
-		app:layout_constraintTop_toBottomOf="@id/textOr" />
+		app:layout_constraintTop_toBottomOf="@id/text_or" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

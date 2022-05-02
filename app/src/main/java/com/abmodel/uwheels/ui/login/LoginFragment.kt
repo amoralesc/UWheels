@@ -43,10 +43,10 @@ class LoginFragment : Fragment() {
 
 		val usernameEditText = binding.email
 		val passwordEditText = binding.password
-		val loginButton = binding.buttonLogin
+		val loginButton = binding.login
 
 		binding.apply {
-			buttonSignUp.setOnClickListener {
+			signUp.setOnClickListener {
 				findNavController().navigate(R.id.action_loginFragment_to_signUpFragment)
 			}
 		}

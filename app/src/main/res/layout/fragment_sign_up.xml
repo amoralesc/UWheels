@@ -11,34 +11,34 @@
 	tools:context=".ui.signup.SignUpFragment">
 
 	<androidx.constraintlayout.widget.Guideline
-		android:id="@+id/guidelineHorizontalMiddle"
+		android:id="@+id/guide_horizontal_middle"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		android:orientation="horizontal"
 		app:layout_constraintGuide_percent="0.6" />
 
 	<TextView
-		android:id="@+id/textSignUp"
+		android:id="@+id/title_sign_up"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		android:fontFamily="@font/poppins_medium"
 		android:text="@string/sign_up"
 		android:textAppearance="@style/TextAppearance.MaterialComponents.Headline3"
 		android:textColor="@color/white"
-		app:layout_constraintBottom_toTopOf="@id/layoutName"
+		app:layout_constraintBottom_toTopOf="@id/name_layout"
 		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintStart_toStartOf="parent"
 		app:layout_constraintTop_toTopOf="parent"
 		app:layout_constraintVertical_bias="0.6" />
 
 	<com.google.android.material.textfield.TextInputLayout
-		android:id="@+id/layoutName"
+		android:id="@+id/name_layout"
 		style="@style/Widget.UWheels.TextInputLayout.OutlinedBox.Light"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
 		android:layout_marginBottom="@dimen/margin_between_elements"
 		android:theme="@style/Widget.UWheels.TextInputLayout.OutlinedBox.Light"
-		app:layout_constraintBottom_toTopOf="@id/layoutLastName"
+		app:layout_constraintBottom_toTopOf="@id/last_name_layout"
 		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintStart_toStartOf="parent">
 
@@ -53,18 +53,18 @@
 	</com.google.android.material.textfield.TextInputLayout>
 
 	<com.google.android.material.textfield.TextInputLayout
-		android:id="@+id/layoutLastName"
+		android:id="@+id/last_name_layout"
 		style="@style/Widget.UWheels.TextInputLayout.OutlinedBox.Light"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
 		android:layout_marginBottom="@dimen/margin_between_elements"
 		android:theme="@style/Widget.UWheels.TextInputLayout.OutlinedBox.Light"
-		app:layout_constraintBottom_toTopOf="@id/layoutPhoneNumber"
+		app:layout_constraintBottom_toTopOf="@id/phone_number_layout"
 		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintStart_toStartOf="parent">
 
 		<com.google.android.material.textfield.TextInputEditText
-			android:id="@+id/lastName"
+			android:id="@+id/last_name"
 			style="@style/Widget.UWheels.TextInputEditText.OutlinedBox.Light"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
@@ -74,18 +74,18 @@
 	</com.google.android.material.textfield.TextInputLayout>
 
 	<com.google.android.material.textfield.TextInputLayout
-		android:id="@+id/layoutPhoneNumber"
+		android:id="@+id/phone_number_layout"
 		style="@style/Widget.UWheels.TextInputLayout.OutlinedBox.Light"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
 		android:layout_marginBottom="@dimen/margin_between_elements"
 		android:theme="@style/Widget.UWheels.TextInputLayout.OutlinedBox.Light"
-		app:layout_constraintBottom_toTopOf="@id/layoutEmail"
+		app:layout_constraintBottom_toTopOf="@id/email_layout"
 		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintStart_toStartOf="parent">
 
 		<com.google.android.material.textfield.TextInputEditText
-			android:id="@+id/phoneNumber"
+			android:id="@+id/phone_number"
 			style="@style/Widget.UWheels.TextInputEditText.OutlinedBox.Light"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
@@ -95,13 +95,13 @@
 	</com.google.android.material.textfield.TextInputLayout>
 
 	<com.google.android.material.textfield.TextInputLayout
-		android:id="@+id/layoutEmail"
+		android:id="@+id/email_layout"
 		style="@style/Widget.UWheels.TextInputLayout.OutlinedBox.Light"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
 		android:layout_marginBottom="@dimen/margin_between_elements"
 		android:theme="@style/Widget.UWheels.TextInputLayout.OutlinedBox.Light"
-		app:layout_constraintBottom_toTopOf="@id/guidelineHorizontalMiddle"
+		app:layout_constraintBottom_toTopOf="@id/guide_horizontal_middle"
 		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintStart_toStartOf="parent">
 
@@ -116,14 +116,14 @@
 	</com.google.android.material.textfield.TextInputLayout>
 
 	<com.google.android.material.textfield.TextInputLayout
-		android:id="@+id/layoutPassword"
+		android:id="@+id/password_layout"
 		style="@style/Widget.UWheels.TextInputLayout.OutlinedBox.Light"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
 		android:theme="@style/Widget.UWheels.TextInputLayout.OutlinedBox.Light"
 		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintStart_toStartOf="parent"
-		app:layout_constraintTop_toBottomOf="@id/guidelineHorizontalMiddle"
+		app:layout_constraintTop_toBottomOf="@id/guide_horizontal_middle"
 		app:passwordToggleEnabled="true"
 		app:passwordToggleTint="@color/white">
 
@@ -138,7 +138,7 @@
 	</com.google.android.material.textfield.TextInputLayout>
 
 	<com.google.android.material.textfield.TextInputLayout
-		android:id="@+id/layoutPasswordAgain"
+		android:id="@+id/password_again_layout"
 		style="@style/Widget.UWheels.TextInputLayout.OutlinedBox.Light"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
@@ -146,12 +146,12 @@
 		android:theme="@style/Widget.UWheels.TextInputLayout.OutlinedBox.Light"
 		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintStart_toStartOf="parent"
-		app:layout_constraintTop_toBottomOf="@id/layoutPassword"
+		app:layout_constraintTop_toBottomOf="@id/password_layout"
 		app:passwordToggleEnabled="true"
 		app:passwordToggleTint="@color/white">
 
 		<com.google.android.material.textfield.TextInputEditText
-			android:id="@+id/passwordAgain"
+			android:id="@+id/password_again"
 			style="@style/Widget.UWheels.TextInputEditText.OutlinedBox.Light"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
@@ -161,7 +161,7 @@
 	</com.google.android.material.textfield.TextInputLayout>
 
 	<Button
-		android:id="@+id/buttonSignUp"
+		android:id="@+id/sign_up"
 		style="@style/Widget.UWheels.ButtonPrimary.Medium"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
@@ -170,6 +170,6 @@
 		android:text="@string/sign_up"
 		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintStart_toStartOf="parent"
-		app:layout_constraintTop_toBottomOf="@id/layoutPasswordAgain" />
+		app:layout_constraintTop_toBottomOf="@id/password_again_layout" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

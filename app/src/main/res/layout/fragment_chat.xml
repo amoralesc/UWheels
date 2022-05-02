@@ -28,7 +28,7 @@
 			app:tint="@color/white" />
 
 		<TextView
-			android:id="@+id/chatName"
+			android:id="@+id/chat_name"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:layout_marginStart="8dp"
@@ -39,25 +39,25 @@
 			tools:text="Classic Wheels" />
 
 		<ImageView
-			android:id="@+id/imageCalendar"
+			android:id="@+id/image_calendar"
 			android:layout_width="16dp"
 			android:layout_height="16dp"
-			app:layout_constraintBottom_toBottomOf="@id/chatDate"
-			app:layout_constraintStart_toStartOf="@id/chatName"
-			app:layout_constraintTop_toTopOf="@id/chatDate"
+			app:layout_constraintBottom_toBottomOf="@id/chat_date"
+			app:layout_constraintStart_toStartOf="@id/chat_name"
+			app:layout_constraintTop_toTopOf="@id/chat_date"
 			app:srcCompat="@drawable/ic_calendar_padded"
 			app:tint="@color/white"
 			tools:ignore="ContentDescription" />
 
 		<TextView
-			android:id="@+id/chatDate"
+			android:id="@+id/chat_date"
 			android:textAppearance="?textAppearanceSubtitle1"
 			android:layout_width="wrap_content"
 			android:layout_marginStart="8dp"
 			android:layout_height="wrap_content"
 			android:textColor="@color/white"
-			app:layout_constraintTop_toBottomOf="@id/chatName"
-			app:layout_constraintStart_toEndOf="@id/imageCalendar"
+			app:layout_constraintTop_toBottomOf="@id/chat_name"
+			app:layout_constraintStart_toEndOf="@id/image_calendar"
 			tools:text="Tomorrow, 7:00 a.m."/>
 
 	</androidx.constraintlayout.widget.ConstraintLayout>

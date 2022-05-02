@@ -14,7 +14,7 @@
 	 	rather a list of actions -->
 
 	<TextView
-		android:id="@+id/textName"
+		android:id="@+id/user_name"
 		android:layout_width="0dp"
 		android:layout_height="wrap_content"
 		android:layout_marginStart="8dp"
@@ -27,29 +27,42 @@
 		android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
 		android:textColor="@color/dark_gray"
 		android:textSize="20sp"
-		app:layout_constraintEnd_toStartOf="@id/layoutImageProfile"
+		app:layout_constraintEnd_toStartOf="@id/user_image_layout"
 		app:layout_constraintStart_toStartOf="parent"
-		app:layout_constraintTop_toTopOf="@+id/layoutImageProfile" />
+		app:layout_constraintTop_toTopOf="@+id/user_image_layout" />
 
 	<com.google.android.material.switchmaterial.SwitchMaterial
-		android:id="@+id/switchDriverMode"
+		android:id="@+id/driver_mode"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		android:layout_marginStart="8dp"
 		android:layout_marginBottom="8dp"
 		android:elevation="4dp"
-		app:layout_constraintBottom_toBottomOf="@id/layoutImageProfile"
+		app:layout_constraintBottom_toBottomOf="@id/user_image_layout"
 		app:layout_constraintStart_toStartOf="parent" />
 
+	<TextView
+		android:id="@+id/text_driver_mode"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginStart="@dimen/margin_between_elements_short"
+		android:fontFamily="@font/poppins"
+		android:text="@string/driver_mode"
+		android:textAppearance="?textAppearanceBody1"
+		android:textColor="@color/dark_gray"
+		app:layout_constraintBottom_toBottomOf="@id/driver_mode"
+		app:layout_constraintStart_toEndOf="@id/driver_mode"
+		app:layout_constraintTop_toTopOf="@id/driver_mode" />
+
 	<androidx.constraintlayout.widget.ConstraintLayout
-		android:id="@+id/layoutImageProfile"
+		android:id="@+id/user_image_layout"
 		android:layout_width="90dp"
 		android:layout_height="90dp"
 		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintTop_toTopOf="parent">
 
 		<com.google.android.material.imageview.ShapeableImageView
-			android:id="@+id/imageProfile"
+			android:id="@+id/user_image"
 			android:layout_width="match_parent"
 			android:layout_height="match_parent"
 			android:clickable="true"
@@ -63,7 +76,7 @@
 			app:srcCompat="@drawable/ic_account_circle" />
 
 		<ImageView
-			android:id="@+id/isVerifiedCheckmark"
+			android:id="@+id/is_verified"
 			android:layout_width="40dp"
 			android:layout_height="40dp"
 			android:contentDescription="@string/profile_is_verified"
@@ -75,19 +88,6 @@
 			tools:visibility="visible" />
 
 	</androidx.constraintlayout.widget.ConstraintLayout>
-
-	<TextView
-		android:id="@+id/textDriverMode"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:layout_marginStart="@dimen/margin_between_elements_short"
-		android:fontFamily="@font/poppins"
-		android:text="@string/driver_mode"
-		android:textAppearance="?textAppearanceBody1"
-		android:textColor="@color/dark_gray"
-		app:layout_constraintBottom_toBottomOf="@id/switchDriverMode"
-		app:layout_constraintStart_toEndOf="@id/switchDriverMode"
-		app:layout_constraintTop_toTopOf="@id/switchDriverMode" />
 
 	<!-- TODO: Remove if alert bubble custom view works
 	<FrameLayout
@@ -123,7 +123,7 @@
 	-->
 
 	<Button
-		android:id="@+id/buttonRides"
+		android:id="@+id/my_rides"
 		style="@style/Widget.UWheels.ButtonPrimary.Medium"
 		android:layout_width="match_parent"
 		android:layout_height="60dp"
@@ -136,23 +136,23 @@
 		app:iconTint="@color/color_brand_blend"
 		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintStart_toStartOf="parent"
-		app:layout_constraintTop_toBottomOf="@id/layoutImageProfile" />
+		app:layout_constraintTop_toBottomOf="@id/user_image_layout" />
 
 	<com.abmodel.uwheels.AlertBubbleView
-		android:id="@+id/alertBubbleRides"
+		android:id="@+id/my_rides_alert"
 		android:layout_width="28dp"
 		android:layout_height="28dp"
 		android:layout_marginEnd="@dimen/margin_between_elements"
 		android:elevation="5dp"
 		android:visibility="gone"
 		app:iconSize="24dp"
-		app:layout_constraintBottom_toBottomOf="@+id/buttonRides"
-		app:layout_constraintEnd_toEndOf="@+id/buttonRides"
-		app:layout_constraintTop_toTopOf="@+id/buttonRides"
+		app:layout_constraintBottom_toBottomOf="@+id/my_rides"
+		app:layout_constraintEnd_toEndOf="@+id/my_rides"
+		app:layout_constraintTop_toTopOf="@+id/my_rides"
 		tools:visibility="visible" />
 
 	<Button
-		android:id="@+id/buttonContacts"
+		android:id="@+id/my_contacts"
 		style="@style/Widget.UWheels.ButtonPrimary.Medium"
 		android:layout_width="match_parent"
 		android:layout_height="60dp"
@@ -166,22 +166,22 @@
 		app:iconTint="@color/color_brand_blend"
 		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintStart_toStartOf="parent"
-		app:layout_constraintTop_toBottomOf="@id/buttonRides" />
+		app:layout_constraintTop_toBottomOf="@id/my_rides" />
 
 	<com.abmodel.uwheels.AlertBubbleView
-		android:id="@+id/alertBubbleContacts"
+		android:id="@+id/my_contacts_alert"
 		android:layout_width="28dp"
 		android:layout_height="28dp"
 		android:layout_marginEnd="@dimen/margin_between_elements"
 		android:elevation="5dp"
 		android:visibility="gone"
-		app:layout_constraintBottom_toBottomOf="@+id/buttonContacts"
-		app:layout_constraintEnd_toEndOf="@+id/buttonContacts"
-		app:layout_constraintTop_toTopOf="@+id/buttonContacts"
+		app:layout_constraintBottom_toBottomOf="@+id/my_contacts"
+		app:layout_constraintEnd_toEndOf="@+id/my_contacts"
+		app:layout_constraintTop_toTopOf="@+id/my_contacts"
 		tools:visibility="visible" />
 
 	<Button
-		android:id="@+id/buttonChats"
+		android:id="@+id/chats"
 		style="@style/Widget.UWheels.ButtonPrimary.Medium"
 		android:layout_width="match_parent"
 		android:layout_height="60dp"
@@ -195,22 +195,22 @@
 		app:iconTint="@color/color_brand_blend"
 		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintStart_toStartOf="parent"
-		app:layout_constraintTop_toBottomOf="@id/buttonContacts" />
+		app:layout_constraintTop_toBottomOf="@id/my_contacts" />
 
 	<com.abmodel.uwheels.AlertBubbleView
-		android:id="@+id/alertBubbleChats"
+		android:id="@+id/chats_alert"
 		android:layout_width="28dp"
 		android:layout_height="28dp"
 		android:layout_marginEnd="@dimen/margin_between_elements"
 		android:elevation="5dp"
 		android:visibility="gone"
-		app:layout_constraintBottom_toBottomOf="@+id/buttonChats"
-		app:layout_constraintEnd_toEndOf="@+id/buttonChats"
-		app:layout_constraintTop_toTopOf="@+id/buttonChats"
+		app:layout_constraintBottom_toBottomOf="@+id/chats"
+		app:layout_constraintEnd_toEndOf="@+id/chats"
+		app:layout_constraintTop_toTopOf="@+id/chats"
 		tools:visibility="visible" />
 
 	<Button
-		android:id="@+id/buttonSearchRide"
+		android:id="@+id/search_ride"
 		style="@style/Widget.UWheels.ButtonPrimary.Medium"
 		android:layout_width="match_parent"
 		android:layout_height="60dp"
@@ -224,10 +224,10 @@
 		app:iconTint="@color/color_brand_blend"
 		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintStart_toStartOf="parent"
-		app:layout_constraintTop_toBottomOf="@id/buttonChats" />
+		app:layout_constraintTop_toBottomOf="@id/chats" />
 
 	<Button
-		android:id="@+id/buttonCreateRide"
+		android:id="@+id/create_ride"
 		style="@style/Widget.UWheels.ButtonPrimary.Medium"
 		android:layout_width="match_parent"
 		android:layout_height="60dp"
@@ -241,10 +241,10 @@
 		app:iconTint="@color/color_brand_blend"
 		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintStart_toStartOf="parent"
-		app:layout_constraintTop_toBottomOf="@id/buttonSearchRide" />
+		app:layout_constraintTop_toBottomOf="@id/search_ride" />
 
 	<Button
-		android:id="@+id/buttonSettings"
+		android:id="@+id/settings"
 		style="@style/Widget.UWheels.ButtonPrimary.Medium"
 		android:layout_width="match_parent"
 		android:layout_height="60dp"
@@ -258,6 +258,6 @@
 		app:iconTint="@color/color_brand_blend"
 		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintStart_toStartOf="parent"
-		app:layout_constraintTop_toBottomOf="@id/buttonCreateRide" />
+		app:layout_constraintTop_toBottomOf="@id/create_ride" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

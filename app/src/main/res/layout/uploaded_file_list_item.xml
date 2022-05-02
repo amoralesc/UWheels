@@ -11,7 +11,7 @@
 	tools:ignore="RtlSymmetry">
 
 	<ImageView
-		android:id="@+id/imageFilePreview"
+		android:id="@+id/image_file_preview"
 		android:layout_width="60dp"
 		android:layout_height="60dp"
 		android:scaleType="fitCenter"
@@ -22,7 +22,7 @@
 		tools:srcCompat="@drawable/ic_file" />
 
 	<ImageButton
-		android:id="@+id/buttonRemove"
+		android:id="@+id/remove"
 		android:layout_width="@dimen/min_size_clickable"
 		android:layout_height="@dimen/min_size_clickable"
 		android:background="@null"
@@ -35,7 +35,7 @@
 		app:tint="@color/dark_gray" />
 
 	<EditText
-		android:id="@+id/fileName"
+		android:id="@+id/file_name"
 		android:layout_width="0dp"
 		android:layout_height="wrap_content"
 		android:layout_marginStart="@dimen/margin_between_elements_short"
@@ -46,8 +46,8 @@
 		android:minHeight="@dimen/min_size_clickable"
 		android:textColor="@color/dark_gray"
 		app:layout_constraintBottom_toBottomOf="parent"
-		app:layout_constraintEnd_toStartOf="@+id/buttonRemove"
-		app:layout_constraintStart_toEndOf="@+id/imageFilePreview"
+		app:layout_constraintEnd_toStartOf="@+id/remove"
+		app:layout_constraintStart_toEndOf="@+id/image_file_preview"
 		app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

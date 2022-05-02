@@ -35,7 +35,7 @@
 		app:layout_constraintTop_toTopOf="parent" />
 
 	<TextView
-		android:id="@+id/textTitle"
+		android:id="@+id/text_title"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		android:fontFamily="@font/poppins_medium"
@@ -49,28 +49,28 @@
 		android:id="@+id/chips"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
-		app:checkedChip="@id/chipActive"
+		app:checkedChip="@id/chip_active"
 		app:layout_constraintStart_toStartOf="parent"
-		app:layout_constraintTop_toBottomOf="@id/textTitle"
+		app:layout_constraintTop_toBottomOf="@id/text_title"
 		app:selectionRequired="true"
 		app:singleSelection="true">
 
 		<com.google.android.material.chip.Chip
-			android:id="@+id/chipActive"
+			android:id="@+id/chip_active"
 			style="@style/Widget.UWheels.Chip.Choice"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:text="@string/active" />
 
 		<com.google.android.material.chip.Chip
-			android:id="@+id/chipRequested"
+			android:id="@+id/chip_requested"
 			style="@style/Widget.UWheels.Chip.Choice"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:text="@string/requested" />
 
 		<com.google.android.material.chip.Chip
-			android:id="@+id/chipCompleted"
+			android:id="@+id/chip_completed"
 			style="@style/Widget.UWheels.Chip.Choice"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
@@ -87,6 +87,5 @@
 		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintStart_toStartOf="parent"
 		app:layout_constraintTop_toBottomOf="@id/chips" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
