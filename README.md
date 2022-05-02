@@ -2,7 +2,7 @@
 
 UWheels es una aplicación móvil para dispositivos Android que permite a usuarios conectar con otras usuarios para utilizar servicios de movilidad compartida. Permite a los usuarios comunicarse, crear y unirse a rutas compartidas y mucho más.
 
-## Especifcaciones 📋
+## Especificaciones 📋
 
 La aplicación está desarrollada para dispositivos Android con una versión SDK mínima de 24.
 
@@ -15,7 +15,7 @@ La aplicación está desarrollada para dispositivos Android con una versión SDK
 
 ## Instalación 📦
 
-### Prerequisitos 📚
+### Pre-rrequisitos 📚
 
 Este proyecto está construido con tecnologías Firebase y de Google Maps Platform. Si desea compilar y correr el código fuente localmente, debe tener estos servicios enlazados con una cuenta de Google Cloud Platform. Si desea utilizar los servicios contratados por ABMODEL, debe solicitar acceso a estos contactando al equipo. Sin embargo, su solicitud solo será tenida en cuenta si también pertenece a la misma organización (Pontificia Universidad Javeriana) o afines.
 
