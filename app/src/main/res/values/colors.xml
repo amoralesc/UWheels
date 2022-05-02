@@ -10,7 +10,7 @@
 	<color name="color_on_primary">@color/white</color>
 
 	<color name="color_secondary">#EAEAEA</color>
-	<color name="color_secondary_variant">#A3A3A3</color>
+	<color name="color_secondary_variant">#DDDDDD</color>
 	<color name="color_on_secondary">@color/black</color>
 
 	<color name="black">#FF000000</color>

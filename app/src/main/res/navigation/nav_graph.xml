@@ -3,7 +3,7 @@
 	xmlns:app="http://schemas.android.com/apk/res-auto"
 	xmlns:tools="http://schemas.android.com/tools"
 	android:id="@+id/nav_graph.xml"
-	app:startDestination="@id/loginFragment">
+	app:startDestination="@id/searchRideFragment">
 
 	<fragment
 		android:id="@+id/passengerHomeFragment"
@@ -13,6 +13,15 @@
 		<action
 			android:id="@+id/action_passengerHomeFragment_to_myRidesFragment"
 			app:destination="@id/myRidesFragment" />
+		<action
+			android:id="@+id/action_passengerHomeFragment_to_contactsFragment"
+			app:destination="@id/contactsFragment" />
+		<action
+			android:id="@+id/action_passengerHomeFragment_to_chatsFragment"
+			app:destination="@id/chatsFragment" />
+		<action
+			android:id="@+id/action_passengerHomeFragment_to_searchRideFragment"
+			app:destination="@id/searchRideFragment" />
 	</fragment>
 	<fragment
 		android:id="@+id/loginFragment"
@@ -21,7 +30,9 @@
 		tools:layout="@layout/fragment_login" >
 		<action
 			android:id="@+id/action_loginFragment_to_signUpFragment"
-			app:destination="@id/signUpFragment" />
+			app:destination="@id/signUpFragment"
+			app:enterAnim="@android:anim/slide_in_left"
+			app:exitAnim="@android:anim/slide_out_right" />
 		<action
 			android:id="@+id/action_loginFragment_to_passengerHomeFragment"
 			app:destination="@id/passengerHomeFragment"
@@ -72,5 +83,47 @@
 		android:id="@+id/myRidesFragment"
 		android:name="com.abmodel.uwheels.ui.passenger.rides.MyRidesFragment"
 		android:label="fragment_my_rides"
-		tools:layout="@layout/fragment_my_rides" />
+		tools:layout="@layout/fragment_my_rides" >
+		<action
+			android:id="@+id/action_myRidesFragment_to_passengerHomeFragment"
+			app:destination="@id/passengerHomeFragment"
+			app:popUpTo="@id/passengerHomeFragment" />
+	</fragment>
+	<fragment
+		android:id="@+id/contactsFragment"
+		android:name="com.abmodel.uwheels.ui.passenger.contacts.ContactsFragment"
+		android:label="fragment_passenger_contacts"
+		tools:layout="@layout/fragment_passenger_contacts" >
+		<action
+			android:id="@+id/action_contactsFragment_to_passengerHomeFragment"
+			app:destination="@id/passengerHomeFragment"
+			app:popUpTo="@id/passengerHomeFragment" />
+	</fragment>
+	<fragment
+		android:id="@+id/chatsFragment"
+		android:name="com.abmodel.uwheels.ui.chat.ChatsFragment"
+		android:label="fragment_chats"
+		tools:layout="@layout/fragment_chats" >
+		<action
+			android:id="@+id/action_chatsFragment_to_passengerHomeFragment"
+			app:destination="@id/passengerHomeFragment"
+			app:popUpTo="@id/passengerHomeFragment" />
+		<action
+			android:id="@+id/action_chatsFragment_to_chatFragment"
+			app:destination="@id/chatFragment" />
+	</fragment>
+	<fragment
+		android:id="@+id/chatFragment"
+		android:name="com.abmodel.uwheels.ui.chat.ChatFragment"
+		android:label="fragment_chat"
+		tools:layout="@layout/fragment_chat" >
+		<action
+			android:id="@+id/action_chatFragment_to_chatsFragment"
+			app:destination="@id/chatsFragment"
+			app:popUpTo="@id/chatFragment" />
+	</fragment>
+	<fragment
+		android:id="@+id/searchRideFragment"
+		android:name="com.abmodel.uwheels.ui.passenger.search.SearchRideFragment"
+		android:label="SearchRideFragment" />
 </navigation>

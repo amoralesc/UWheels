@@ -1,15 +1,158 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
-	xmlns:app="http://schemas.android.com/apk/res-auto"
-	xmlns:tools="http://schemas.android.com/tools">
+	android:orientation="vertical">
 
-	<androidx.fragment.app.FragmentContainerView
-		android:id="@+id/mapSearchRide"
-		android:name="com.google.android.gms.maps.SupportMapFragment"
-		tools:context=".ui.passenger.search.SearchRideFragment"
+	<androidx.coordinatorlayout.widget.CoordinatorLayout
 		android:layout_width="match_parent"
-		android:layout_height="match_parent" />
+		android:layout_height="0dp"
+		android:layout_gravity="top"
+		android:layout_weight="1"
+		tools:background="@color/color_secondary_variant">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+		<androidx.constraintlayout.widget.ConstraintLayout
+			android:layout_width="match_parent"
+			android:layout_height="match_parent">
+
+			<androidx.fragment.app.FragmentContainerView
+				android:id="@+id/mapSearchRide"
+				android:name="com.google.android.gms.maps.SupportMapFragment"
+				android:layout_width="match_parent"
+				android:layout_height="match_parent"
+				app:layout_constraintBottom_toBottomOf="parent"
+				app:layout_constraintEnd_toEndOf="parent"
+				app:layout_constraintStart_toStartOf="parent"
+				app:layout_constraintTop_toTopOf="parent"
+				tools:context=".ui.passenger.search.SearchRideFragment" />
+
+		</androidx.constraintlayout.widget.ConstraintLayout>
+
+		<LinearLayout
+			android:id="@+id/bottom_sheet_results"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:background="@drawable/bottom_sheet_background"
+			android:elevation="4dp"
+			android:orientation="vertical"
+			android:paddingTop="8dp"
+			app:behavior_expandedOffset="100dp"
+			app:behavior_fitToContents="true"
+			app:behavior_halfExpandedRatio="0.5"
+			app:behavior_hideable="false"
+			app:behavior_peekHeight="80dp"
+			app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
+
+			<ImageView
+				android:layout_width="40dp"
+				android:layout_height="4dp"
+				android:layout_gravity="center_horizontal"
+				app:srcCompat="@color/color_secondary_variant"
+				tools:ignore="ContentDescription" />
+
+			<com.google.android.material.chip.ChipGroup
+				android:id="@+id/chips_ride_type"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_marginStart="16dp"
+				android:layout_marginTop="8dp"
+				app:checkedChip="@id/chip_classic"
+				app:selectionRequired="true"
+				app:singleSelection="true">
+
+				<com.google.android.material.chip.Chip
+					android:id="@+id/chip_classic"
+					style="@style/Widget.UWheels.Chip.Choice"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:text="@string/classic_wheels" />
+
+				<com.google.android.material.chip.Chip
+					android:id="@+id/chip_shared"
+					style="@style/Widget.UWheels.Chip.Choice"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:text="@string/shared_wheels" />
+
+				<com.google.android.material.chip.Chip
+					android:id="@+id/chip_we"
+					style="@style/Widget.UWheels.Chip.Choice"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:text="@string/we_wheels" />
+
+			</com.google.android.material.chip.ChipGroup>
+
+			<androidx.recyclerview.widget.RecyclerView
+				android:id="@+id/results"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginTop="8dp" />
+
+		</LinearLayout>
+
+	</androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+	<com.google.android.material.divider.MaterialDivider
+		android:layout_width="match_parent"
+		android:layout_height="1dp"
+		app:dividerColor="#959595" />
+
+	<androidx.constraintlayout.widget.ConstraintLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_gravity="bottom"
+		android:background="@color/white"
+		android:elevation="8dp"
+		android:paddingStart="8dp">
+
+		<ImageView
+			android:id="@+id/image_wallet"
+			android:layout_width="30dp"
+			android:layout_height="30dp"
+			app:layout_constraintBottom_toBottomOf="@id/filters"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toTopOf="@id/filters"
+			app:srcCompat="@drawable/ic_wallet_padded"
+			app:tint="@color/dark_gray"
+			tools:ignore="ContentDescription" />
+
+		<TextView
+			android:id="@+id/payment_method"
+			android:layout_width="wrap_content"
+			android:layout_height="match_parent"
+			android:layout_marginStart="8dp"
+			android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
+			android:textColor="@color/dark_gray"
+			app:layout_constraintBottom_toBottomOf="@id/image_wallet"
+			app:layout_constraintStart_toEndOf="@id/image_wallet"
+			app:layout_constraintTop_toTopOf="@id/image_wallet"
+			tools:text="Cash" />
+
+		<ImageButton
+			android:id="@+id/filters"
+			style="?attr/buttonBarNeutralButtonStyle"
+			android:layout_width="@dimen/min_size_clickable"
+			android:layout_height="@dimen/min_size_clickable"
+			android:contentDescription="@string/press_search_filters"
+			android:foreground="?attr/selectableItemBackground"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintTop_toTopOf="parent"
+			app:srcCompat="@drawable/ic_sliders"
+			app:tint="@color/dark_gray" />
+
+		<Button
+			android:id="@+id/request"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginEnd="8dp"
+			android:text="@string/request"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toBottomOf="@id/filters" />
+
+	</androidx.constraintlayout.widget.ConstraintLayout>
+
+</LinearLayout>

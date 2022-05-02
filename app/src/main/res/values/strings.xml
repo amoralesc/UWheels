@@ -59,4 +59,10 @@
 	<string name="go_back">Go back</string>
 	<string name="send">Send</string>
 	<string name="hint_input">Type a message…</string>
+	<string name="classic_wheels">Classic Wheels</string>
+	<string name="shared_wheels">Shared Wheels</string>
+	<string name="we_wheels">We Wheels</string>
+	<string name="press_search_filters">Press to set search filters</string>
+	<string name="search">Search</string>
+	<string name="request">Request</string>
 </resources>
