@@ -65,4 +65,10 @@
 	<string name="press_search_filters">Press to set search filters</string>
 	<string name="search">Search</string>
 	<string name="request">Request</string>
+	<string name="source">Source</string>
+	<string name="destination">Destination</string>
+	<string name="date">Date</string>
+	<string name="time">Time</string>
+	<string name="select_time">Select time</string>
+	<string name="select_date">Select date</string>
 </resources>
