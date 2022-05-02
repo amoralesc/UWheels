@@ -17,7 +17,7 @@ La aplicación está desarrollada para dispositivos Android con una versión SDK
 
 ### Prerequisitos 📚
 
-Este proyecto está construido con tecnologías Firebase y de Google Maps Platform. Si desea compilar y corren el código fuente localmente, debe tener estos servicios enlazados con una cuenta de Google Cloud Platform. Si desea utilizar los servicios contratados por ABMODEL, debe solicitar acceso a estos contactando al equipo. Sin embargo, su solicitud solo será tenida en cuenta si también pertenece a la misma organización (Pontificia Universidad Javeriana) o afines.
+Este proyecto está construido con tecnologías Firebase y de Google Maps Platform. Si desea compilar y correr el código fuente localmente, debe tener estos servicios enlazados con una cuenta de Google Cloud Platform. Si desea utilizar los servicios contratados por ABMODEL, debe solicitar acceso a estos contactando al equipo. Sin embargo, su solicitud solo será tenida en cuenta si también pertenece a la misma organización (Pontificia Universidad Javeriana) o afines.
 
 1. Contar con Android Studio y el plugin de Kotlin instalado.
 2. Crear o contar con una cuenta de Google Cloud Platform con facturación activada.
@@ -43,6 +43,12 @@ MAPS_API_KEY=[your_api_key]
 ```
 
 6. Conecte su proyecto de Android Studio a su proyecto de Firebase. Se recomienda utilizar el asistente de Firebase ubicado en Tools > Firebase.
+
+## Notas sobre el código 📝
+
+Si desea visualizar o modificar el código fuente, debe tener en cuenta las siguientes recomendaciones:
+
+- Debido al manejo de Splash screens, el tema por defecto es '''UWheels.Starting''' (es cambiado a '''Theme.UWheels''' después que el Splash screen desaparece). Cuando quiera ver visualmente los layouts de la aplicación, en la pestaña _Design_ debe cambiar el tema a '''Theme.UWheels''' para poderlos visualizar correctamente.
 
 ## Wiki 📖
 
