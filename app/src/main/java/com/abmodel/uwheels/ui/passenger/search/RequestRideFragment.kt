@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.abmodel.uwheels.R
-import com.abmodel.uwheels.databinding.FragmentSearchRideBinding
+import com.abmodel.uwheels.databinding.FragmentRequestRideBinding
 import com.abmodel.uwheels.util.formatDateFromMillis
 import com.abmodel.uwheels.util.formatTime
 import com.abmodel.uwheels.util.hideKeyboard
@@ -16,12 +16,11 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
-import java.util.*
 
-class SearchRideFragment : Fragment(), OnMapReadyCallback {
+class RequestRideFragment : Fragment(), OnMapReadyCallback {
 
 	// Binding objects to access the view elements
-	private var _binding: FragmentSearchRideBinding? = null
+	private var _binding: FragmentRequestRideBinding? = null
 	private val binding get() = _binding!!
 
 	private var mMap: GoogleMap? = null
@@ -32,7 +31,7 @@ class SearchRideFragment : Fragment(), OnMapReadyCallback {
 		savedInstanceState: Bundle?
 	): View {
 		// Inflate the layout and binding for this fragment
-		_binding = FragmentSearchRideBinding.inflate(inflater, container, false)
+		_binding = FragmentRequestRideBinding.inflate(inflater, container, false)
 		return binding.root
 	}
 
@@ -129,6 +128,6 @@ class SearchRideFragment : Fragment(), OnMapReadyCallback {
 	}
 
 	companion object {
-		const val TAG = "SearchRideFragment"
+		const val TAG = "RequestRideFragment"
 	}
 }

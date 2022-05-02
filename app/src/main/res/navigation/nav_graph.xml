@@ -124,6 +124,6 @@
 	</fragment>
 	<fragment
 		android:id="@+id/searchRideFragment"
-		android:name="com.abmodel.uwheels.ui.passenger.search.SearchRideFragment"
+		android:name="com.abmodel.uwheels.ui.passenger.search.RequestRideFragment"
 		android:label="SearchRideFragment" />
 </navigation>
