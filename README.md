@@ -21,6 +21,7 @@ Este proyecto está construido con tecnologías Firebase y de Google Maps Platfo
 
 1. Contar con Android Studio y el plugin de Kotlin instalado.
 2. Crear o contar con una cuenta de Google Cloud Platform con facturación activada.
+3. Contar una _API de Google Maps_ y un _google-services.json_ con la información de conexión con Firebase.
 
 ### Pasos de instalación 📚
 
@@ -36,19 +37,19 @@ Este proyecto está construido con tecnologías Firebase y de Google Maps Platfo
 git clone https://github.com/IntroCompuMovil202210J/UWheels.git
 ```
 
-5. Coloque su Google Maps API en el archivo local.properties bajo el nombre '''MAPS_API_KEY'''.
+5. Coloque su Google Maps API en el archivo _local.properties_ bajo el nombre ```MAPS_API_KEY```.
 
 ```
 MAPS_API_KEY=[your_api_key]
 ```
 
-6. Conecte su proyecto de Android Studio a su proyecto de Firebase. Se recomienda utilizar el asistente de Firebase ubicado en Tools > Firebase.
+6. Conecte su proyecto de Android Studio a su [proyecto de Firebase](https://firebase.google.com/docs/android/setup). Se puede utilizar el asistente de Firebase de Android Studio ubicado en Tools > Firebase.
 
 ## Notas sobre el código 📝
 
 Si desea visualizar o modificar el código fuente, debe tener en cuenta las siguientes recomendaciones:
 
-- Debido al manejo de Splash screens, el tema por defecto es '''UWheels.Starting''' (es cambiado a '''Theme.UWheels''' después que el Splash screen desaparece). Cuando quiera ver visualmente los layouts de la aplicación, en la pestaña _Design_ debe cambiar el tema a '''Theme.UWheels''' para poderlos visualizar correctamente.
+- Debido al manejo de Splash screens, el tema por defecto es ```UWheels.Starting``` (es cambiado a ```Theme.UWheels``` después que el Splash screen desaparece). Cuando quiera ver visualmente los layouts de la aplicación, en la pestaña _Design_ debe cambiar el tema a ```Theme.UWheels``` para poderlos visualizar correctamente.
 
 ## Wiki 📖
 
@@ -67,8 +68,8 @@ _El equipo de ABMODEL pertenece a la Pontificia Universidad Javeriana y está co
 
 ### Licencia 📝
 
-Este proyecto está bajo licencia Apache 2.0. Una copia de la licencia es adjuntada. El uso de la marca, el logo y el nombre de la aplicación (UWheels) con fines comerciales está explícitamente prohibido sin previo consentimiento.
+Este proyecto está bajo licencia Apache 2.0. Una copia de la licencia es adjuntada. El uso de la marca, el logo y el nombre de la aplicación (UWheels) bajo cualquier motivo está explícitamente prohibido sin previa autorización.
 
 ---
 
-⌨️ con ❤️ por [ABMODEL](https://github.com/orgs/IntroCompuMovil202210J/teams/abmodel) 😊
+⌨️con ❤️por [ABMODEL](https://github.com/orgs/IntroCompuMovil202210J/teams/abmodel) 😊

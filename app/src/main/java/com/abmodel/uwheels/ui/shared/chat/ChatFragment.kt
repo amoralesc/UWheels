@@ -1,16 +1,16 @@
-package com.abmodel.uwheels.ui.chat
+package com.abmodel.uwheels.ui.shared.chat
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.abmodel.uwheels.databinding.FragmentChatsBinding
+import com.abmodel.uwheels.databinding.FragmentChatBinding
 
-class ChatsFragment : Fragment() {
+class ChatFragment : Fragment() {
 
 	// Binding objects to access the view elements
-	private var _binding: FragmentChatsBinding? = null
+	private var _binding: FragmentChatBinding? = null
 	private val binding get() = _binding!!
 
 	override fun onCreateView(
@@ -18,7 +18,7 @@ class ChatsFragment : Fragment() {
 		savedInstanceState: Bundle?
 	): View {
 		// Inflate the layout and binding for this fragment
-		_binding = FragmentChatsBinding.inflate(inflater, container, false)
+		_binding = FragmentChatBinding.inflate(inflater, container, false)
 		return binding.root
 	}
 

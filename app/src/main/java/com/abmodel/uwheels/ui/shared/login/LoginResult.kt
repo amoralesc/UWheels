@@ -1,4 +1,4 @@
-package com.abmodel.uwheels.ui.login
+package com.abmodel.uwheels.ui.shared.login
 
 /**
  * Authentication result : success (user details) or error message.

@@ -1,4 +1,4 @@
-package com.abmodel.uwheels.ui.login
+package com.abmodel.uwheels.ui.shared.login
 
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider

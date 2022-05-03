@@ -1,4 +1,4 @@
-package com.abmodel.uwheels.ui.login
+package com.abmodel.uwheels.ui.shared.login
 
 /**
  * User details post authentication that is exposed to the UI

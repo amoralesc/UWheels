@@ -1,4 +1,4 @@
-package com.abmodel.uwheels.ui.passenger.ride.search
+package com.abmodel.uwheels.ui.shared.search
 
 import android.os.Bundle
 import android.util.Log

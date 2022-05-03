@@ -6,7 +6,7 @@
 	android:layout_height="match_parent"
 	android:background="?colorSecondary"
 	android:paddingVertical="24dp"
-	tools:context=".ui.chat.ChatsFragment">
+	tools:context=".ui.shared.chat.ChatsFragment">
 
 	<include
 		android:id="@+id/back"

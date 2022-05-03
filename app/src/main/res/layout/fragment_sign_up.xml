@@ -8,7 +8,7 @@
 	android:clipToPadding="false"
 	android:paddingHorizontal="@dimen/squeezed_margin"
 	android:paddingVertical="@dimen/side_margin"
-	tools:context=".ui.signup.SignUpFragment">
+	tools:context=".ui.shared.signup.SignUpFragment">
 
 	<androidx.constraintlayout.widget.Guideline
 		android:id="@+id/guide_horizontal_middle"

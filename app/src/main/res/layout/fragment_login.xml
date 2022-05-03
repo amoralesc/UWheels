@@ -8,7 +8,7 @@
 	android:clipToPadding="false"
 	android:paddingHorizontal="@dimen/squeezed_margin"
 	android:paddingVertical="@dimen/side_margin"
-	tools:context=".ui.login.LoginFragment">
+	tools:context=".ui.shared.login.LoginFragment">
 
 	<androidx.constraintlayout.widget.Guideline
 		android:id="@+id/guide_horizontal_middle"

@@ -1,4 +1,4 @@
-package com.abmodel.uwheels.ui.login
+package com.abmodel.uwheels.ui.shared.login
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
