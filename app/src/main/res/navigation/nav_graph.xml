@@ -3,7 +3,7 @@
 	xmlns:app="http://schemas.android.com/apk/res-auto"
 	xmlns:tools="http://schemas.android.com/tools"
 	android:id="@+id/nav_graph.xml"
-	app:startDestination="@id/searchRideFragment">
+	app:startDestination="@id/requestRideFragment">
 
 	<fragment
 		android:id="@+id/passengerHomeFragment"
@@ -20,8 +20,8 @@
 			android:id="@+id/action_passengerHomeFragment_to_chatsFragment"
 			app:destination="@id/chatsFragment" />
 		<action
-			android:id="@+id/action_passengerHomeFragment_to_searchRideFragment"
-			app:destination="@id/searchRideFragment" />
+			android:id="@+id/action_passengerHomeFragment_to_requestRideFragment"
+			app:destination="@id/requestRideFragment" />
 	</fragment>
 	<fragment
 		android:id="@+id/loginFragment"
@@ -123,7 +123,7 @@
 			app:popUpTo="@id/chatFragment" />
 	</fragment>
 	<fragment
-		android:id="@+id/searchRideFragment"
+		android:id="@+id/requestRideFragment"
 		android:name="com.abmodel.uwheels.ui.passenger.search.RequestRideFragment"
-		android:label="SearchRideFragment" />
+		android:label="requestRideFragment" />
 </navigation>

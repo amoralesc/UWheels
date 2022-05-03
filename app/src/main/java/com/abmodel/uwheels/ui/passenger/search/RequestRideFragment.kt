@@ -1,6 +1,9 @@
 package com.abmodel.uwheels.ui.passenger.search
 
+import android.annotation.SuppressLint
+import android.location.Location
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,9 +13,13 @@ import com.abmodel.uwheels.databinding.FragmentRequestRideBinding
 import com.abmodel.uwheels.util.formatDateFromMillis
 import com.abmodel.uwheels.util.formatTime
 import com.abmodel.uwheels.util.hideKeyboard
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
+import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.LatLng
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
@@ -24,6 +31,8 @@ class RequestRideFragment : Fragment(), OnMapReadyCallback {
 	private val binding get() = _binding!!
 
 	private var mMap: GoogleMap? = null
+
+	private lateinit var fusedLocationClient: FusedLocationProviderClient
 
 	override fun onCreateView(
 		inflater: LayoutInflater,
@@ -37,6 +46,11 @@ class RequestRideFragment : Fragment(), OnMapReadyCallback {
 
 	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 		super.onViewCreated(view, savedInstanceState)
+
+		// Setup the location provider client
+		fusedLocationClient = LocationServices.getFusedLocationProviderClient(
+			requireActivity()
+		)
 
 		// Obtain the SupportMapFragment and get notified
 		// when the map is ready to be used.
@@ -123,8 +137,34 @@ class RequestRideFragment : Fragment(), OnMapReadyCallback {
 	 * Manipulates the map once available. The callback is triggered
 	 * when the map is ready to be used.
 	 */
+	@SuppressLint("MissingPermission")
 	override fun onMapReady(googleMap: GoogleMap) {
 		mMap = googleMap
+
+		// TODO: Last known location requires permissions
+		fusedLocationClient.lastLocation
+			.addOnSuccessListener { location: Location? ->
+				// Got last known location. In some rare situations this can be null.
+				if (location != null) {
+					// Move the camera to the user's location
+					mMap?.animateCamera(
+						CameraUpdateFactory.newLatLngZoom(
+							LatLng(
+								location.latitude,
+								location.longitude
+							),
+							15f
+						)
+					)
+				}
+			}
+			.addOnFailureListener {
+				Log.w(TAG, "Failed to get last known location")
+				Log.w(TAG, it.message ?: "")
+			}
+			.addOnCanceledListener {
+				Log.w(TAG, "Last known location task was cancelled")
+			}
 	}
 
 	companion object {
