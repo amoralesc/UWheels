@@ -1,4 +1,4 @@
-package com.abmodel.uwheels.ui.passenger.search
+package com.abmodel.uwheels.ui.passenger.ride.request
 
 import android.annotation.SuppressLint
 import android.location.Location

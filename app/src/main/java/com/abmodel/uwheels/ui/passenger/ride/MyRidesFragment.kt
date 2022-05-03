@@ -1,4 +1,4 @@
-package com.abmodel.uwheels.ui.passenger.rides
+package com.abmodel.uwheels.ui.passenger.ride
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

@@ -7,7 +7,7 @@
 	android:background="?colorSecondary"
 	android:paddingHorizontal="24dp"
 	android:paddingVertical="24dp"
-	tools:context=".ui.passenger.rides.MyRidesFragment">
+	tools:context=".ui.passenger.ride.MyRidesFragment">
 
 	<!--
 	TODO: Remove this if included button back item works
