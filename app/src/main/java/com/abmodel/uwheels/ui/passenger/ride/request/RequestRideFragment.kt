@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.abmodel.uwheels.R
 import com.abmodel.uwheels.databinding.FragmentRequestRideBinding
 import com.abmodel.uwheels.util.formatDateFromMillis
@@ -91,11 +92,34 @@ class RequestRideFragment : Fragment(), OnMapReadyCallback {
 				showTimePicker()
 			}
 		}
+
+		binding.source.apply {
+			setOnClickListener {
+				goToSearchAddress("source")
+			}
+		}
+
+		binding.destination.apply {
+			setOnClickListener {
+				goToSearchAddress("destination")
+			}
+		}
 	}
 
 	override fun onDestroyView() {
 		super.onDestroyView()
 		_binding = null
+	}
+
+	private fun goToSearchAddress(selectedInput: String) {
+		val action =
+			RequestRideFragmentDirections
+				.actionRequestRideFragmentToSearchAddressFragment(
+					selectedInput = selectedInput
+				)
+
+		findNavController()
+			.navigate(action)
 	}
 
 	private val datePicker =

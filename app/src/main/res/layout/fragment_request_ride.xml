@@ -15,6 +15,7 @@
 
 		<androidx.constraintlayout.widget.ConstraintLayout
 			android:layout_width="match_parent"
+			android:elevation="4dp"
 			android:layout_height="match_parent">
 
 			<include
@@ -22,8 +23,8 @@
 				layout="@layout/button_back_item"
 				android:layout_width="50dp"
 				android:layout_height="48dp"
-				android:layout_marginStart="12dp"
-				android:layout_marginTop="12dp"
+				android:layout_marginStart="16dp"
+				android:layout_marginTop="16dp"
 				app:layout_constraintStart_toStartOf="parent"
 				app:layout_constraintTop_toTopOf="parent" />
 
@@ -32,10 +33,9 @@
 			<androidx.constraintlayout.widget.ConstraintLayout
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
-				android:layout_marginHorizontal="12dp"
+				android:layout_marginHorizontal="16dp"
 				android:layout_marginTop="8dp"
 				android:background="@drawable/search_address_background"
-				android:elevation="4dp"
 				android:orientation="vertical"
 				app:layout_constraintEnd_toEndOf="parent"
 				app:layout_constraintStart_toStartOf="parent"
@@ -187,17 +187,6 @@
 
 			</androidx.constraintlayout.widget.ConstraintLayout>
 
-			<androidx.fragment.app.FragmentContainerView
-				android:id="@+id/map_search_ride"
-				android:name="com.google.android.gms.maps.SupportMapFragment"
-				android:layout_width="match_parent"
-				android:layout_height="match_parent"
-				app:layout_constraintBottom_toBottomOf="parent"
-				app:layout_constraintEnd_toEndOf="parent"
-				app:layout_constraintStart_toStartOf="parent"
-				app:layout_constraintTop_toTopOf="parent"
-				tools:context=".ui.passenger.ride.request.RequestRideFragment" />
-
 		</androidx.constraintlayout.widget.ConstraintLayout>
 
 		<LinearLayout
@@ -262,6 +251,14 @@
 				android:layout_marginTop="8dp" />
 
 		</LinearLayout>
+
+		<androidx.fragment.app.FragmentContainerView
+			android:id="@+id/map_search_ride"
+			android:name="com.google.android.gms.maps.SupportMapFragment"
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			app:layout_anchorGravity="center"
+			tools:context=".ui.passenger.ride.request.RequestRideFragment" />
 
 	</androidx.coordinatorlayout.widget.CoordinatorLayout>
 

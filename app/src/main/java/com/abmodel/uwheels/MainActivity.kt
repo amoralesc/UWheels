@@ -20,7 +20,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
 		// Install the splash screen
 		// TODO: The splash screen can be further customized
 		// to be shown while the app is loading data.
-		val splashScreen = installSplashScreen()
+		// val splashScreen = installSplashScreen()
 
 		super.onCreate(savedInstanceState)
 

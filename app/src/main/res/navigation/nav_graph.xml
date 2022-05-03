@@ -125,5 +125,22 @@
 	<fragment
 		android:id="@+id/requestRideFragment"
 		android:name="com.abmodel.uwheels.ui.passenger.ride.request.RequestRideFragment"
-		android:label="requestRideFragment" />
+		android:label="requestRideFragment" >
+		<action
+			android:id="@+id/action_requestRideFragment_to_searchAddressFragment"
+			app:destination="@id/searchAddressFragment" />
+	</fragment>
+	<fragment
+		android:id="@+id/searchAddressFragment"
+		android:name="com.abmodel.uwheels.ui.passenger.ride.search.SearchAddressFragment"
+		android:label="fragment_search_address"
+		tools:layout="@layout/fragment_search_address">
+		<action
+			android:id="@+id/action_searchAddressFragment_to_requestRideFragment"
+			app:destination="@id/requestRideFragment"
+			app:popUpTo="@id/requestRideFragment" />
+		<argument
+			android:name="selected_input"
+			app:argType="string" />
+	</fragment>
 </navigation>
