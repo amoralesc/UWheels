@@ -56,7 +56,7 @@ class RequestRideFragment : Fragment(), OnMapReadyCallback {
 		// Obtain the SupportMapFragment and get notified
 		// when the map is ready to be used.
 		val mapFragment = childFragmentManager
-			.findFragmentById(R.id.map_search_ride) as? SupportMapFragment
+			.findFragmentById(R.id.map_request_ride) as? SupportMapFragment
 		mapFragment?.getMapAsync(this)
 
 		// Setup the date picker

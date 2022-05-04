@@ -5,6 +5,8 @@
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
 	android:background="@drawable/gradient_brand"
+	android:clipChildren="false"
+	android:clipToPadding="false"
 	android:padding="@dimen/margin_large"
 	tools:context=".ui.driver.apply.DriverApplicationFragment">
 

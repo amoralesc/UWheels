@@ -80,4 +80,5 @@
 	<string name="create">Create</string>
 	<string name="transportation">Transportation</string>
 	<string name="select_transportation">Select transportation</string>
+	<string name="cash">Cash</string>
 </resources>

@@ -1,43 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:app="http://schemas.android.com/apk/res-auto"
 	xmlns:tools="http://schemas.android.com/tools"
 	android:layout_width="match_parent"
-	android:layout_height="match_parent"
-	android:orientation="vertical">
+	android:layout_height="match_parent">
 
 	<androidx.coordinatorlayout.widget.CoordinatorLayout
 		android:layout_width="match_parent"
 		android:layout_height="0dp"
-		android:layout_gravity="top"
-		android:layout_weight="1"
+		app:layout_constraintBottom_toTopOf="@id/bottom_options_layout"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toTopOf="parent"
 		tools:background="@color/color_secondary_variant">
 
 		<androidx.constraintlayout.widget.ConstraintLayout
 			android:layout_width="match_parent"
-			android:elevation="4dp"
-			android:layout_height="match_parent">
+			android:layout_height="match_parent"
+			android:elevation="3dp">
 
 			<com.abmodel.uwheels.BackButton
 				android:id="@+id/back"
 				style="@style/Widget.UWheels.Button.BackButton"
-				android:elevation="4dp"
 				android:layout_marginStart="16dp"
 				android:layout_marginTop="16dp"
+				android:elevation="4dp"
 				android:paddingHorizontal="@dimen/back_button_padding"
 				app:layout_constraintStart_toStartOf="parent"
 				app:layout_constraintTop_toTopOf="parent"
 				tools:ignore="SpeakableTextPresentCheck" />
 
-			<!-- Search address input -->
-
 			<androidx.constraintlayout.widget.ConstraintLayout
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
 				android:layout_marginHorizontal="16dp"
-				android:elevation="4dp"
 				android:layout_marginTop="8dp"
 				android:background="@drawable/search_address_background"
+				android:elevation="4dp"
 				android:orientation="vertical"
 				app:layout_constraintEnd_toEndOf="parent"
 				app:layout_constraintStart_toStartOf="parent"
@@ -191,19 +190,28 @@
 
 		</androidx.constraintlayout.widget.ConstraintLayout>
 
+		<androidx.fragment.app.FragmentContainerView
+			android:id="@+id/map_request_ride"
+			android:name="com.google.android.gms.maps.SupportMapFragment"
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			app:layout_anchorGravity="center"
+			tools:context=".ui.passenger.ride.request.RequestRideFragment" />
+
 		<LinearLayout
 			android:id="@+id/bottom_sheet_results"
 			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
+			android:layout_height="match_parent"
 			android:background="@drawable/bottom_sheet_background"
 			android:elevation="4dp"
+			android:nestedScrollingEnabled="true"
 			android:orientation="vertical"
 			android:paddingTop="8dp"
-			app:behavior_expandedOffset="100dp"
-			app:behavior_fitToContents="true"
-			app:behavior_halfExpandedRatio="0.5"
+			app:behavior_expandedOffset="200dp"
+			app:behavior_fitToContents="false"
+			app:behavior_halfExpandedRatio="0.4"
 			app:behavior_hideable="false"
-			app:behavior_peekHeight="80dp"
+			app:behavior_peekHeight="76dp"
 			app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
 
 			<ImageView
@@ -249,38 +257,37 @@
 			<androidx.recyclerview.widget.RecyclerView
 				android:id="@+id/results"
 				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:layout_marginTop="8dp" />
+				android:layout_height="match_parent"
+				android:layout_marginTop="8dp"
+				android:layout_marginBottom="200dp" />
 
 		</LinearLayout>
 
-		<androidx.fragment.app.FragmentContainerView
-			android:id="@+id/map_search_ride"
-			android:name="com.google.android.gms.maps.SupportMapFragment"
-			android:layout_width="match_parent"
-			android:layout_height="match_parent"
-			app:layout_anchorGravity="center"
-			tools:context=".ui.passenger.ride.request.RequestRideFragment" />
-
 	</androidx.coordinatorlayout.widget.CoordinatorLayout>
 
-	<com.google.android.material.divider.MaterialDivider
-		android:layout_width="match_parent"
-		android:layout_height="1dp"
-		app:dividerColor="#959595" />
-
 	<androidx.constraintlayout.widget.ConstraintLayout
+		android:id="@+id/bottom_options_layout"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
-		android:layout_gravity="bottom"
 		android:background="@color/white"
-		android:elevation="8dp"
-		android:paddingStart="8dp">
+		android:elevation="6dp"
+		app:layout_constraintBottom_toBottomOf="parent"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent">
+
+		<com.google.android.material.divider.MaterialDivider
+			android:layout_width="match_parent"
+			android:layout_height="1dp"
+			app:dividerColor="#B3959595"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toTopOf="parent" />
 
 		<ImageView
 			android:id="@+id/image_wallet"
 			android:layout_width="30dp"
 			android:layout_height="30dp"
+			android:layout_marginStart="8dp"
 			app:layout_constraintBottom_toBottomOf="@id/filters"
 			app:layout_constraintStart_toStartOf="parent"
 			app:layout_constraintTop_toTopOf="@id/filters"
@@ -288,17 +295,32 @@
 			app:tint="@color/dark_gray"
 			tools:ignore="ContentDescription" />
 
+		<Spinner
+			android:id="@+id/payment_method_clickable"
+			android:layout_width="140dp"
+			android:layout_height="30dp"
+			android:layout_marginStart="8dp"
+			android:background="@drawable/spinner_white_background"
+			android:elevation="2dp"
+			app:layout_constraintBottom_toBottomOf="@id/filters"
+			app:layout_constraintStart_toEndOf="@id/image_wallet"
+			app:layout_constraintTop_toTopOf="@id/filters" />
+
 		<TextView
 			android:id="@+id/payment_method"
 			android:layout_width="wrap_content"
 			android:layout_height="match_parent"
 			android:layout_marginStart="8dp"
+			android:clickable="false"
+			android:elevation="4dp"
+			android:gravity="center_vertical"
+			android:paddingStart="10dp"
+			android:text="@string/cash"
 			android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
 			android:textColor="@color/dark_gray"
-			app:layout_constraintBottom_toBottomOf="@id/image_wallet"
+			app:layout_constraintBottom_toBottomOf="@id/payment_method_clickable"
 			app:layout_constraintStart_toEndOf="@id/image_wallet"
-			app:layout_constraintTop_toTopOf="@id/image_wallet"
-			tools:text="Cash" />
+			app:layout_constraintTop_toTopOf="@id/payment_method_clickable" />
 
 		<ImageButton
 			android:id="@+id/filters"
@@ -316,7 +338,7 @@
 			android:id="@+id/request"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:layout_marginEnd="8dp"
+			android:layout_marginHorizontal="8dp"
 			android:text="@string/request"
 			app:layout_constraintEnd_toEndOf="parent"
 			app:layout_constraintStart_toStartOf="parent"
@@ -324,4 +346,4 @@
 
 	</androidx.constraintlayout.widget.ConstraintLayout>
 
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

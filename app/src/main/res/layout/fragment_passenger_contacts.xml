@@ -5,13 +5,13 @@
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
 	android:background="?colorSecondary"
-	android:paddingHorizontal="24dp"
-	android:paddingVertical="24dp"
 	tools:context=".ui.passenger.contacts.ContactsFragment">
 
 	<com.abmodel.uwheels.BackButton
 		android:id="@+id/back"
 		style="@style/Widget.UWheels.Button.BackButton"
+		android:layout_marginStart="24dp"
+		android:layout_marginTop="24dp"
 		android:elevation="4dp"
 		android:paddingHorizontal="@dimen/back_button_padding"
 		app:layout_constraintStart_toStartOf="parent"
@@ -26,7 +26,7 @@
 		android:text="@string/contacts"
 		android:textAppearance="?textAppearanceHeadline4"
 		android:textColor="@color/dark_gray"
-		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintStart_toStartOf="@id/back"
 		app:layout_constraintTop_toBottomOf="@id/back" />
 
 	<com.google.android.material.chip.ChipGroup
@@ -34,7 +34,7 @@
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		app:checkedChip="@id/chip_contacts"
-		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintStart_toStartOf="@id/text_title"
 		app:layout_constraintTop_toBottomOf="@id/text_title"
 		app:selectionRequired="true"
 		app:singleSelection="true">
@@ -59,7 +59,7 @@
 		android:id="@+id/contacts"
 		android:layout_width="match_parent"
 		android:layout_height="0dp"
-		android:layout_marginTop="@dimen/margin_between_elements"
+		android:layout_marginTop="8dp"
 		app:layout_constraintBottom_toBottomOf="parent"
 		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintStart_toStartOf="parent"
