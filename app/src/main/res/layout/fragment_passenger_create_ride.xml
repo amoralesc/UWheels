@@ -12,11 +12,12 @@
 	android:paddingTop="16dp"
 	tools:context=".ui.passenger.ride.create.CreateRideFragment">
 
-	<include
+	<com.abmodel.uwheels.BackButton
 		android:id="@+id/back"
-		layout="@layout/button_back_item"
-		android:layout_width="50dp"
-		android:layout_height="48dp" />
+		style="@style/Widget.UWheels.Button.BackButton"
+		android:elevation="4dp"
+		android:paddingHorizontal="@dimen/back_button_padding"
+		tools:ignore="SpeakableTextPresentCheck" />
 
 	<TextView
 		android:id="@+id/title_create"

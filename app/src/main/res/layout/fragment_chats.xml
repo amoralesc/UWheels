@@ -5,23 +5,24 @@
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
 	android:background="?colorSecondary"
-	android:paddingVertical="24dp"
+	android:paddingVertical="16dp"
 	tools:context=".ui.shared.chat.ChatsFragment">
 
-	<include
+	<com.abmodel.uwheels.BackButton
 		android:id="@+id/back"
-		layout="@layout/button_back_item"
-		android:layout_width="50dp"
-		android:layout_height="48dp"
-		android:layout_marginStart="24dp"
+		style="@style/Widget.UWheels.Button.BackButton"
+		android:elevation="4dp"
+		android:layout_marginStart="16dp"
+		android:paddingHorizontal="@dimen/back_button_padding"
 		app:layout_constraintStart_toStartOf="parent"
-		app:layout_constraintTop_toTopOf="parent" />
+		app:layout_constraintTop_toTopOf="parent"
+		tools:ignore="SpeakableTextPresentCheck" />
 
 	<TextView
 		android:id="@+id/text_title"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
-		android:layout_marginStart="24dp"
+		android:layout_marginStart="16dp"
 		android:fontFamily="@font/poppins_medium"
 		android:text="@string/chats"
 		android:textAppearance="?textAppearanceHeadline4"

@@ -3,7 +3,7 @@
 	xmlns:app="http://schemas.android.com/apk/res-auto"
 	xmlns:tools="http://schemas.android.com/tools"
 	android:id="@+id/nav_graph.xml"
-	app:startDestination="@id/passengerCreateRideFragment">
+	app:startDestination="@id/passengerHomeFragment">
 
 	<fragment
 		android:id="@+id/passengerHomeFragment"
@@ -22,6 +22,9 @@
 		<action
 			android:id="@+id/action_passengerHomeFragment_to_requestRideFragment"
 			app:destination="@id/requestRideFragment" />
+		<action
+			android:id="@+id/action_passengerHomeFragment_to_passengerCreateRideFragment"
+			app:destination="@id/passengerCreateRideFragment" />
 	</fragment>
 	<fragment
 		android:id="@+id/loginFragment"
@@ -155,5 +158,9 @@
 		<action
 			android:id="@+id/action_createRideFragment_to_searchAddressFragment"
 			app:destination="@id/searchAddressFragment" />
+		<action
+			android:id="@+id/action_passengerCreateRideFragment_to_passengerHomeFragment"
+			app:destination="@id/passengerHomeFragment"
+			app:popUpTo="@id/passengerHomeFragment" />
 	</fragment>
 </navigation>

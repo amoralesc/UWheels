@@ -18,16 +18,16 @@
 			android:elevation="4dp"
 			android:layout_height="match_parent">
 
-			<include
+			<com.abmodel.uwheels.BackButton
 				android:id="@+id/back"
-				layout="@layout/button_back_item"
-				android:layout_width="50dp"
-				android:layout_height="48dp"
+				style="@style/Widget.UWheels.Button.BackButton"
 				android:elevation="4dp"
 				android:layout_marginStart="16dp"
 				android:layout_marginTop="16dp"
+				android:paddingHorizontal="@dimen/back_button_padding"
 				app:layout_constraintStart_toStartOf="parent"
-				app:layout_constraintTop_toTopOf="parent" />
+				app:layout_constraintTop_toTopOf="parent"
+				tools:ignore="SpeakableTextPresentCheck" />
 
 			<!-- Search address input -->
 

@@ -56,19 +56,10 @@ class SearchAddressFragment : Fragment() {
 				Log.w(TAG, "Invalid selected input")
 			}
 		}
-
-		// Set the back button
-		binding.back.button.setOnClickListener {
-			onBackPressed()
-		}
 	}
 
 	override fun onDestroyView() {
 		super.onDestroyView()
 		_binding = null
-	}
-
-	private fun onBackPressed() {
-		findNavController().navigateUp()
 	}
 }

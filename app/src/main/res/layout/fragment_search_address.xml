@@ -18,13 +18,14 @@
 		android:paddingHorizontal="16dp"
 		android:paddingVertical="16dp">
 
-		<include
+		<com.abmodel.uwheels.BackButton
 			android:id="@+id/back"
-			layout="@layout/button_back_item"
-			android:layout_width="50dp"
-			android:layout_height="48dp"
+			style="@style/Widget.UWheels.Button.BackButton"
+			android:elevation="4dp"
+			android:paddingHorizontal="@dimen/back_button_padding"
 			app:layout_constraintStart_toStartOf="parent"
-			app:layout_constraintTop_toTopOf="parent" />
+			app:layout_constraintTop_toTopOf="parent"
+			tools:ignore="SpeakableTextPresentCheck" />
 
 		<ImageView
 			android:id="@+id/image_source"

@@ -26,13 +26,14 @@
 		app:layout_constraintTop_toTopOf="parent" />
 -->
 
-	<include
+	<com.abmodel.uwheels.BackButton
 		android:id="@+id/back"
-		layout="@layout/button_back_item"
-		android:layout_width="50dp"
-		android:layout_height="48dp"
+		style="@style/Widget.UWheels.Button.BackButton"
+		android:elevation="4dp"
+		android:paddingHorizontal="@dimen/back_button_padding"
 		app:layout_constraintStart_toStartOf="parent"
-		app:layout_constraintTop_toTopOf="parent" />
+		app:layout_constraintTop_toTopOf="parent"
+		tools:ignore="SpeakableTextPresentCheck" />
 
 	<TextView
 		android:id="@+id/text_title"
