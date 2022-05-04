@@ -71,4 +71,13 @@
 	<string name="time">Time</string>
 	<string name="select_time">Select time</string>
 	<string name="select_date">Select date</string>
+	<string name="ride_information">Ride information</string>
+	<string name="ride_config">Ride config</string>
+	<string name="wheels_type">Wheels type</string>
+	<string name="select_wheels_type">Select wheels type</string>
+	<string name="capacity">Capacity</string>
+	<string name="select_capacity">Select capacity</string>
+	<string name="create">Create</string>
+	<string name="transportation">Transportation</string>
+	<string name="select_transportation">Select transportation</string>
 </resources>

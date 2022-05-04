@@ -45,10 +45,10 @@ class SearchAddressFragment : Fragment() {
 		// Set the selected input
 		when (selectedInput) {
 			"source" -> {
-				binding.searchSource.requestFocus()
+				binding.searchSource.requestFocusFromTouch()
 			}
 			"destination" -> {
-				binding.searchDestination.requestFocus()
+				binding.searchDestination.requestFocusFromTouch()
 			}
 			else -> {
 				Log.w(TAG, "Invalid selected input")
