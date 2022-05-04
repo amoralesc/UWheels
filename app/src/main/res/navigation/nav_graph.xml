@@ -3,7 +3,7 @@
 	xmlns:app="http://schemas.android.com/apk/res-auto"
 	xmlns:tools="http://schemas.android.com/tools"
 	android:id="@+id/nav_graph.xml"
-	app:startDestination="@id/requestRideFragment">
+	app:startDestination="@id/passengerCreateRideFragment">
 
 	<fragment
 		android:id="@+id/passengerHomeFragment"
@@ -142,5 +142,18 @@
 		<argument
 			android:name="selected_input"
 			app:argType="string" />
+		<action
+			android:id="@+id/action_searchAddressFragment_to_passengerCreateRideFragment"
+			app:destination="@id/passengerCreateRideFragment"
+			app:popUpTo="@id/passengerCreateRideFragment" />
+	</fragment>
+	<fragment
+		android:id="@+id/passengerCreateRideFragment"
+		android:name="com.abmodel.uwheels.ui.passenger.ride.create.CreateRideFragment"
+		android:label="fragment_passenger_create_ride"
+		tools:layout="@layout/fragment_passenger_create_ride" >
+		<action
+			android:id="@+id/action_createRideFragment_to_searchAddressFragment"
+			app:destination="@id/searchAddressFragment" />
 	</fragment>
 </navigation>

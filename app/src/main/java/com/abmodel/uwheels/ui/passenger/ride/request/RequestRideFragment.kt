@@ -65,6 +65,8 @@ class RequestRideFragment : Fragment(), OnMapReadyCallback {
 			binding.date.setText(
 				formatDateFromMillis(dateSelected)
 			)
+
+			// TODO: Also set the date in the view model
 		}
 
 		// Setup the time picker
