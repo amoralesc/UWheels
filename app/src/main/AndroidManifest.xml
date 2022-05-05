@@ -9,6 +9,8 @@
 
 	<!-- Hardware features -->
 	<uses-feature android:name="android.hardware.camera" />
+	<uses-feature android:name="android.hardware.sensor.light" />
+	<uses-feature android:name="android.hardware.sensor.accelerometer" />
 
 	<application
 		android:allowBackup="true"

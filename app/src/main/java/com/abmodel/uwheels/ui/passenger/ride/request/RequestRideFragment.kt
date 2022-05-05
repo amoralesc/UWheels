@@ -427,6 +427,10 @@ class RequestRideFragment : Fragment(), OnMapReadyCallback {
 			.addOnCanceledListener {
 				Log.w(TAG, "Last known location task was cancelled")
 			}
+
+		if (hasLocationPermissions) {
+			mMap!!.isMyLocationEnabled = true
+		}
 	}
 
 	private fun moveCameraToDefault() {

@@ -1,5 +1,6 @@
 package com.abmodel.uwheels.util
 
+/*
 import android.content.Context
 import android.hardware.Sensor
 import android.hardware.SensorEvent
@@ -78,3 +79,4 @@ class Sensor : AppCompatActivity(), SensorEventListener {
 	}
 */
 }
+*/
