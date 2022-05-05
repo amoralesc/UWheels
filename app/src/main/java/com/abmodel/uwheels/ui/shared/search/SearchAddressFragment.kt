@@ -8,8 +8,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import com.abmodel.uwheels.databinding.FragmentSearchAddressBinding
+import com.abmodel.uwheels.ui.passenger.ride.request.RequestRideViewModel
+import com.abmodel.uwheels.ui.passenger.ride.request.RequestRideViewModelFactory
 import com.abmodel.uwheels.ui.shared.search.adapter.AddressItemAdapter
 
 class SearchAddressFragment : Fragment() {
@@ -25,6 +28,9 @@ class SearchAddressFragment : Fragment() {
 
 	private val searchAddressViewModel: SearchAddressViewModel by viewModels {
 		SearchAddressViewModelFactory(requireActivity().application)
+	}
+	private val requestRideViewModel: RequestRideViewModel by activityViewModels {
+		RequestRideViewModelFactory(requireActivity().application)
 	}
 
 	// Arguments
@@ -97,9 +103,20 @@ class SearchAddressFragment : Fragment() {
 
 		searchAddressViewModel.sourceAddress.observe(viewLifecycleOwner) { address ->
 			binding.searchSource.setText(address.mainText)
+			requestRideViewModel.updateSourceAddress(address)
 		}
 		searchAddressViewModel.destinationAddress.observe(viewLifecycleOwner) { address ->
 			binding.searchDestination.setText(address.mainText)
+			requestRideViewModel.updateDestinationAddress(address)
+		}
+
+		if (requestRideViewModel.sourceAddress.value != null) {
+			//searchAddressViewModel.selectAddress(requestRideViewModel.sourceAddress.value!!, "source")
+			searchAddressViewModel.updateSourceAddress(requestRideViewModel.sourceAddress.value!!)
+		}
+		if (requestRideViewModel.destinationAddress.value != null) {
+			//searchAddressViewModel.selectAddress(requestRideViewModel.destinationAddress.value!!, "destination")
+			searchAddressViewModel.updateDestinationAddress(requestRideViewModel.destinationAddress.value!!)
 		}
 	}
 

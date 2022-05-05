@@ -68,6 +68,14 @@ class SearchAddressViewModel(
 		}
 	}
 
+	fun updateSourceAddress(address: CustomAddress) {
+		_sourceAddress.postValue(address)
+	}
+
+	fun updateDestinationAddress(address: CustomAddress) {
+		_destinationAddress.postValue(address)
+	}
+
 	fun selectAddress(address: CustomAddress, selectedInput: String) {
 		viewModelScope.launch(Dispatchers.IO) {
 			try {

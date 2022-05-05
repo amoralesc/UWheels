@@ -40,7 +40,7 @@
 	<string name="camera">Camera</string>
 	<string name="profile_is_verified">This profile is verified</string>
 	<string name="press_open_profile">Press to open the profile</string>
-	<string name="greeting_name">Hello, %s</string>
+	<string name="greeting_name">Hello!</string>
 	<string name="driver_mode">Driver mode</string>
 	<string name="my_rides">My rides</string>
 	<string name="my_contacts">My contacts</string>
@@ -88,4 +88,20 @@
 	<string name="year">Year</string>
 	<string name="model">Model</string>
 
+	<!-- Locations permissions -->
+	<string name="permission_location_denied">Location access permissions were denied</string>
+	<string name="permission_fine_location_title">Fine location access</string>
+	<string name="permission_fine_location_message">
+		The app needs fine location access to accurately draw routes
+		from your current location to your desired destination
+	</string>
+	<string name="permissions_location_title">Location access</string>
+	<string name="permissions_location_message">
+		The app needs location access to draw routes from
+		your current location to your desired destination
+	</string>
+
+	<!-- Permissions -->
+	<string name="request_permission">Request permission</string>
+	<string name="dismiss">Dismiss</string>
 </resources>
