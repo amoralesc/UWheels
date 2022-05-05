@@ -20,7 +20,7 @@
 
     <string name="welcome">"Welcome!"</string>
     <string name="invalid_email">Not a valid email</string>
-    <string name="invalid_password">Must have >7 characters, at least 1 digit, upper and lower case letter</string>
+    <string name="invalid_password">Password: >=8 characters, 1 digit, 1 upper, 1 lower case letter</string>
     <string name="login_failed">"Login failed"</string>
 
     <!-- Strings related to sign up -->

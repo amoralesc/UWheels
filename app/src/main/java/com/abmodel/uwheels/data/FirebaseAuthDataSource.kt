@@ -1,9 +1,10 @@
 package com.abmodel.uwheels.data
 
-import com.abmodel.uwheels.data.model.LoggedInUser
+import android.util.Log
+import androidx.annotation.MainThread
+import com.abmodel.uwheels.ui.shared.login.LoginFragment
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
 import java.io.IOException
 
 /**
@@ -13,45 +14,53 @@ class FirebaseAuthDataSource {
 
 	private val mAuth = FirebaseAuth.getInstance()
 
-
-
 	fun login(email: String, password: String): Result<AuthResult> {
 		try {
-			val user =
-				mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener { task ->
-					if (!task.isSuccessful) {
-						throw IOException(task.exception)
-					}
-				}
+			Log.d(LoginFragment.TAG, "Trying to login with email: $email and password: $password")
 
-			return Result.Success(user.result)
-		}catch (e: Throwable) {
-			return Result.Error(IOException("Error logging in", e))
+			val task =
+				mAuth.signInWithEmailAndPassword(email, password)
+					.addOnCompleteListener {
+						if (it.isSuccessful) {
+							Log.d(LoginFragment.TAG, "Login successful")
+						} else {
+							Log.d(LoginFragment.TAG, "Login failed")
+						}
+					}
+
+			return Result.Success(task.result)
+
+		} catch (e: Exception) {
+			return Result.Error(e)
 		}
 	}
 
 	fun isLoggedIn(): Boolean {
 		val currentUser = mAuth.currentUser
-		if(currentUser != null) {
+		if (currentUser != null) {
 			return true
 		}
 		return false
 	}
 
-	fun sigIn(email: String, password: String): Result<AuthResult> {
-		try {
-			val user = mAuth.createUserWithEmailAndPassword(email, password)
-				.addOnCompleteListener { task ->
-					if (!task.isSuccessful) {
-						throw IOException(task.exception)
+	fun signUp(email: String, password: String): Result<AuthResult> {
+		return try {
+			val user =
+				mAuth.createUserWithEmailAndPassword(email, password)
+					.addOnCompleteListener { task ->
+						if (!task.isSuccessful) {
+							throw Exception(task.exception)
+						}
 					}
-				}
-			return Result.Success(user.result)
-		}catch (e: Throwable) {
-			return Result.Error(IOException("Error logging in", e))
+					.addOnFailureListener {
+						throw it
+					}
+			Result.Success(user.result)
+
+		} catch (e: Throwable) {
+			Result.Error(Exception("Error signing up", e))
 		}
 	}
-
 
 	fun logout() {
 		mAuth.signOut()

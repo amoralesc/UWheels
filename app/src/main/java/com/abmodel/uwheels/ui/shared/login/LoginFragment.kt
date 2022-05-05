@@ -1,11 +1,8 @@
 package com.abmodel.uwheels.ui.shared.login
 
-import androidx.lifecycle.Observer
 import androidx.annotation.StringRes
 import androidx.fragment.app.Fragment
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -70,26 +67,10 @@ class LoginFragment : Fragment() {
 			loginResult.error?.let {
 				showLoginFailed(it)
 			}
-			if (loginResult.success != null) {
+			if (loginResult.success) {
 				goToHomeScreen()
 			}
 		}
-
-		/*
-		val afterTextChangedListener = object : TextWatcher {
-			override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) { }
-			override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) { }
-
-			override fun afterTextChanged(s: Editable) {
-				loginViewModel.loginDataChanged(
-					binding.email.text.toString(),
-					binding.password.text.toString()
-				)
-			}
-		}
-		binding.email.addTextChangedListener(afterTextChangedListener)
-		binding.password.addTextChangedListener(afterTextChangedListener)
-		*/
 	}
 
 	private fun showLoginFailed(@StringRes errorString: Int) {

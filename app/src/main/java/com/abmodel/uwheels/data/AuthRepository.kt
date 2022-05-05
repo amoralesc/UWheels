@@ -1,9 +1,11 @@
 package com.abmodel.uwheels.data
 
 import android.content.Context
+import android.util.Log
 import androidx.annotation.MainThread
 import com.abmodel.uwheels.data.model.LoggedInUser
 import com.google.firebase.auth.AuthResult
+import com.google.firebase.auth.FirebaseUser
 import java.util.concurrent.Executor
 import java.util.concurrent.Executors
 
@@ -13,11 +15,9 @@ import java.util.concurrent.Executors
 interface AuthRepository {
 	fun login(email: String, password: String): Result<AuthResult>
 	fun logout()
-	fun sigIn(email: String, password: String): Result<AuthResult>
+	fun signUp(email: String, password: String): Result<AuthResult>
 	fun isLoggedIn(): Boolean
 	fun getLoggedInUser(): LoggedInUser?
-	fun validateEmailAndPassword(email: String, password: String): Boolean
-	abstract fun isEmailValid(email: String): Boolean
 }
 
 /**
@@ -50,8 +50,8 @@ class DefaultAuthRepository internal constructor(
 	}
 
 	// in-memory cache of the loggedInUser object
-	private var _user: LoggedInUser? = null
-	private val user: LoggedInUser?
+	private var _user: FirebaseUser? = null
+	private val user: FirebaseUser?
 		get() = _user
 
 	init {
@@ -64,46 +64,43 @@ class DefaultAuthRepository internal constructor(
 	}
 
 	override fun login(email: String, password: String): Result<AuthResult> {
-		// handle login
-		return dataSource.login(email, password)
+		val result = dataSource.login(email, password)
+
+		Log.d("DefaultAuthRepository", "login: $result")
+
+		if (result is Result.Success<AuthResult>) {
+			Log.d("DefaultAuthRepository", "Logged in user: ${result.data.user!!}")
+			setLoggedInUser(result.data.user!!)
+		}
+
+		return result
 	}
 
 	override fun logout() {
 		dataSource.logout()
 	}
 
-	 override fun sigIn(email: String, password: String): Result<AuthResult> {
-	 	if(validateEmailAndPassword(email, password)){
-	 		return dataSource.sigIn(email, password)
-	 	}
-	 	return Result.Error(Exception("Invalid email or password"))
-	 }
+	override fun signUp(email: String, password: String): Result<AuthResult> {
+		return dataSource.signUp(email, password)
+	}
 
 	@MainThread
 	override fun isLoggedIn(): Boolean {
-		return dataSource.isLoggedIn();
+		return dataSource.isLoggedIn()
 	}
 
 	override fun getLoggedInUser(): LoggedInUser? {
-		return user
-	}
-
-	override fun validateEmailAndPassword(email: String, password: String): Boolean {
-		if(email.isEmpty() && password.isEmpty() && isEmailValid(email)){
-			return false
+		return if (isLoggedIn()) {
+			LoggedInUser(
+				userId = user!!.uid,
+				displayName = user!!.displayName
+			)
+		} else {
+			null
 		}
-		return true
 	}
 
-	override fun isEmailValid(email: String): Boolean {
-		if (!email.contains("@") ||
-			!email.contains(".") ||
-			email.length < 5)
-			return false;
-		return true;
-	}
-
-	private fun setLoggedInUser(loggedInUser: LoggedInUser) {
+	private fun setLoggedInUser(loggedInUser: FirebaseUser) {
 		this._user = loggedInUser
 		// If user credentials will be cached in local storage, it is recommended it be encrypted
 		// @see https://developer.android.com/training/articles/keystore

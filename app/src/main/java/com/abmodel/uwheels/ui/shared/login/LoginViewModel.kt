@@ -1,35 +1,67 @@
 package com.abmodel.uwheels.ui.shared.login
 
 import android.app.Application
+import android.util.Log
 import android.util.Patterns
 import androidx.lifecycle.*
 import com.abmodel.uwheels.R
 import com.abmodel.uwheels.data.DefaultAuthRepository
 import com.abmodel.uwheels.data.AuthRepository
 import com.abmodel.uwheels.data.Result
+import com.abmodel.uwheels.util.isEmailValid
+import com.abmodel.uwheels.util.isPasswordValid
+import com.google.firebase.auth.FirebaseAuth
 import java.util.regex.Pattern
 
 class LoginViewModel @JvmOverloads constructor(
-	application: Application,
-	private val authRepository: AuthRepository =
-		DefaultAuthRepository.getInstance(application)
+	application: Application
 ) : AndroidViewModel(application) {
 
 	private val _loginResult = MutableLiveData<LoginResult>()
 	val loginResult: LiveData<LoginResult> = _loginResult
 
+	private val mAuth = FirebaseAuth.getInstance()
+
+	init {
+		// Check if user is already logged in
+		if (mAuth.currentUser != null) {
+			_loginResult.value = LoginResult(
+				success = true, error = null
+			)
+		} else {
+			_loginResult.value = LoginResult()
+		}
+	}
+
+	/**
+	 * Attempts to sign in the user through Firebase Authentication.
+	 * If the user is successfully signed in, the [LoginResult.success] will be true.
+	 * If there is an error, the [LoginResult.error] will be set.
+	 *
+	 * @param email the user's email
+	 * @param password the user's password
+	 */
 	fun login(email: String, password: String) {
 
 		if (checkLoginForm(email, password)) {
-			// Can be launched in a separate asynchronous job
-			val result = authRepository.login(email, password)
 
-			if (result is Result.Success) {
-				_loginResult.value =
-					LoginResult(success = LoggedInUserView(displayName = result.data.displayName))
-			} else {
-				_loginResult.value = LoginResult(error = R.string.login_failed)
-			}
+			mAuth.signInWithEmailAndPassword(email, password)
+				.addOnCompleteListener {
+					if (it.isSuccessful) {
+						Log.d(LoginFragment.TAG, "Login successful")
+						_loginResult.value = LoginResult(
+							success = true, error = null
+						)
+					} else {
+						Log.d(LoginFragment.TAG, "Login failed")
+						_loginResult.value = LoginResult(
+							error = R.string.login_failed
+						)
+					}
+				}
+
+		} else {
+			_loginResult.value = LoginResult(error = R.string.login_failed)
 		}
 	}
 
@@ -52,32 +84,5 @@ class LoginViewModel @JvmOverloads constructor(
 		} else {
 			true
 		}
-	}
-
-	/**
-	 * Checks if the email is valid. It uses ReGex pattern matching.
-	 *
-	 * @param email the email to be checked
-	 * @return true if the email is valid, false otherwise
-	 */
-	private fun isEmailValid(email: String): Boolean {
-		return Patterns.EMAIL_ADDRESS.matcher(email).matches()
-	}
-
-	/**
-	 * Checks if the password is valid. A password is valid if:
-	 * * it is at least 8 characters long.
-	 * * it contains at least one digit.
-	 * * it contains at least one upper case and one lower case letter.
-	 * * it may contain special characters.
-	 *
-	 * @param password the password to be checked
-	 * @return true if the password is valid, false otherwise
-	 */
-	private fun isPasswordValid(password: String): Boolean {
-		val pattern = Pattern.compile(
-			"^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}\$"
-		)
-		return pattern.matcher(password).matches()
 	}
 }
