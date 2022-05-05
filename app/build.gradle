@@ -83,7 +83,7 @@ dependencies {
 
 	// Firebase auth
 	implementation 'com.google.firebase:firebase-auth-ktx'
-    implementation 'com.google.android.gms:play-services-auth:20.2.0'
+	implementation 'com.google.android.gms:play-services-auth:20.2.0'
 
     // Unit testing
 	testImplementation 'junit:junit:4.13.2'

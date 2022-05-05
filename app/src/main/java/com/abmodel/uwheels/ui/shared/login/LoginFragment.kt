@@ -1,14 +1,11 @@
 package com.abmodel.uwheels.ui.shared.login
 
-import android.content.Intent
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.annotation.StringRes
 import androidx.fragment.app.Fragment
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,15 +15,12 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.abmodel.uwheels.R
 import com.abmodel.uwheels.databinding.FragmentLoginBinding
-import com.google.android.gms.auth.api.signin.GoogleSignIn
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount
-import com.google.android.gms.auth.api.signin.GoogleSignInClient
-import com.google.android.gms.common.api.ApiException
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.GoogleAuthProvider
-import java.lang.Exception
 
 class LoginFragment : Fragment() {
+
+	companion object {
+		const val TAG = "LoginFragment"
+	}
 
 	// Binding objects to access the view elements
 	private var _binding: FragmentLoginBinding? = null
@@ -98,6 +92,7 @@ class LoginFragment : Fragment() {
 				)
 			}
 		}
+
 		usernameEditText.addTextChangedListener(afterTextChangedListener)
 		passwordEditText.addTextChangedListener(afterTextChangedListener)
 		passwordEditText.setOnEditorActionListener { _, actionId, _ ->
@@ -116,30 +111,6 @@ class LoginFragment : Fragment() {
 				passwordEditText.text.toString()
 			)
 		}
-
-		//ALL LOGIC COMES HERE
-
-
-		//configure google sign in
-		val gso = com.google.android.gms.auth.api.signin.GoogleSignInOptions.Builder(com.google.android.gms.auth.api.signin.GoogleSignInOptions.DEFAULT_SIGN_IN)
-			.requestIdToken(getString(R.string.default_web_client_id))
-			.requestEmail()
-			.build()
-
-		//get context
-		googleSingInClient = GoogleSignIn.getClient(requireContext(), gso)
-
-		//call firebase
-		firebaseAuth = FirebaseAuth.getInstance()
-		checkUser()
-
-		binding.loginGoogle.setOnClickListener {
-			Toast.makeText(context, "Google Sign In", Toast.LENGTH_SHORT).show()
-			val signInIntent = googleSingInClient.signInIntent
-			startActivityForResult(signInIntent, RC_SIGN_IN)
-		}
-
-
 	}
 
 	private fun updateUiWithUser(model: LoggedInUserView) {
@@ -149,49 +120,11 @@ class LoginFragment : Fragment() {
 	}
 
 	private fun showLoginFailed(@StringRes errorString: Int) {
-		val appContext = context?.applicationContext ?: return
-		Toast.makeText(appContext, errorString, Toast.LENGTH_LONG).show()
+		Toast.makeText(requireContext(), errorString, Toast.LENGTH_LONG).show()
 	}
 
 	override fun onDestroyView() {
 		super.onDestroyView()
 		_binding = null
-	}
-
-	//DELETE IF CHAMGES ON GSING IN
-
-	override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-		super.onActivityResult(requestCode, resultCode, data)
-		if(requestCode == 100){
-			val task = GoogleSignIn.getSignedInAccountFromIntent(data)
-			try{
-				val account = task.getResult(ApiException::class.java)
-				firebaseAuthWithGoogle(account!!)
-			}catch (e: Exception){
-			}
-		}
-	}
-
-	private fun firebaseAuthWithGoogle(account: GoogleSignInAccount) {
-		val credential = GoogleAuthProvider.getCredential(account.idToken, null)
-		firebaseAuth.signInWithCredential(credential)
-			.addOnSuccessListener { authResult ->
-				val user = firebaseAuth.currentUser
-				val uid = user!!.uid
-				val email = user!!.email
-
-				//check if is a new user or existing user
-				if (authResult.additionalUserInfo!!.isNewUser) {
-					//Toast.makeText(this, "Welcome new user", Toast.LENGTH_SHORT).show()
-				}else{
-					//Toast.makeText(this, "Welcome back", Toast.LENGTH_SHORT).show()
-				}
-				//start profile activity
-				findNavController().navigate(R.id.action_loginFragment_to_passengerHomeFragment)
-			}
-
-			.addOnFailureListener {
-				//Toast.makeText(this, "Authentication failed", Toast.LENGTH_SHORT).show()
-			}
 	}
 }

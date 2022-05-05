@@ -53,6 +53,8 @@ class DefaultAuthRepository internal constructor(
 		// If user credentials will be cached in local storage, it is recommended it be encrypted
 		// @see https://developer.android.com/training/articles/keystore
 		_user = null
+
+		// FABIO CHECKS HERE IF USER IS LOGGED IN
 	}
 
 	override fun login(email: String, password: String): Result<LoggedInUser> {
