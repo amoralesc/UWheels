@@ -87,7 +87,10 @@ dependencies {
 	implementation 'com.google.android.gms:play-services-auth:20.2.0'
 	implementation 'com.google.android.libraries.places:places:2.6.0'
 
-	// Unit testing
+	// Firebase storage
+	implementation 'com.google.firebase:firebase-storage:20.0.1'
+
+    // Unit testing
 	testImplementation 'junit:junit:4.13.2'
 
 	// Instrumentation testing
