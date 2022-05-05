@@ -9,7 +9,7 @@
 		android:id="@+id/passengerHomeFragment"
 		android:name="com.abmodel.uwheels.ui.passenger.HomeFragment"
 		android:label="fragment_passenger_home"
-		tools:layout="@layout/fragment_passenger_home" >
+		tools:layout="@layout/fragment_passenger_home">
 		<action
 			android:id="@+id/action_passengerHomeFragment_to_myRidesFragment"
 			app:destination="@id/myRidesFragment" />
@@ -30,7 +30,7 @@
 		android:id="@+id/loginFragment"
 		android:name="com.abmodel.uwheels.ui.shared.login.LoginFragment"
 		android:label="fragment_login"
-		tools:layout="@layout/fragment_login" >
+		tools:layout="@layout/fragment_login">
 		<action
 			android:id="@+id/action_loginFragment_to_signUpFragment"
 			app:destination="@id/signUpFragment"
@@ -45,7 +45,7 @@
 		android:id="@+id/signUpFragment"
 		android:name="com.abmodel.uwheels.ui.shared.signup.SignUpFragment"
 		android:label="fragment_sign_up"
-		tools:layout="@layout/fragment_sign_up" >
+		tools:layout="@layout/fragment_sign_up">
 		<action
 			android:id="@+id/action_signUpFragment_to_loginFragment"
 			app:destination="@id/loginFragment"
@@ -63,7 +63,7 @@
 		android:id="@+id/becomeDriverFragment"
 		android:name="com.abmodel.uwheels.ui.driver.apply.BecomeDriverFragment"
 		android:label="fragment_become_driver"
-		tools:layout="@layout/fragment_become_driver" >
+		tools:layout="@layout/fragment_become_driver">
 		<action
 			android:id="@+id/action_becomeDriverFragment_to_driverApplicationFragment"
 			app:destination="@id/driverApplicationFragment" />
@@ -76,7 +76,7 @@
 		android:id="@+id/driverApplicationFragment"
 		android:name="com.abmodel.uwheels.ui.driver.apply.DriverApplicationFragment"
 		android:label="fragment_driver_application"
-		tools:layout="@layout/fragment_driver_application" >
+		tools:layout="@layout/fragment_driver_application">
 		<action
 			android:id="@+id/action_driverApplicationFragment_to_passengerHomeFragment"
 			app:destination="@id/passengerHomeFragment"
@@ -86,7 +86,7 @@
 		android:id="@+id/myRidesFragment"
 		android:name="com.abmodel.uwheels.ui.passenger.ride.MyRidesFragment"
 		android:label="fragment_my_rides"
-		tools:layout="@layout/fragment_my_rides" >
+		tools:layout="@layout/fragment_my_rides">
 		<action
 			android:id="@+id/action_myRidesFragment_to_passengerHomeFragment"
 			app:destination="@id/passengerHomeFragment"
@@ -96,7 +96,7 @@
 		android:id="@+id/contactsFragment"
 		android:name="com.abmodel.uwheels.ui.passenger.contacts.ContactsFragment"
 		android:label="fragment_passenger_contacts"
-		tools:layout="@layout/fragment_passenger_contacts" >
+		tools:layout="@layout/fragment_passenger_contacts">
 		<action
 			android:id="@+id/action_contactsFragment_to_passengerHomeFragment"
 			app:destination="@id/passengerHomeFragment"
@@ -106,7 +106,7 @@
 		android:id="@+id/chatsFragment"
 		android:name="com.abmodel.uwheels.ui.shared.chat.ChatsFragment"
 		android:label="fragment_chats"
-		tools:layout="@layout/fragment_chats" >
+		tools:layout="@layout/fragment_chats">
 		<action
 			android:id="@+id/action_chatsFragment_to_passengerHomeFragment"
 			app:destination="@id/passengerHomeFragment"
@@ -119,7 +119,7 @@
 		android:id="@+id/chatFragment"
 		android:name="com.abmodel.uwheels.ui.shared.chat.ChatFragment"
 		android:label="fragment_chat"
-		tools:layout="@layout/fragment_chat" >
+		tools:layout="@layout/fragment_chat">
 		<action
 			android:id="@+id/action_chatFragment_to_chatsFragment"
 			app:destination="@id/chatsFragment"
@@ -128,7 +128,7 @@
 	<fragment
 		android:id="@+id/requestRideFragment"
 		android:name="com.abmodel.uwheels.ui.passenger.ride.request.RequestRideFragment"
-		android:label="requestRideFragment" >
+		android:label="requestRideFragment">
 		<action
 			android:id="@+id/action_requestRideFragment_to_searchAddressFragment"
 			app:destination="@id/searchAddressFragment" />
@@ -154,7 +154,7 @@
 		android:id="@+id/passengerCreateRideFragment"
 		android:name="com.abmodel.uwheels.ui.passenger.ride.create.CreateRideFragment"
 		android:label="fragment_passenger_create_ride"
-		tools:layout="@layout/fragment_passenger_create_ride" >
+		tools:layout="@layout/fragment_passenger_create_ride">
 		<action
 			android:id="@+id/action_createRideFragment_to_searchAddressFragment"
 			app:destination="@id/searchAddressFragment" />
