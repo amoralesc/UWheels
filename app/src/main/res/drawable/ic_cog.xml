@@ -1,0 +1,26 @@
+<!--- Copyright 2022 Google LLC
+	#
+	# Licensed under the Apache License, Version 2.0 (the 'License');
+	# you may not use this file except in compliance with the License.
+	# You may obtain a copy of the License at
+	#
+	#     https://www.apache.org/licenses/LICENSE-2.0
+	#
+	# Unless required by applicable law or agreed to in writing, software
+	# distributed under the License is distributed on an 'AS IS' BASIS,
+	# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+	# See the License for the specific language governing permissions and# limitations under the License.
+
+	# This file has been modified to fill the full viewport
+-->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+	android:width="24dp"
+	android:height="24dp"
+	android:tint="?attr/colorControlNormal"
+	android:viewportWidth="24"
+	android:viewportHeight="24">
+	<path
+		android:fillColor="@color/white"
+		android:pathData="M12.0027,16.2A4.3178,4.2 0,0 1,7.6849 12,4.3178 4.2,0 0,1 12.0027,7.8 4.3178,4.2 0,0 1,16.3205 12,4.3178 4.2,0 0,1 12.0027,16.2m9.1661,-3.036c0.0493,-0.384 0.0864,-0.768 0.0864,-1.164 0,-0.396 -0.037,-0.792 -0.0864,-1.2l2.603,-1.956c0.2344,-0.18 0.2961,-0.504 0.148,-0.768l-2.4673,-4.152c-0.148,-0.264 -0.4811,-0.372 -0.7525,-0.264l-3.0718,1.2c-0.6415,-0.468 -1.3077,-0.876 -2.0849,-1.176l-0.4565,-3.18C15.0375,0.216 14.7785,0 14.4701,0H9.5354c-0.3084,0 -0.5675,0.216 -0.6168,0.504l-0.4565,3.18c-0.7772,0.3 -1.4434,0.708 -2.0849,1.176l-3.0718,-1.2c-0.2714,-0.108 -0.6045,0 -0.7525,0.264l-2.4673,4.152c-0.1604,0.264 -0.0864,0.588 0.148,0.768L2.8366,10.8c-0.0493,0.408 -0.0864,0.804 -0.0864,1.2 0,0.396 0.037,0.78 0.0864,1.164l-2.603,1.992c-0.2344,0.18 -0.3084,0.504 -0.148,0.768l2.4673,4.152c0.148,0.264 0.4811,0.36 0.7525,0.264l3.0718,-1.212c0.6415,0.48 1.3077,0.888 2.0849,1.188l0.4565,3.18C8.9679,23.784 9.227,24 9.5354,24h4.9347c0.3084,0 0.5675,-0.216 0.6168,-0.504l0.4565,-3.18c0.7772,-0.312 1.4434,-0.708 2.0849,-1.188l3.0718,1.212c0.2714,0.096 0.6045,0 0.7525,-0.264l2.4673,-4.152c0.148,-0.264 0.0864,-0.588 -0.148,-0.768z"
+		android:strokeWidth="1.21671557" />
+</vector>

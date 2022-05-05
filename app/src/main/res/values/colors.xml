@@ -1,10 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+	<color name="color_brand_start">#E300FF</color>
+	<color name="color_brand_end">#7700C5</color>
+	<color name="color_brand_blend">#AD00E2</color>
+
+	<color name="color_primary">@color/color_brand_blend</color>
+	<color name="color_primary_variant">@color/color_brand_end</color>
+	<color name="color_on_primary">@color/white</color>
+
+	<color name="color_secondary">#EAEAEA</color>
+	<color name="color_secondary_variant">#DDDDDD</color>
+	<color name="color_on_secondary">@color/black</color>
+
+	<color name="black">#FF000000</color>
+	<color name="dark_gray">#303030</color>
+
+	<color name="white">#FFFFFFFF</color>
+	<color name="white_80">#CCFFFFFF</color>
+	<color name="white_60">#99FFFFFF</color>
+	<color name="white_40">#66FFFFFF</color>
+	<color name="white_20">#33FFFFFF</color>
+
+	<color name="red">#FF0000</color>
+
 	<color name="purple_200">#FFBB86FC</color>
 	<color name="purple_500">#FF6200EE</color>
 	<color name="purple_700">#FF3700B3</color>
 	<color name="teal_200">#FF03DAC5</color>
 	<color name="teal_700">#FF018786</color>
-	<color name="black">#FF000000</color>
-	<color name="white">#FFFFFFFF</color>
+
 </resources>

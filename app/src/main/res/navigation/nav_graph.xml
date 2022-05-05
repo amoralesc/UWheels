@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:id="@+id/nav_graph.xml"
+	app:startDestination="@id/loginFragment">
+
+	<fragment
+		android:id="@+id/passengerHomeFragment"
+		android:name="com.abmodel.uwheels.ui.passenger.HomeFragment"
+		android:label="fragment_passenger_home"
+		tools:layout="@layout/fragment_passenger_home">
+		<action
+			android:id="@+id/action_passengerHomeFragment_to_myRidesFragment"
+			app:destination="@id/myRidesFragment" />
+		<action
+			android:id="@+id/action_passengerHomeFragment_to_contactsFragment"
+			app:destination="@id/contactsFragment" />
+		<action
+			android:id="@+id/action_passengerHomeFragment_to_chatsFragment"
+			app:destination="@id/chatsFragment" />
+		<action
+			android:id="@+id/action_passengerHomeFragment_to_requestRideFragment"
+			app:destination="@id/requestRideFragment" />
+		<action
+			android:id="@+id/action_passengerHomeFragment_to_passengerCreateRideFragment"
+			app:destination="@id/passengerCreateRideFragment" />
+		<action
+			android:id="@+id/action_passengerHomeFragment_to_loginFragment"
+			app:destination="@id/loginFragment"
+			app:popUpTo="@id/loginFragment" />
+	</fragment>
+	<fragment
+		android:id="@+id/loginFragment"
+		android:name="com.abmodel.uwheels.ui.shared.login.LoginFragment"
+		android:label="fragment_login"
+		tools:layout="@layout/fragment_login">
+		<action
+			android:id="@+id/action_loginFragment_to_signUpFragment"
+			app:destination="@id/signUpFragment"/>
+		<action
+			android:id="@+id/action_loginFragment_to_passengerHomeFragment"
+			app:destination="@id/passengerHomeFragment"
+			app:popUpTo="@id/passengerHomeFragment" />
+	</fragment>
+	<fragment
+		android:id="@+id/signUpFragment"
+		android:name="com.abmodel.uwheels.ui.shared.signup.SignUpFragment"
+		android:label="fragment_sign_up"
+		tools:layout="@layout/fragment_sign_up">
+		<action
+			android:id="@+id/action_signUpFragment_to_loginFragment"
+			app:destination="@id/loginFragment"
+			app:popUpTo="@id/loginFragment" />
+		<action
+			android:id="@+id/action_signUpFragment_to_becomeDriverFragment"
+			app:destination="@id/becomeDriverFragment"
+			app:popUpTo="@id/becomeDriverFragment" />
+		<action
+			android:id="@+id/action_signUpFragment_to_passengerHomeFragment"
+			app:destination="@id/passengerHomeFragment"
+			app:popUpTo="@id/passengerHomeFragment" />
+	</fragment>
+	<fragment
+		android:id="@+id/becomeDriverFragment"
+		android:name="com.abmodel.uwheels.ui.driver.apply.BecomeDriverFragment"
+		android:label="fragment_become_driver"
+		tools:layout="@layout/fragment_become_driver">
+		<action
+			android:id="@+id/action_becomeDriverFragment_to_driverApplicationFragment"
+			app:destination="@id/driverApplicationFragment" />
+		<action
+			android:id="@+id/action_becomeDriverFragment_to_passengerHomeFragment"
+			app:destination="@id/passengerHomeFragment"
+			app:popUpTo="@id/passengerHomeFragment" />
+	</fragment>
+	<fragment
+		android:id="@+id/driverApplicationFragment"
+		android:name="com.abmodel.uwheels.ui.driver.apply.DriverApplicationFragment"
+		android:label="fragment_driver_application"
+		tools:layout="@layout/fragment_driver_application">
+		<action
+			android:id="@+id/action_driverApplicationFragment_to_passengerHomeFragment"
+			app:destination="@id/passengerHomeFragment"
+			app:popUpTo="@id/passengerHomeFragment" />
+	</fragment>
+	<fragment
+		android:id="@+id/myRidesFragment"
+		android:name="com.abmodel.uwheels.ui.passenger.ride.MyRidesFragment"
+		android:label="fragment_my_rides"
+		tools:layout="@layout/fragment_my_rides">
+		<action
+			android:id="@+id/action_myRidesFragment_to_passengerHomeFragment"
+			app:destination="@id/passengerHomeFragment"
+			app:popUpTo="@id/passengerHomeFragment" />
+	</fragment>
+	<fragment
+		android:id="@+id/contactsFragment"
+		android:name="com.abmodel.uwheels.ui.passenger.contacts.ContactsFragment"
+		android:label="fragment_passenger_contacts"
+		tools:layout="@layout/fragment_passenger_contacts">
+		<action
+			android:id="@+id/action_contactsFragment_to_passengerHomeFragment"
+			app:destination="@id/passengerHomeFragment"
+			app:popUpTo="@id/passengerHomeFragment" />
+	</fragment>
+	<fragment
+		android:id="@+id/chatsFragment"
+		android:name="com.abmodel.uwheels.ui.shared.chat.ChatsFragment"
+		android:label="fragment_chats"
+		tools:layout="@layout/fragment_chats">
+		<action
+			android:id="@+id/action_chatsFragment_to_passengerHomeFragment"
+			app:destination="@id/passengerHomeFragment"
+			app:popUpTo="@id/passengerHomeFragment" />
+		<action
+			android:id="@+id/action_chatsFragment_to_chatFragment"
+			app:destination="@id/chatFragment" />
+	</fragment>
+	<fragment
+		android:id="@+id/chatFragment"
+		android:name="com.abmodel.uwheels.ui.shared.chat.ChatFragment"
+		android:label="fragment_chat"
+		tools:layout="@layout/fragment_chat">
+		<action
+			android:id="@+id/action_chatFragment_to_chatsFragment"
+			app:destination="@id/chatsFragment"
+			app:popUpTo="@id/chatFragment" />
+	</fragment>
+	<fragment
+		android:id="@+id/requestRideFragment"
+		android:name="com.abmodel.uwheels.ui.passenger.ride.request.RequestRideFragment"
+		android:label="requestRideFragment">
+		<action
+			android:id="@+id/action_requestRideFragment_to_searchAddressFragment"
+			app:destination="@id/searchAddressFragment" />
+	</fragment>
+	<fragment
+		android:id="@+id/searchAddressFragment"
+		android:name="com.abmodel.uwheels.ui.shared.search.SearchAddressFragment"
+		android:label="fragment_search_address"
+		tools:layout="@layout/fragment_search_address">
+		<action
+			android:id="@+id/action_searchAddressFragment_to_requestRideFragment"
+			app:destination="@id/requestRideFragment"
+			app:popUpTo="@id/requestRideFragment" />
+		<argument
+			android:name="selected_input"
+			app:argType="string" />
+		<action
+			android:id="@+id/action_searchAddressFragment_to_passengerCreateRideFragment"
+			app:destination="@id/passengerCreateRideFragment"
+			app:popUpTo="@id/passengerCreateRideFragment" />
+	</fragment>
+	<fragment
+		android:id="@+id/passengerCreateRideFragment"
+		android:name="com.abmodel.uwheels.ui.passenger.ride.create.CreateRideFragment"
+		android:label="fragment_passenger_create_ride"
+		tools:layout="@layout/fragment_passenger_create_ride">
+		<action
+			android:id="@+id/action_createRideFragment_to_searchAddressFragment"
+			app:destination="@id/searchAddressFragment" />
+		<action
+			android:id="@+id/action_passengerCreateRideFragment_to_passengerHomeFragment"
+			app:destination="@id/passengerHomeFragment"
+			app:popUpTo="@id/passengerHomeFragment" />
+	</fragment>
+</navigation>

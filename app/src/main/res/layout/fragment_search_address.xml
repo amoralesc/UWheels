@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools">
+
+	<data>
+
+		<variable
+			name="viewModel"
+			type="com.abmodel.uwheels.ui.shared.search.SearchAddressViewModel" />
+	</data>
+
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:clipChildren="false"
+		android:clipToPadding="false"
+		android:orientation="vertical"
+		tools:context=".ui.shared.search.SearchAddressFragment">
+
+		<androidx.constraintlayout.widget.ConstraintLayout
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:background="@color/color_secondary"
+			android:clipChildren="false"
+			android:clipToPadding="false"
+			android:paddingHorizontal="16dp"
+			android:paddingVertical="16dp">
+
+			<com.abmodel.uwheels.BackButton
+				android:id="@+id/back"
+				style="@style/Widget.UWheels.Button.BackButton"
+				android:elevation="4dp"
+				android:paddingHorizontal="@dimen/back_button_padding"
+				app:layout_constraintStart_toStartOf="parent"
+				app:layout_constraintTop_toTopOf="parent"
+				tools:ignore="SpeakableTextPresentCheck" />
+
+			<ImageView
+				android:id="@+id/image_source"
+				android:layout_width="16dp"
+				android:layout_height="16dp"
+				android:elevation="1dp"
+				android:padding="2dp"
+				app:layout_constraintBottom_toBottomOf="@id/search_source"
+				app:layout_constraintStart_toStartOf="parent"
+				app:layout_constraintTop_toTopOf="@id/search_source"
+				app:srcCompat="@drawable/ic_circle"
+				app:tint="@color/black"
+				tools:ignore="ContentDescription" />
+
+			<EditText
+				android:id="@+id/search_source"
+				android:layout_width="0dp"
+				android:layout_height="40dp"
+				android:layout_marginStart="16dp"
+				android:layout_marginTop="8dp"
+				android:layout_marginEnd="8dp"
+				android:background="@color/white"
+				android:hint="@string/source"
+				android:importantForAutofill="no"
+				android:inputType="text"
+				android:paddingHorizontal="8dp"
+				app:layout_constraintEnd_toEndOf="parent"
+				app:layout_constraintStart_toEndOf="@id/image_source"
+				app:layout_constraintTop_toBottomOf="@id/back"
+				tools:ignore="TouchTargetSizeCheck,TextContrastCheck" />
+
+			<ImageView
+				android:id="@+id/image_destination"
+				android:layout_width="16dp"
+				android:layout_height="16dp"
+				android:elevation="1dp"
+				android:padding="2dp"
+				app:layout_constraintBottom_toBottomOf="@id/search_destination"
+				app:layout_constraintStart_toStartOf="parent"
+				app:layout_constraintTop_toTopOf="@id/search_destination"
+				app:srcCompat="@drawable/ic_circle"
+				app:tint="@color/color_primary"
+				tools:ignore="ContentDescription" />
+
+			<EditText
+				android:id="@+id/search_destination"
+				android:layout_width="0dp"
+				android:layout_height="40dp"
+				android:layout_marginStart="16dp"
+				android:layout_marginTop="12dp"
+				android:layout_marginEnd="8dp"
+				android:background="@color/white"
+				android:hint="@string/destination"
+				android:importantForAutofill="no"
+				android:inputType="text"
+				android:paddingHorizontal="8dp"
+				app:layout_constraintEnd_toEndOf="parent"
+				app:layout_constraintStart_toEndOf="@id/image_destination"
+				app:layout_constraintTop_toBottomOf="@id/search_source"
+				tools:ignore="TouchTargetSizeCheck,TextContrastCheck" />
+
+			<com.google.android.material.divider.MaterialDivider
+				android:layout_width="1dp"
+				android:layout_height="0dp"
+				android:layout_marginVertical="8dp"
+				app:dividerColor="#737373"
+				app:layout_constraintBottom_toBottomOf="@id/image_destination"
+				app:layout_constraintEnd_toEndOf="@id/image_source"
+				app:layout_constraintStart_toStartOf="@id/image_source"
+				app:layout_constraintTop_toTopOf="@id/image_source" />
+
+		</androidx.constraintlayout.widget.ConstraintLayout>
+
+		<androidx.recyclerview.widget.RecyclerView
+			android:id="@+id/search_results"
+			android:layout_width="match_parent"
+			app:addressList="@{viewModel.addressResults}"
+			android:layout_height="match_parent"
+			android:clipToPadding="false"
+			app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+			tools:itemCount="5"
+			tools:listitem="@layout/address_list_item" />
+
+	</LinearLayout>
+</layout>

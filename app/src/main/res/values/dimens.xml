@@ -1,0 +1,31 @@
+<resources>
+	<dimen name="margin_tiny">4dp</dimen>
+	<dimen name="margin_short">8dp</dimen>
+	<dimen name="margin_default">16dp</dimen>
+	<dimen name="margin_big">24dp</dimen>
+	<dimen name="margin_large">40dp</dimen>
+
+	<!-- Default margins. -->
+	<dimen name="side_margin">@dimen/margin_default</dimen>
+	<dimen name="squeezed_margin">@dimen/margin_large</dimen>
+	<dimen name="margin_between_elements">16dp</dimen>
+	<dimen name="margin_between_elements_short">8dp</dimen>
+	<dimen name="margin_between_elements_big">32dp</dimen>
+
+	<dimen name="min_size_clickable">48dp</dimen>
+
+	<!-- Style dimens -->
+	<!-- Text size -->
+	<dimen name="text_size_medium">18sp</dimen>
+
+	<!-- Shapes -->
+	<dimen name="button_corner_radius">12dp</dimen>
+
+	<!-- Buttons -->
+	<dimen name="button_inset">6dp</dimen>
+	<dimen name="back_button_padding">10dp</dimen>
+
+
+	<!-- Login fragment margins -->
+
+</resources>

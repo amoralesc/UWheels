@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string-array name="driver_application_title">
+		<item>Driver\'s License</item>
+		<item>Proof of Ownership</item>
+		<item>Vehicle\'s Insurance</item>
+		<item>Vehicle\'s Pictures</item>
+		<item>Vehicle\'s Detail</item>
+	</string-array>
+
+	<string-array name="driver_application_description">
+		<item>Upload your driver\'s license. Both sides must be visible</item>
+		<item>Upload valid proof of ownership of your vehicle</item>
+		<item>Upload valid proof of insurance of your vehicle</item>
+		<item>Upload multiple pictures of your vehicle. Ensure multiples angles</item>
+		<item>Fill in all your vehicle\'s details as listed below</item>
+	</string-array>
+
+	<string-array name="driver_application_files">
+		<item><b>Supported files:</b> PNG, JPG, JPEG, PDF, DOCX</item>
+		<item><b>Supported files:</b> PDF, DOCX</item>
+		<item><b>Supported files:</b> PDF, DOCX</item>
+		<item><b>Supported files:</b> PNG, JPG, JPEG</item>
+		<item>All the information will be reviewed by our team</item>
+	</string-array>
+
+</resources>
