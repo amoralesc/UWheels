@@ -7,6 +7,7 @@ import com.abmodel.uwheels.R
 import com.abmodel.uwheels.data.DefaultAuthRepository
 import com.abmodel.uwheels.data.AuthRepository
 import com.abmodel.uwheels.data.Result
+import java.util.regex.Pattern
 
 class LoginViewModel @JvmOverloads constructor(
 	application: Application,
@@ -14,66 +15,69 @@ class LoginViewModel @JvmOverloads constructor(
 		DefaultAuthRepository.getInstance(application)
 ) : AndroidViewModel(application) {
 
-	private val _loginForm = MutableLiveData<LoginFormState>()
-	val loginFormState: LiveData<LoginFormState> = _loginForm
-
 	private val _loginResult = MutableLiveData<LoginResult>()
 	val loginResult: LiveData<LoginResult> = _loginResult
 
-	fun login(username: String, password: String) {
-		// can be launched in a separate asynchronous job
-		val result = authRepository.login(username, password)
+	fun login(email: String, password: String) {
 
-		if (result is Result.Success) {
-			_loginResult.value =
-				LoginResult(success = LoggedInUserView(displayName = result.data.displayName))
-		} else {
-			_loginResult.value = LoginResult(error = R.string.login_failed)
+		if (checkLoginForm(email, password)) {
+			// Can be launched in a separate asynchronous job
+			val result = authRepository.login(email, password)
+
+			if (result is Result.Success) {
+				_loginResult.value =
+					LoginResult(success = LoggedInUserView(displayName = result.data.displayName))
+			} else {
+				_loginResult.value = LoginResult(error = R.string.login_failed)
+			}
 		}
 	}
 
-	fun loginDataChanged(username: String, password: String) {
-		if (!isUserNameValid(username)) {
-			_loginForm.value = LoginFormState(usernameError = R.string.invalid_username)
+	/**
+	 * Checks the login form data (email, password).
+	 * Sets the [LoginResult] to an error message if data is invalid.
+	 *
+	 * @param email The email address of the user.
+	 * @param password The password of the user.
+	 * @return true if the data is valid, false otherwise.
+	 */
+	private fun checkLoginForm(email: String, password: String): Boolean {
+
+		return if (!isEmailValid(email)) {
+			_loginResult.value = LoginResult(error = R.string.invalid_email)
+			false
 		} else if (!isPasswordValid(password)) {
-			_loginForm.value = LoginFormState(passwordError = R.string.invalid_password)
+			_loginResult.value = LoginResult(error = R.string.invalid_password)
+			false
 		} else {
-			_loginForm.value = LoginFormState(isDataValid = true)
+			true
 		}
 	}
 
-	// A placeholder username validation check
-	private fun isUserNameValid(username: String): Boolean {
-		return if (username.contains("@")) {
-			Patterns.EMAIL_ADDRESS.matcher(username).matches()
-		} else {
-			username.isNotBlank()
-		}
+	/**
+	 * Checks if the email is valid. It uses ReGex pattern matching.
+	 *
+	 * @param email the email to be checked
+	 * @return true if the email is valid, false otherwise
+	 */
+	private fun isEmailValid(email: String): Boolean {
+		return Patterns.EMAIL_ADDRESS.matcher(email).matches()
 	}
 
-	// A placeholder password validation check
+	/**
+	 * Checks if the password is valid. A password is valid if:
+	 * * it is at least 8 characters long.
+	 * * it contains at least one digit.
+	 * * it contains at least one upper case and one lower case letter.
+	 * * it may contain special characters.
+	 *
+	 * @param password the password to be checked
+	 * @return true if the password is valid, false otherwise
+	 */
 	private fun isPasswordValid(password: String): Boolean {
-		return password.length > 5
+		val pattern = Pattern.compile(
+			"^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}\$"
+		)
+		return pattern.matcher(password).matches()
 	}
 }
-
-/*
-/**
- * ViewModel provider factory to instantiate LoginViewModel.
- * Required given LoginViewModel has a non-empty constructor
- */
-class LoginViewModelFactory : ViewModelProvider.Factory {
-
-	@Suppress("UNCHECKED_CAST")
-	override fun <T : ViewModel> create(modelClass: Class<T>): T {
-		if (modelClass.isAssignableFrom(LoginViewModel::class.java)) {
-			return LoginViewModel(
-				loginRepository = LoginRepository(
-					dataSource = LoginDataSource()
-				)
-			) as T
-		}
-		throw IllegalArgumentException("Unknown ViewModel class")
-	}
-}
-*/

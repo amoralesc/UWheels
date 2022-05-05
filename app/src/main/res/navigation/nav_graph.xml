@@ -33,9 +33,7 @@
 		tools:layout="@layout/fragment_login">
 		<action
 			android:id="@+id/action_loginFragment_to_signUpFragment"
-			app:destination="@id/signUpFragment"
-			app:enterAnim="@android:anim/slide_in_left"
-			app:exitAnim="@android:anim/slide_out_right" />
+			app:destination="@id/signUpFragment"/>
 		<action
 			android:id="@+id/action_loginFragment_to_passengerHomeFragment"
 			app:destination="@id/passengerHomeFragment"

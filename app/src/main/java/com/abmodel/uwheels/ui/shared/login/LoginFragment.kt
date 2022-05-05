@@ -41,86 +41,65 @@ class LoginFragment : Fragment() {
 	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 		super.onViewCreated(view, savedInstanceState)
 
-		val usernameEditText = binding.email
-		val passwordEditText = binding.password
-		val loginButton = binding.login
-
 		binding.apply {
+
+			password.setOnEditorActionListener { _, actionId, _ ->
+				if (actionId == EditorInfo.IME_ACTION_DONE) {
+					loginViewModel.login(
+						binding.email.text.toString(),
+						binding.password.text.toString()
+					)
+				}
+				false
+			}
+
+			login.setOnClickListener {
+				loginViewModel.login(
+					binding.email.text.toString(),
+					binding.password.text.toString()
+				)
+			}
+
 			signUp.setOnClickListener {
 				findNavController().navigate(R.id.action_loginFragment_to_signUpFragment)
 			}
 		}
 
-		loginViewModel.loginFormState.observe(viewLifecycleOwner,
-			Observer { loginFormState ->
-				if (loginFormState == null) {
-					return@Observer
-				}
-				// loginButton.isEnabled = loginFormState.isDataValid
-				loginFormState.usernameError?.let {
-					// usernameEditText.error = getString(it)
-				}
-				loginFormState.passwordError?.let {
-					// passwordEditText.error = getString(it)
-				}
-			})
+		loginViewModel.loginResult.observe(viewLifecycleOwner) { loginResult ->
+			loginResult ?: return@observe
+			loginResult.error?.let {
+				showLoginFailed(it)
+			}
+			if (loginResult.success != null) {
+				goToHomeScreen()
+			}
+		}
 
-		loginViewModel.loginResult.observe(viewLifecycleOwner,
-			Observer { loginResult ->
-				loginResult ?: return@Observer
-				loginResult.error?.let {
-					showLoginFailed(it)
-				}
-				loginResult.success?.let {
-					updateUiWithUser(it)
-				}
-			})
-
+		/*
 		val afterTextChangedListener = object : TextWatcher {
-			override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
-				// ignore
-			}
-
-			override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
-				// ignore
-			}
+			override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) { }
+			override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) { }
 
 			override fun afterTextChanged(s: Editable) {
 				loginViewModel.loginDataChanged(
-					usernameEditText.text.toString(),
-					passwordEditText.text.toString()
+					binding.email.text.toString(),
+					binding.password.text.toString()
 				)
 			}
 		}
-
-		usernameEditText.addTextChangedListener(afterTextChangedListener)
-		passwordEditText.addTextChangedListener(afterTextChangedListener)
-		passwordEditText.setOnEditorActionListener { _, actionId, _ ->
-			if (actionId == EditorInfo.IME_ACTION_DONE) {
-				loginViewModel.login(
-					usernameEditText.text.toString(),
-					passwordEditText.text.toString()
-				)
-			}
-			false
-		}
-
-		loginButton.setOnClickListener {
-			loginViewModel.login(
-				usernameEditText.text.toString(),
-				passwordEditText.text.toString()
-			)
-		}
-	}
-
-	private fun updateUiWithUser(model: LoggedInUserView) {
-		val welcome = getString(R.string.welcome) + model.displayName
-		// TODO : initiate successful logged in experience
-		Toast.makeText(requireContext(), welcome, Toast.LENGTH_LONG).show()
+		binding.email.addTextChangedListener(afterTextChangedListener)
+		binding.password.addTextChangedListener(afterTextChangedListener)
+		*/
 	}
 
 	private fun showLoginFailed(@StringRes errorString: Int) {
 		Toast.makeText(requireContext(), errorString, Toast.LENGTH_LONG).show()
+	}
+
+	private fun goToHomeScreen() {
+		findNavController().navigate(
+			R.id.action_loginFragment_to_passengerHomeFragment
+		)
 	}
 
 	override fun onDestroyView() {
