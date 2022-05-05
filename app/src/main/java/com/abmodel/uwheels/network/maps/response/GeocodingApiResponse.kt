@@ -14,14 +14,14 @@ data class GeocodingViewport(
 
 data class GeocodingGeometry(
 	@Json(name = "location") val location: GeocodingLocation,
-	@Json(name = "location_type") val locationType: String,
-	@Json(name = "viewport") val viewport: GeocodingViewport
+	@Json(name = "location_type") val locationType: String?,
+	@Json(name = "viewport") val viewport: GeocodingViewport?
 )
 
 data class GeocodingResult(
 	@Json(name = "address_components") val addressComponents: List<Any>?,
 	@Json(name = "formatted_address") val formattedAddress: String?,
-	@Json(name = "geometry") val geometry: GeocodingGeometry?,
+	@Json(name = "geometry") val geometry: GeocodingGeometry,
 	@Json(name = "place_id") val placeId: String?,
 	@Json(name = "types") val types: List<String>?
 )

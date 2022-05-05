@@ -34,7 +34,7 @@ data class PlacesAutocompleteStatus(
 
 data class PlacesAutocompleteResponse(
 	@Json(name = "predictions") val predictions: List<PlaceAutocompletePrediction>,
-	@Json(name = "status") val status: PlacesAutocompleteStatus,
+	@Json(name = "status") val status: Any,
 	@Json(name = "error_message") val errorMessage: String?,
 	@Json(name = "info_messages") val infoMessages: List<String>?
 )

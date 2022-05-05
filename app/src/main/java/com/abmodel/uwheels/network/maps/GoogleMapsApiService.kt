@@ -28,7 +28,6 @@ interface DirectionsApiService {
 		@Query("origin") origin: String,
 		@Query("destination") destination: String,
 		@Query("region") region: String,
-		@Query("sessiontoken") sessionToken: String,
 		@Query("key") key: String
 	): DirectionsResponse
 }
@@ -46,6 +45,7 @@ interface PlacesAutocompleteApiService {
 		@Query("location") location: String,
 		@Query("radius") radius: Int,
 		@Query("region") region: String,
+		@Query("sessiontoken") sessionToken: String,
 		@Query("key") key: String
 	): PlacesAutocompleteResponse
 }

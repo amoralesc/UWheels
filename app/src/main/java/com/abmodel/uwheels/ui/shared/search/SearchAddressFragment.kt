@@ -8,9 +8,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
 import com.abmodel.uwheels.databinding.FragmentSearchAddressBinding
 import com.abmodel.uwheels.ui.shared.search.adapter.AddressItemAdapter
 
@@ -72,21 +70,36 @@ class SearchAddressFragment : Fragment() {
 			override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
 
 			override fun afterTextChanged(s: Editable) {
-				searchAddressViewModel.searchAddress(
-					binding.searchSource.text.toString()
+				searchAddressViewModel.autocompleteAddress(
+					s.toString()
 				)
 			}
 		}
 		binding.searchSource.addTextChangedListener(afterTextChangedListener)
+		binding.searchDestination.addTextChangedListener(afterTextChangedListener)
 
 		// Set the on click listener for the selected address
 		// in the recycler view
 		binding.apply {
 			lifecycleOwner = viewLifecycleOwner
 			viewModel = searchAddressViewModel
+
 			searchResults.adapter = AddressItemAdapter { address ->
 				Log.d(TAG, "Selected address: $address")
+				selectedInput = if (binding.searchSource.hasFocus()) {
+					"source"
+				} else {
+					"destination"
+				}
+				searchAddressViewModel.selectAddress(address, selectedInput!!)
 			}
+		}
+
+		searchAddressViewModel.sourceAddress.observe(viewLifecycleOwner) { address ->
+			binding.searchSource.setText(address.mainText)
+		}
+		searchAddressViewModel.destinationAddress.observe(viewLifecycleOwner) { address ->
+			binding.searchDestination.setText(address.mainText)
 		}
 	}
 

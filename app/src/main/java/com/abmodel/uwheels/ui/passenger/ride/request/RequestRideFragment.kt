@@ -11,9 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.abmodel.uwheels.R
 import com.abmodel.uwheels.databinding.FragmentRequestRideBinding
-import com.abmodel.uwheels.util.formatDateFromMillis
-import com.abmodel.uwheels.util.formatTime
-import com.abmodel.uwheels.util.hideKeyboard
+import com.abmodel.uwheels.util.*
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -175,10 +173,7 @@ class RequestRideFragment : Fragment(), OnMapReadyCallback {
 					// Move the camera to the user's location
 					mMap?.animateCamera(
 						CameraUpdateFactory.newLatLngZoom(
-							LatLng(
-								location.latitude,
-								location.longitude
-							),
+							LatLng(location.latitude, location.longitude),
 							15f
 						)
 					)
@@ -187,10 +182,21 @@ class RequestRideFragment : Fragment(), OnMapReadyCallback {
 			.addOnFailureListener {
 				Log.w(TAG, "Failed to get last known location")
 				Log.w(TAG, it.message ?: "")
+
+				moveCameraToDefault()
 			}
 			.addOnCanceledListener {
 				Log.w(TAG, "Last known location task was cancelled")
 			}
+	}
+
+	private fun moveCameraToDefault() {
+		mMap!!.moveCamera(
+			CameraUpdateFactory.newLatLngZoom(
+				LatLng(BOGOTA_LAT, BOGOTA_LNG),
+				BOGOTA_ZOOM
+			)
+		)
 	}
 
 	companion object {

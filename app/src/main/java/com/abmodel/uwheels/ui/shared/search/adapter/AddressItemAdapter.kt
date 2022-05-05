@@ -1,29 +1,29 @@
 package com.abmodel.uwheels.ui.shared.search.adapter
 
-import android.location.Address
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.abmodel.uwheels.databinding.AddressListItemBinding
+import com.abmodel.uwheels.ui.shared.search.CustomAddress
 
 /**
  * [ListAdapter] to inflate the address list item and populate
  * address search results.
  */
 class AddressItemAdapter(
-	private val onItemClicked: (Address) -> Unit
-) : ListAdapter<Address, AddressItemAdapter.AddressItemViewHolder>(DiffCallback) {
+	private val onItemClicked: (CustomAddress) -> Unit
+) : ListAdapter<CustomAddress, AddressItemAdapter.AddressItemViewHolder>(DiffCallback) {
 
 	class AddressItemViewHolder(
 		private var binding: AddressListItemBinding
 	) : RecyclerView.ViewHolder(binding.root) {
 
-		fun bind(address: Address) {
+		fun bind(address: CustomAddress) {
 			binding.apply {
-				addressName.text = address.featureName ?: "Error"
-				addressLine.text = address.getAddressLine(0) ?: "Error"
+				addressMainText.text = address.mainText
+				addressSecondaryText.text = address.secondaryText
 			}
 		}
 	}
@@ -51,14 +51,13 @@ class AddressItemAdapter(
 	}
 
 	companion object {
-		private val DiffCallback = object : DiffUtil.ItemCallback<Address>() {
-			override fun areItemsTheSame(oldItem: Address, newItem: Address): Boolean {
-				return oldItem.latitude == newItem.latitude &&
-						oldItem.longitude == newItem.longitude
+		private val DiffCallback = object : DiffUtil.ItemCallback<CustomAddress>() {
+			override fun areItemsTheSame(oldItem: CustomAddress, newItem: CustomAddress): Boolean {
+				return oldItem.placeId == newItem.placeId
 			}
 
-			override fun areContentsTheSame(oldItem: Address, newItem: Address): Boolean {
-				return oldItem.equals(newItem)
+			override fun areContentsTheSame(oldItem: CustomAddress, newItem: CustomAddress): Boolean {
+				return oldItem == newItem
 			}
 		}
 	}

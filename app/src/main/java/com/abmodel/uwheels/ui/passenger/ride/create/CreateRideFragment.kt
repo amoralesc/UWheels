@@ -128,13 +128,14 @@ class CreateRideFragment : Fragment(), OnMapReadyCallback {
 		mMap!!.uiSettings.isCompassEnabled = true
 
 		// Move camera to default city location
-		// TODO: This shouldn't be a constant, but a value that comes from the user
+		moveCameraToDefault()
+	}
+
+	// TODO: This shouldn't be a constant, but a value that comes from the user
+	private fun moveCameraToDefault() {
 		mMap!!.moveCamera(
 			CameraUpdateFactory.newLatLngZoom(
-				LatLng(
-					BOGOTA_LAT,
-					BOGOTA_LNG
-				),
+				LatLng(BOGOTA_LAT, BOGOTA_LNG),
 				BOGOTA_ZOOM
 			)
 		)
