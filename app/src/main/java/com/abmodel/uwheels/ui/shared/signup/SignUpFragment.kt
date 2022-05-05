@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
 import android.widget.Toast
 import androidx.annotation.StringRes
 import androidx.fragment.app.viewModels
@@ -39,6 +40,13 @@ class SignUpFragment : Fragment() {
 
 		binding.apply {
 
+			passwordAgain.setOnEditorActionListener { _, actionId, _ ->
+				if (actionId == EditorInfo.IME_ACTION_DONE) {
+					onClickedSignUp()
+				}
+				false
+			}
+
 			signUp.setOnClickListener {
 				signUpViewModel.signUp(
 					name.text.toString(),
@@ -62,8 +70,19 @@ class SignUpFragment : Fragment() {
 		}
 	}
 
+	private fun onClickedSignUp() {
+		signUpViewModel.signUp(
+			binding.name.text.toString(),
+			binding.lastName.text.toString(),
+			binding.phoneNumber.text.toString(),
+			binding.email.text.toString(),
+			binding.password.text.toString(),
+			binding.passwordAgain.text.toString()
+		)
+	}
+
 	private fun showSignUpFailed(@StringRes errorString: Int) {
-		Toast.makeText(requireContext(), errorString, Toast.LENGTH_LONG).show()
+		Toast.makeText(requireContext(), errorString, Toast.LENGTH_SHORT).show()
 	}
 
 	private fun goToBecomeDriverScreen() {

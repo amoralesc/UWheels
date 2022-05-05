@@ -10,6 +10,8 @@ import com.abmodel.uwheels.ui.shared.login.FormResult
 import com.abmodel.uwheels.util.isEmailValid
 import com.abmodel.uwheels.util.isPasswordValid
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.auth.PhoneAuthCredential
 
 class SignUpViewModel @JvmOverloads constructor(
 	application: Application
@@ -40,6 +42,7 @@ class SignUpViewModel @JvmOverloads constructor(
 						)
 					} else {
 						Log.d(SignUpFragment.TAG, "Sign up failed")
+						Log.d(SignUpFragment.TAG, task.exception?.message.toString())
 						_signUpResult.value = FormResult(
 							error = R.string.signup_failed
 						)
@@ -56,7 +59,7 @@ class SignUpViewModel @JvmOverloads constructor(
 		return if (name.isEmpty() || lastName.isEmpty() || phone.isEmpty() ||
 			email.isEmpty() || password.isEmpty() || passwordAgain.isEmpty()
 		) {
-			_signUpResult.value = FormResult(error = R.string.login_failed_empty_fields)
+			_signUpResult.value = FormResult(error = R.string.signup_failed_empty_fields)
 			false
 		} else if (!isEmailValid(email)) {
 			_signUpResult.value = FormResult(error = R.string.invalid_email)

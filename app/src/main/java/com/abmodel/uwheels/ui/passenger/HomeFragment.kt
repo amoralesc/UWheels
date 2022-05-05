@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import com.abmodel.uwheels.R
 import com.abmodel.uwheels.databinding.FragmentPassengerHomeBinding
+import com.google.firebase.auth.FirebaseAuth
 
 enum class FromHomeFragmentDestination {
 	PROFILE,
@@ -83,7 +84,12 @@ class HomeFragment : Fragment() {
 	private fun goToNextScreen(destination: FromHomeFragmentDestination) {
 		when (destination) {
 			FromHomeFragmentDestination.PROFILE -> {
+				// TODO: replace with actual profile fragment
 				Log.i(TAG, "Not implemented yet")
+				FirebaseAuth.getInstance().signOut()
+				findNavController().navigate(
+					R.id.action_passengerHomeFragment_to_loginFragment
+				)
 			}
 			FromHomeFragmentDestination.RIDES -> {
 				findNavController().navigate(

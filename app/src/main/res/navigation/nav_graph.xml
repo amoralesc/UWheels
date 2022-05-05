@@ -25,6 +25,10 @@
 		<action
 			android:id="@+id/action_passengerHomeFragment_to_passengerCreateRideFragment"
 			app:destination="@id/passengerCreateRideFragment" />
+		<action
+			android:id="@+id/action_passengerHomeFragment_to_loginFragment"
+			app:destination="@id/loginFragment"
+			app:popUpTo="@id/loginFragment" />
 	</fragment>
 	<fragment
 		android:id="@+id/loginFragment"
