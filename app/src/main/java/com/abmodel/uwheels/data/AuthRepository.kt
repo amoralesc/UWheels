@@ -1,7 +1,9 @@
 package com.abmodel.uwheels.data
 
 import android.content.Context
+import androidx.annotation.MainThread
 import com.abmodel.uwheels.data.model.LoggedInUser
+import com.google.firebase.auth.AuthResult
 import java.util.concurrent.Executor
 import java.util.concurrent.Executors
 
@@ -9,10 +11,13 @@ import java.util.concurrent.Executors
  * Login repository interface that provides the data access layer for the login
  */
 interface AuthRepository {
-	fun login(email: String, password: String): Result<LoggedInUser>
+	fun login(email: String, password: String): Result<AuthResult>
 	fun logout()
+	fun sigIn(email: String, password: String): Result<AuthResult>
 	fun isLoggedIn(): Boolean
 	fun getLoggedInUser(): LoggedInUser?
+	fun validateEmailAndPassword(email: String, password: String): Boolean
+	abstract fun isEmailValid(email: String): Boolean
 }
 
 /**
@@ -55,28 +60,47 @@ class DefaultAuthRepository internal constructor(
 		_user = null
 
 		// FABIO CHECKS HERE IF USER IS LOGGED IN
+		isLoggedIn()
 	}
 
-	override fun login(email: String, password: String): Result<LoggedInUser> {
+	override fun login(email: String, password: String): Result<AuthResult> {
 		// handle login
-		val result = dataSource.login(email, password)
-		if (result is Result.Success) {
-			setLoggedInUser(result.data)
-		}
-		return result
+		return dataSource.login(email, password)
 	}
 
 	override fun logout() {
-		_user = null
 		dataSource.logout()
 	}
 
+	 override fun sigIn(email: String, password: String): Result<AuthResult> {
+	 	if(validateEmailAndPassword(email, password)){
+	 		return dataSource.sigIn(email, password)
+	 	}
+	 	return Result.Error(Exception("Invalid email or password"))
+	 }
+
+	@MainThread
 	override fun isLoggedIn(): Boolean {
-		return _user != null
+		return dataSource.isLoggedIn();
 	}
 
 	override fun getLoggedInUser(): LoggedInUser? {
 		return user
+	}
+
+	override fun validateEmailAndPassword(email: String, password: String): Boolean {
+		if(email.isEmpty() && password.isEmpty() && isEmailValid(email)){
+			return false
+		}
+		return true
+	}
+
+	override fun isEmailValid(email: String): Boolean {
+		if (!email.contains("@") ||
+			!email.contains(".") ||
+			email.length < 5)
+			return false;
+		return true;
 	}
 
 	private fun setLoggedInUser(loggedInUser: LoggedInUser) {
