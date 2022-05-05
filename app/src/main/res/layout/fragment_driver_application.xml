@@ -15,6 +15,7 @@
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		android:fontFamily="@font/poppins_medium"
+		android:textSize="30sp"
 		android:textAppearance="?textAppearanceHeadline4"
 		android:textColor="@color/white"
 		app:layout_constraintStart_toStartOf="parent"
@@ -25,10 +26,11 @@
 		android:id="@+id/text_description"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
-		android:layout_marginTop="@dimen/margin_between_elements_short"
+		android:lines="2"
+		android:maxLines="2"
 		android:textAppearance="?textAppearanceBody1"
 		android:textColor="@color/white"
-		android:textSize="18sp"
+		android:textSize="16sp"
 		app:layout_constraintTop_toBottomOf="@id/text_title"
 		tools:text="Upload your driver's license. Both sides must be visible" />
 
@@ -37,22 +39,26 @@
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
 		android:layout_marginTop="@dimen/margin_between_elements_short"
+		android:lines="2"
+		android:maxLines="2"
 		android:textAppearance="?textAppearanceBody1"
 		android:textColor="@color/white"
-		android:textSize="18sp"
+		android:textSize="16sp"
 		app:layout_constraintTop_toBottomOf="@id/text_description"
 		tools:text="@string/supported_files" />
 
 	<androidx.constraintlayout.widget.ConstraintLayout
+		android:id="@+id/layout_upload_files"
 		android:layout_width="match_parent"
 		android:layout_height="0dp"
 		android:layout_marginVertical="@dimen/margin_between_elements"
 		android:background="?colorSecondary"
 		android:elevation="2dp"
-		android:orientation="vertical"
 		android:paddingHorizontal="16dp"
 		android:paddingTop="16dp"
 		app:layout_constraintBottom_toTopOf="@id/back"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
 		app:layout_constraintTop_toBottomOf="@id/text_supported_files">
 
 		<Button
@@ -86,6 +92,7 @@
 			android:layout_height="0dp"
 			android:layout_marginTop="@dimen/margin_between_elements_short"
 			android:clipToPadding="false"
+			app:layout_constraintBottom_toBottomOf="parent"
 			app:layout_constraintEnd_toEndOf="parent"
 			app:layout_constraintStart_toStartOf="parent"
 			app:layout_constraintTop_toBottomOf="@id/upload"
@@ -93,6 +100,104 @@
 			tools:listitem="@layout/uploaded_file_list_item" />
 
 	</androidx.constraintlayout.widget.ConstraintLayout>
+
+	<LinearLayout
+		android:id="@+id/layout_vehicle_details"
+		android:layout_width="match_parent"
+		android:layout_height="0dp"
+		android:orientation="vertical"
+		android:visibility="gone"
+		app:layout_constraintBottom_toTopOf="@id/back"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toBottomOf="@id/text_supported_files">
+
+		<com.google.android.material.textfield.TextInputLayout
+			style="@style/Widget.UWheels.TextInputLayout.OutlinedBox.Light"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginTop="16dp"
+			android:theme="@style/Widget.UWheels.TextInputLayout.OutlinedBox.Light">
+
+			<com.google.android.material.textfield.TextInputEditText
+				android:id="@+id/vehicle_make"
+				style="@style/Widget.UWheels.TextInputEditText.OutlinedBox.Light"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:hint="@string/make"
+				android:inputType="text" />
+
+		</com.google.android.material.textfield.TextInputLayout>
+
+		<com.google.android.material.textfield.TextInputLayout
+			style="@style/Widget.UWheels.TextInputLayout.OutlinedBox.Light"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginTop="16dp"
+			android:theme="@style/Widget.UWheels.TextInputLayout.OutlinedBox.Light">
+
+			<com.google.android.material.textfield.TextInputEditText
+				android:id="@+id/vehicle_model"
+				style="@style/Widget.UWheels.TextInputEditText.OutlinedBox.Light"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:hint="@string/model"
+				android:inputType="number" />
+
+		</com.google.android.material.textfield.TextInputLayout>
+
+		<com.google.android.material.textfield.TextInputLayout
+			style="@style/Widget.UWheels.TextInputLayout.OutlinedBox.Light"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginTop="16dp"
+			android:theme="@style/Widget.UWheels.TextInputLayout.OutlinedBox.Light">
+
+			<com.google.android.material.textfield.TextInputEditText
+				android:id="@+id/vehicle_year"
+				style="@style/Widget.UWheels.TextInputEditText.OutlinedBox.Light"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:hint="@string/year"
+				android:inputType="number" />
+
+		</com.google.android.material.textfield.TextInputLayout>
+
+		<com.google.android.material.textfield.TextInputLayout
+			style="@style/Widget.UWheels.TextInputLayout.OutlinedBox.Light"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginTop="16dp"
+			android:theme="@style/Widget.UWheels.TextInputLayout.OutlinedBox.Light">
+
+			<com.google.android.material.textfield.TextInputEditText
+				android:id="@+id/vehicle_plate"
+				style="@style/Widget.UWheels.TextInputEditText.OutlinedBox.Light"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:hint="@string/plate"
+				android:inputType="text" />
+
+		</com.google.android.material.textfield.TextInputLayout>
+
+		<com.google.android.material.textfield.TextInputLayout
+			style="@style/Widget.UWheels.TextInputLayout.OutlinedBox.Light"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginTop="16dp"
+			android:theme="@style/Widget.UWheels.TextInputLayout.OutlinedBox.Light">
+
+			<com.google.android.material.textfield.TextInputEditText
+				android:id="@+id/vehicle_capacity"
+				style="@style/Widget.UWheels.TextInputEditText.OutlinedBox.Light"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:hint="@string/capacity"
+				android:inputType="number" />
+
+		</com.google.android.material.textfield.TextInputLayout>
+
+	</LinearLayout>
 
 	<Button
 		android:id="@+id/back"
