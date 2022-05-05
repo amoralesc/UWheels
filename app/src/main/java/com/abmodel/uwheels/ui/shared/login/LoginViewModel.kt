@@ -1,16 +1,18 @@
 package com.abmodel.uwheels.ui.shared.login
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import android.app.Application
 import android.util.Patterns
-import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.*
 import com.abmodel.uwheels.R
-import com.abmodel.uwheels.data.LoginDataSource
-import com.abmodel.uwheels.data.LoginRepository
+import com.abmodel.uwheels.data.DefaultAuthRepository
+import com.abmodel.uwheels.data.AuthRepository
 import com.abmodel.uwheels.data.Result
 
-class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel() {
+class LoginViewModel @JvmOverloads constructor(
+	application: Application,
+	private val authRepository: AuthRepository =
+		DefaultAuthRepository.getInstance(application)
+) : AndroidViewModel(application) {
 
 	private val _loginForm = MutableLiveData<LoginFormState>()
 	val loginFormState: LiveData<LoginFormState> = _loginForm
@@ -20,7 +22,7 @@ class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel()
 
 	fun login(username: String, password: String) {
 		// can be launched in a separate asynchronous job
-		val result = loginRepository.login(username, password)
+		val result = authRepository.login(username, password)
 
 		if (result is Result.Success) {
 			_loginResult.value =
@@ -55,7 +57,7 @@ class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel()
 	}
 }
 
-
+/*
 /**
  * ViewModel provider factory to instantiate LoginViewModel.
  * Required given LoginViewModel has a non-empty constructor
@@ -74,3 +76,4 @@ class LoginViewModelFactory : ViewModelProvider.Factory {
 		throw IllegalArgumentException("Unknown ViewModel class")
 	}
 }
+*/

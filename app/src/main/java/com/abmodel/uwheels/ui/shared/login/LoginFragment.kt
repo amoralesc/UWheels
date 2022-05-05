@@ -1,7 +1,6 @@
 package com.abmodel.uwheels.ui.shared.login
 
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.annotation.StringRes
 import androidx.fragment.app.Fragment
 import android.os.Bundle
@@ -12,35 +11,36 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.widget.Toast
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.abmodel.uwheels.R
 import com.abmodel.uwheels.databinding.FragmentLoginBinding
 
 class LoginFragment : Fragment() {
 
-	private lateinit var loginViewModel: LoginViewModel
+	// Binding objects to access the view elements
 	private var _binding: FragmentLoginBinding? = null
-
-	// This property is only valid between onCreateView and
-	// onDestroyView.
 	private val binding get() = _binding!!
+
+	private val loginViewModel: LoginViewModel by viewModels()
 
 	override fun onCreateView(
 		inflater: LayoutInflater,
 		container: ViewGroup?,
 		savedInstanceState: Bundle?
 	): View {
-
+		// Inflate the layout and binding for this fragment
 		_binding = FragmentLoginBinding.inflate(inflater, container, false)
 		return binding.root
 	}
 
 	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 		super.onViewCreated(view, savedInstanceState)
+		/*
 		loginViewModel = ViewModelProvider(
 			this, LoginViewModelFactory()
 		)[LoginViewModel::class.java]
-
+		*/
 		val usernameEditText = binding.email
 		val passwordEditText = binding.password
 		val loginButton = binding.login
