@@ -1,16 +1,14 @@
 package com.abmodel.uwheels.ui.shared.login
 
-import android.app.Application
 import android.util.Log
 import androidx.lifecycle.*
 import com.abmodel.uwheels.R
+import com.abmodel.uwheels.ui.shared.data.FormResult
 import com.abmodel.uwheels.util.isEmailValid
 import com.abmodel.uwheels.util.isPasswordValid
 import com.google.firebase.auth.FirebaseAuth
 
-class LoginViewModel @JvmOverloads constructor(
-	application: Application
-) : AndroidViewModel(application) {
+class LoginViewModel: ViewModel() {
 
 	private val _loginResult = MutableLiveData<FormResult>()
 	val loginResult: LiveData<FormResult> = _loginResult

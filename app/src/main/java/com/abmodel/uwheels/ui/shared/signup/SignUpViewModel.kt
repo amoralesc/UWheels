@@ -1,21 +1,17 @@
 package com.abmodel.uwheels.ui.shared.signup
 
-import android.app.Application
 import android.util.Log
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import com.abmodel.uwheels.R
-import com.abmodel.uwheels.ui.shared.login.FormResult
+import com.abmodel.uwheels.ui.shared.data.FormResult
 import com.abmodel.uwheels.util.isEmailValid
 import com.abmodel.uwheels.util.isPasswordValid
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.auth.PhoneAuthCredential
+import com.google.firebase.auth.UserProfileChangeRequest
 
-class SignUpViewModel @JvmOverloads constructor(
-	application: Application
-) : AndroidViewModel(application) {
+class SignUpViewModel: ViewModel() {
 
 	private val _signUpResult = MutableLiveData<FormResult>()
 	val signUpResult: LiveData<FormResult> = _signUpResult
@@ -36,6 +32,14 @@ class SignUpViewModel @JvmOverloads constructor(
 			mAuth.createUserWithEmailAndPassword(email, password)
 				.addOnCompleteListener { task ->
 					if (task.isSuccessful) {
+						// Add additional information
+						val user = mAuth.currentUser
+						user?.updateProfile(
+							UserProfileChangeRequest.Builder()
+								.setDisplayName("$name $lastName")
+								.build()
+						)
+
 						Log.d(SignUpFragment.TAG, "Sign up successful")
 						_signUpResult.value = FormResult(
 							success = true, error = null

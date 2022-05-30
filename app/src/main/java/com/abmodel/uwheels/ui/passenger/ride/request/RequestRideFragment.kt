@@ -20,10 +20,13 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.setFragmentResultListener
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.abmodel.uwheels.R
+import com.abmodel.uwheels.data.model.CustomAddress
 import com.abmodel.uwheels.databinding.FragmentRequestRideBinding
+import com.abmodel.uwheels.ui.shared.search.SearchAddressFragment
 import com.abmodel.uwheels.util.*
 import com.google.android.gms.common.api.ResolvableApiException
 import com.google.android.gms.location.*
@@ -46,9 +49,7 @@ class RequestRideFragment : Fragment(), OnMapReadyCallback {
 	private var _binding: FragmentRequestRideBinding? = null
 	private val binding get() = _binding!!
 
-	private val viewModel: RequestRideViewModel by activityViewModels {
-		RequestRideViewModelFactory(requireActivity().application)
-	}
+	private val viewModel: RequestRideViewModel by viewModels()
 
 	private var mMap: GoogleMap? = null
 	private var sourceMarker: Marker? = null
@@ -71,6 +72,26 @@ class RequestRideFragment : Fragment(), OnMapReadyCallback {
 
 	private var hasLocationPermissions = false
 	private var locationSettingsEnabled = false
+
+	override fun onCreate(savedInstanceState: Bundle?) {
+		super.onCreate(savedInstanceState)
+
+		// Listen to results of the [SearchAddressFragment]
+		setFragmentResultListener(
+			SearchAddressFragment.REQUEST_KEY
+		) { _, bundle ->
+
+			val source: CustomAddress? = bundle.getParcelable(
+				SearchAddressFragment.RESULT_KEY_SOURCE
+			)
+			val destination: CustomAddress? = bundle.getParcelable(
+				SearchAddressFragment.RESULT_KEY_DESTINATION
+			)
+
+			viewModel.updateSourceAddress(source)
+			viewModel.updateDestinationAddress(destination)
+		}
+	}
 
 	override fun onCreateView(
 		inflater: LayoutInflater,
@@ -166,9 +187,12 @@ class RequestRideFragment : Fragment(), OnMapReadyCallback {
 
 	override fun onResume() {
 		super.onResume()
-		mSensorManager.registerListener(
-			lightEventListener, lightSensor, SensorManager.SENSOR_DELAY_NORMAL
-		)
+
+		if (DEBUG_USE_SENSORS) {
+			mSensorManager.registerListener(
+				lightEventListener, lightSensor, SensorManager.SENSOR_DELAY_NORMAL
+			)
+		}
 		if (hasLocationPermissions && locationSettingsEnabled) {
 			startLocationUpdates()
 		}
@@ -176,7 +200,10 @@ class RequestRideFragment : Fragment(), OnMapReadyCallback {
 
 	override fun onPause() {
 		super.onPause()
-		mSensorManager.unregisterListener(lightEventListener)
+
+		if (DEBUG_USE_SENSORS) {
+			mSensorManager.unregisterListener(lightEventListener)
+		}
 		stopLocationUpdates()
 	}
 
@@ -354,7 +381,9 @@ class RequestRideFragment : Fragment(), OnMapReadyCallback {
 		val action =
 			RequestRideFragmentDirections
 				.actionRequestRideFragmentToSearchAddressFragment(
-					selectedInput = selectedInput
+					selectedInput = selectedInput,
+					source = viewModel.sourceAddress.value,
+					destination = viewModel.destinationAddress.value
 				)
 
 		findNavController()

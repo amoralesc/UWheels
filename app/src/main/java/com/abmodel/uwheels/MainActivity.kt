@@ -1,14 +1,9 @@
 package com.abmodel.uwheels
 
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.ui.NavigationUI.setupActionBarWithNavController
-import com.abmodel.uwheels.databinding.ActivityMainBinding
-import com.abmodel.uwheels.databinding.ActivityTemporalLoginBinding
 
 /**
  * Single activity application that uses a NavHostFragment

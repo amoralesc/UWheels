@@ -1,6 +1,5 @@
 package com.abmodel.uwheels.ui.shared.search
 
-import android.app.Application
 import android.util.Log
 import androidx.lifecycle.*
 import com.abmodel.uwheels.BuildConfig.MAPS_API_KEY
@@ -8,21 +7,20 @@ import com.abmodel.uwheels.network.maps.GeocodingApi
 import com.abmodel.uwheels.network.maps.GeocodingResponse
 import com.abmodel.uwheels.network.maps.PlacesAutocompleteApi
 import com.abmodel.uwheels.network.maps.PlacesAutocompleteResponse
+import com.abmodel.uwheels.data.model.CustomAddress
 import com.abmodel.uwheels.util.*
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.libraries.places.api.model.AutocompleteSessionToken
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class SearchAddressViewModel(
-	application: Application
-) : AndroidViewModel(application) {
+class SearchAddressViewModel: ViewModel() {
+
+	private var autocompleteSessionToken = AutocompleteSessionToken.newInstance()
 
 	private val _addressResults = MutableLiveData<List<CustomAddress>>()
 	val addressResults: MutableLiveData<List<CustomAddress>>
 		get() = _addressResults
-
-	private var autocompleteSessionToken = AutocompleteSessionToken.newInstance()
 
 	private val _sourceAddress = MutableLiveData<CustomAddress>()
 	val sourceAddress: LiveData<CustomAddress>
@@ -32,8 +30,16 @@ class SearchAddressViewModel(
 	val destinationAddress: LiveData<CustomAddress>
 		get() = _destinationAddress
 
+	fun updateSourceAddress(address: CustomAddress) {
+		_sourceAddress.postValue(address)
+	}
+
+	fun updateDestinationAddress(address: CustomAddress) {
+		_destinationAddress.postValue(address)
+	}
+
 	fun autocompleteAddress(query: String) {
-		if (query.length < 4) return
+		if (query.length < 3) return
 
 		viewModelScope.launch(Dispatchers.IO) {
 			try {
@@ -68,14 +74,6 @@ class SearchAddressViewModel(
 		}
 	}
 
-	fun updateSourceAddress(address: CustomAddress) {
-		_sourceAddress.postValue(address)
-	}
-
-	fun updateDestinationAddress(address: CustomAddress) {
-		_destinationAddress.postValue(address)
-	}
-
 	fun selectAddress(address: CustomAddress, selectedInput: String) {
 		viewModelScope.launch(Dispatchers.IO) {
 			try {
@@ -108,19 +106,6 @@ class SearchAddressViewModel(
 			} catch (e: Exception) {
 				Log.e(SearchAddressFragment.TAG, "Error fetching geocoding: ${e.message}")
 			}
-		}
-	}
-}
-
-class SearchAddressViewModelFactory(
-	private val application: Application
-) : ViewModelProvider.AndroidViewModelFactory(application) {
-	@Suppress("UNCHECKED_CAST")
-	override fun <T : ViewModel> create(modelClass: Class<T>): T {
-		if (modelClass.isAssignableFrom(SearchAddressViewModel::class.java)) {
-			return SearchAddressViewModel(application) as T
-		} else {
-			throw IllegalArgumentException("Unknown ViewModel class")
 		}
 	}
 }

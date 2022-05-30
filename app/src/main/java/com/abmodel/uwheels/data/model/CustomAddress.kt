@@ -1,4 +1,4 @@
-package com.abmodel.uwheels.ui.shared.search
+package com.abmodel.uwheels.data.model
 
 import android.os.Parcelable
 import com.google.android.gms.maps.model.LatLng

@@ -6,7 +6,7 @@
 	<data>
 
 		<variable
-			name="viewModel"
+			name="dataViewModel"
 			type="com.abmodel.uwheels.ui.shared.search.SearchAddressViewModel" />
 	</data>
 
@@ -111,7 +111,7 @@
 		<androidx.recyclerview.widget.RecyclerView
 			android:id="@+id/search_results"
 			android:layout_width="match_parent"
-			app:addressList="@{viewModel.addressResults}"
+			app:addressList="@{dataViewModel.addressResults}"
 			android:layout_height="match_parent"
 			android:clipToPadding="false"
 			app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"

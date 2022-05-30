@@ -8,11 +8,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.activityViewModels
+import androidx.core.os.bundleOf
+import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.viewModels
+import com.abmodel.uwheels.data.model.CustomAddress
 import com.abmodel.uwheels.databinding.FragmentSearchAddressBinding
-import com.abmodel.uwheels.ui.passenger.ride.request.RequestRideViewModel
-import com.abmodel.uwheels.ui.passenger.ride.request.RequestRideViewModelFactory
 import com.abmodel.uwheels.ui.shared.search.adapter.AddressItemAdapter
 
 class SearchAddressFragment : Fragment() {
@@ -20,27 +20,35 @@ class SearchAddressFragment : Fragment() {
 	companion object {
 		const val TAG = "SearchAddressFragment"
 		const val ARGUMENT_SELECTED_INPUT = "selected_input"
+		const val ARGUMENT_SOURCE_ADDRESS = "source"
+		const val ARGUMENT_DESTINATION_ADDRESS = "destination"
+		const val REQUEST_KEY = "search_results"
+		const val RESULT_KEY_SOURCE = "source"
+		const val RESULT_KEY_DESTINATION = "destination"
 	}
 
 	// Binding objects to access the view elements
 	private var _binding: FragmentSearchAddressBinding? = null
 	private val binding get() = _binding!!
 
-	private val searchAddressViewModel: SearchAddressViewModel by viewModels {
-		SearchAddressViewModelFactory(requireActivity().application)
-	}
-	private val requestRideViewModel: RequestRideViewModel by activityViewModels {
-		RequestRideViewModelFactory(requireActivity().application)
-	}
+	private val viewModel: SearchAddressViewModel by viewModels()
 
 	// Arguments
 	private var selectedInput: String? = null
+	private var sourceAddress: CustomAddress? = null
+	private var destinationAddress: CustomAddress? = null
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
 
-		// Get the selected input from the arguments
+		// Get the arguments
 		selectedInput = arguments?.getString(ARGUMENT_SELECTED_INPUT).toString()
+		sourceAddress = arguments?.getParcelable(ARGUMENT_SOURCE_ADDRESS)
+		destinationAddress = arguments?.getParcelable(ARGUMENT_DESTINATION_ADDRESS)
+
+		// Set the source and destination addresses on the view model
+		sourceAddress?.let { viewModel.updateSourceAddress(it) }
+		destinationAddress?.let { viewModel.updateDestinationAddress(it) }
 	}
 
 	override fun onCreateView(
@@ -71,12 +79,28 @@ class SearchAddressFragment : Fragment() {
 			}
 		}
 
+		// Observe the view model
+		// To update the selected search result
+		viewModel.sourceAddress.observe(viewLifecycleOwner) { address ->
+			binding.searchSource.setText(address.mainText)
+			updateResults()
+			// requestRideViewModel.updateSourceAddress(address)
+		}
+		viewModel.destinationAddress.observe(viewLifecycleOwner) { address ->
+			binding.searchDestination.setText(address.mainText)
+			updateResults()
+			// requestRideViewModel.updateDestinationAddress(address)
+		}
+
+		// Set an after text changed listener to both inputs
+		// This ensures that after the user types in the input, the results are updated
+		// with places autocomplete suggestions
 		val afterTextChangedListener = object : TextWatcher {
 			override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
 			override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
 
 			override fun afterTextChanged(s: Editable) {
-				searchAddressViewModel.autocompleteAddress(
+				viewModel.autocompleteAddress(
 					s.toString()
 				)
 			}
@@ -84,12 +108,12 @@ class SearchAddressFragment : Fragment() {
 		binding.searchSource.addTextChangedListener(afterTextChangedListener)
 		binding.searchDestination.addTextChangedListener(afterTextChangedListener)
 
-		// Set the on click listener for the selected address
-		// in the recycler view
 		binding.apply {
 			lifecycleOwner = viewLifecycleOwner
-			viewModel = searchAddressViewModel
+			dataViewModel = viewModel
 
+			// Set the on click listener for the selected address
+			// in the recycler view
 			searchResults.adapter = AddressItemAdapter { address ->
 				Log.d(TAG, "Selected address: $address")
 				selectedInput = if (binding.searchSource.hasFocus()) {
@@ -97,31 +121,23 @@ class SearchAddressFragment : Fragment() {
 				} else {
 					"destination"
 				}
-				searchAddressViewModel.selectAddress(address, selectedInput!!)
+				viewModel.selectAddress(address, selectedInput!!)
 			}
-		}
-
-		searchAddressViewModel.sourceAddress.observe(viewLifecycleOwner) { address ->
-			binding.searchSource.setText(address.mainText)
-			requestRideViewModel.updateSourceAddress(address)
-		}
-		searchAddressViewModel.destinationAddress.observe(viewLifecycleOwner) { address ->
-			binding.searchDestination.setText(address.mainText)
-			requestRideViewModel.updateDestinationAddress(address)
-		}
-
-		if (requestRideViewModel.sourceAddress.value != null) {
-			//searchAddressViewModel.selectAddress(requestRideViewModel.sourceAddress.value!!, "source")
-			searchAddressViewModel.updateSourceAddress(requestRideViewModel.sourceAddress.value!!)
-		}
-		if (requestRideViewModel.destinationAddress.value != null) {
-			//searchAddressViewModel.selectAddress(requestRideViewModel.destinationAddress.value!!, "destination")
-			searchAddressViewModel.updateDestinationAddress(requestRideViewModel.destinationAddress.value!!)
 		}
 	}
 
 	override fun onDestroyView() {
 		super.onDestroyView()
 		_binding = null
+	}
+
+	private fun updateResults() {
+		setFragmentResult(
+			REQUEST_KEY,
+			bundleOf(
+				RESULT_KEY_SOURCE to viewModel.sourceAddress.value,
+				RESULT_KEY_DESTINATION to viewModel.destinationAddress.value
+			)
+		)
 	}
 }

@@ -1,22 +1,19 @@
 package com.abmodel.uwheels.ui.passenger.ride.request
 
-import android.app.Application
 import android.util.Log
 import androidx.lifecycle.*
 import com.abmodel.uwheels.BuildConfig.MAPS_API_KEY
 import com.abmodel.uwheels.network.maps.DirectionsApi
 import com.abmodel.uwheels.network.maps.DirectionsResponse
 import com.abmodel.uwheels.network.maps.DirectionsRoute
-import com.abmodel.uwheels.ui.shared.search.CustomAddress
+import com.abmodel.uwheels.data.model.CustomAddress
 import com.abmodel.uwheels.util.PolyUtil
 import com.abmodel.uwheels.util.parseLatLng
 import com.google.android.gms.maps.model.LatLng
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class RequestRideViewModel(
-	application: Application
-) : AndroidViewModel(application) {
+class RequestRideViewModel: ViewModel() {
 
 	private val _sourceAddress = MutableLiveData<CustomAddress?>(null)
 	val sourceAddress: MutableLiveData<CustomAddress?>
@@ -33,15 +30,15 @@ class RequestRideViewModel(
 	fun updateSourceAddress(address: CustomAddress?) {
 		if (address != null) {
 			_sourceAddress.value = address
+			calculateRoute()
 		}
-		calculateRoute()
 	}
 
 	fun updateDestinationAddress(address: CustomAddress?) {
 		if (address != null) {
 			_destinationAddress.value = address
+			calculateRoute()
 		}
-		calculateRoute()
 	}
 
 	private fun calculateRoute() {
@@ -82,6 +79,7 @@ class RequestRideViewModel(
 	}
 }
 
+/*
 class RequestRideViewModelFactory(
 	private val application: Application
 ) : ViewModelProvider.AndroidViewModelFactory(application) {
@@ -94,3 +92,4 @@ class RequestRideViewModelFactory(
 		}
 	}
 }
+*/

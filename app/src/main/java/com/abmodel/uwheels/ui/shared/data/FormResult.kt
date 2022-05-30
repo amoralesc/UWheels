@@ -1,4 +1,4 @@
-package com.abmodel.uwheels.ui.shared.login
+package com.abmodel.uwheels.ui.shared.data
 
 /**
  * Form entry result: success (true) or error message.

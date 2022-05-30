@@ -108,7 +108,9 @@ class CreateRideFragment : Fragment(), OnMapReadyCallback {
 		val action =
 			CreateRideFragmentDirections
 				.actionCreateRideFragmentToSearchAddressFragment(
-					selectedInput = selectedInput
+					selectedInput = selectedInput,
+					source = null,
+					destination = null
 				)
 
 		findNavController()

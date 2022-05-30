@@ -53,11 +53,6 @@ class HomeFragment : Fragment() {
 		val shakeDetector = ShakeDetector()
 		shakeDetector.setOnShakeListener(object : ShakeDetector.OnShakeListener {
 			override fun onShake(count: Int) {
-				/*
-                 * The following method, "handleShakeEvent(count):" is a stub //
-                 * method you would use to setup whatever you want done once the
-                 * device has been shook.
-                 */
 				Toast.makeText(requireContext(), "I feel shaken!", Toast.LENGTH_SHORT).show()
 			}
 		})
@@ -107,7 +102,6 @@ class HomeFragment : Fragment() {
 
 	override fun onResume() {
 		super.onResume()
-		// Add the following line to register the Session Manager Listener onResume
 		mSensorManager.registerListener(
 			mShakeDetector,
 			mAccelerometer,
@@ -115,7 +109,7 @@ class HomeFragment : Fragment() {
 		)
 	}
 
-	override fun onPause() { // Add the following line to unregister the Sensor Manager onPause
+	override fun onPause() {
 		mSensorManager.unregisterListener(mShakeDetector)
 		super.onPause()
 	}
