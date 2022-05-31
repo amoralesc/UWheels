@@ -108,6 +108,13 @@
 
 		</androidx.constraintlayout.widget.ConstraintLayout>
 
+		<androidx.constraintlayout.utils.widget.ImageFilterView
+			android:layout_width="wrap_content"
+			app:srcCompat="@drawable/powered_by_google_on_white"
+			android:layout_marginStart="16dp"
+			android:layout_marginTop="8dp"
+			android:layout_height="wrap_content" />
+
 		<androidx.recyclerview.widget.RecyclerView
 			android:id="@+id/search_results"
 			android:layout_width="match_parent"
