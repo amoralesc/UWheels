@@ -88,6 +88,8 @@
 	<string name="year">Year</string>
 	<string name="model">Model</string>
 
+	<string name="chat_date">%s %s</string>
+
 	<!-- Locations permissions -->
 	<string name="permission_location_denied">Location access permissions were denied</string>
 	<string name="permission_fine_location_title">Fine location access</string>

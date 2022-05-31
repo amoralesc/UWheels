@@ -9,7 +9,7 @@
 	android:clipToPadding="false"
 	android:paddingHorizontal="@dimen/side_margin"
 	android:paddingVertical="24dp"
-	tools:context=".ui.passenger.HomeFragment">
+	tools:context=".ui.passenger.home.HomeFragment">
 
 	<!-- TODO: Per android's design recommendations,
 	 	this view shouldn't be full of buttons but
@@ -91,39 +91,6 @@
 
 	</androidx.constraintlayout.widget.ConstraintLayout>
 
-	<!-- TODO: Remove if alert bubble custom view works
-	<FrameLayout
-		android:id="@+id/alertBubbleRides"
-		android:layout_width="28dp"
-		android:layout_height="28dp"
-		android:layout_marginEnd="@dimen/margin_between_elements"
-		android:elevation="5dp"
-		app:layout_constraintBottom_toBottomOf="@id/buttonRides"
-		app:layout_constraintEnd_toEndOf="@id/buttonRides"
-		app:layout_constraintTop_toTopOf="@id/buttonRides">
-
-		<TextView
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:layout_gravity="center"
-			android:elevation="1dp"
-			android:fontFamily="monospace"
-			android:textAlignment="center"
-			android:textColor="@color/white"
-			android:textSize="17sp"
-			android:textStyle="bold"
-			tools:text="1" />
-
-		<ImageView
-			android:layout_width="match_parent"
-			android:layout_height="match_parent"
-			app:srcCompat="@drawable/ic_circle"
-			app:tint="@color/red"
-			tools:ignore="ContentDescription" />
-
-	</FrameLayout>
-	-->
-
 	<Button
 		android:id="@+id/my_rides"
 		style="@style/Widget.UWheels.ButtonPrimary.Medium"
@@ -138,7 +105,8 @@
 		app:iconTint="@color/color_brand_blend"
 		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintStart_toStartOf="parent"
-		app:layout_constraintTop_toBottomOf="@id/user_image_layout" />
+		app:layout_constraintTop_toBottomOf="@id/user_image_layout"
+		tools:ignore="TextContrastCheck" />
 
 	<com.abmodel.uwheels.AlertBubbleView
 		android:id="@+id/my_rides_alert"
@@ -154,32 +122,33 @@
 		tools:visibility="visible" />
 
 	<Button
-		android:id="@+id/my_contacts"
+		android:id="@+id/contacts"
 		style="@style/Widget.UWheels.ButtonPrimary.Medium"
 		android:layout_width="match_parent"
 		android:layout_height="60dp"
 		android:layout_marginTop="8dp"
 		android:elevation="4dp"
 		android:gravity="center_vertical"
-		android:text="@string/my_contacts"
+		android:text="@string/contacts"
 		app:icon="@drawable/ic_account_circle"
 		app:iconPadding="@dimen/margin_between_elements"
 		app:iconSize="24dp"
 		app:iconTint="@color/color_brand_blend"
 		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintStart_toStartOf="parent"
-		app:layout_constraintTop_toBottomOf="@id/my_rides" />
+		app:layout_constraintTop_toBottomOf="@id/my_rides"
+		tools:ignore="TextContrastCheck" />
 
 	<com.abmodel.uwheels.AlertBubbleView
-		android:id="@+id/my_contacts_alert"
+		android:id="@+id/contacts_alert"
 		android:layout_width="28dp"
 		android:layout_height="28dp"
 		android:layout_marginEnd="@dimen/margin_between_elements"
 		android:elevation="5dp"
 		android:visibility="gone"
-		app:layout_constraintBottom_toBottomOf="@+id/my_contacts"
-		app:layout_constraintEnd_toEndOf="@+id/my_contacts"
-		app:layout_constraintTop_toTopOf="@+id/my_contacts"
+		app:layout_constraintBottom_toBottomOf="@+id/contacts"
+		app:layout_constraintEnd_toEndOf="@+id/contacts"
+		app:layout_constraintTop_toTopOf="@+id/contacts"
 		tools:visibility="visible" />
 
 	<Button
@@ -197,7 +166,8 @@
 		app:iconTint="@color/color_brand_blend"
 		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintStart_toStartOf="parent"
-		app:layout_constraintTop_toBottomOf="@id/my_contacts" />
+		app:layout_constraintTop_toBottomOf="@id/contacts"
+		tools:ignore="TextContrastCheck" />
 
 	<com.abmodel.uwheels.AlertBubbleView
 		android:id="@+id/chats_alert"

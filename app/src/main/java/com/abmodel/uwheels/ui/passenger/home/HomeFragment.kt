@@ -1,4 +1,4 @@
-package com.abmodel.uwheels.ui.passenger
+package com.abmodel.uwheels.ui.passenger.home
 
 import android.content.Context
 import android.hardware.Sensor
@@ -86,7 +86,7 @@ class HomeFragment : Fragment() {
 			myRides.setOnClickListener {
 				goToNextScreen(FromHomeFragmentDestination.RIDES)
 			}
-			myContacts.setOnClickListener {
+			contacts.setOnClickListener {
 				goToNextScreen(FromHomeFragmentDestination.CONTACTS)
 			}
 			chats.setOnClickListener {

@@ -10,8 +10,8 @@
 	<androidx.constraintlayout.widget.ConstraintLayout
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
-		android:paddingVertical="4dp"
-		android:background="@color/color_primary">
+		android:background="@color/color_primary"
+		android:paddingVertical="4dp">
 
 		<ImageButton
 			android:id="@+id/back"
@@ -51,14 +51,14 @@
 
 		<TextView
 			android:id="@+id/chat_date"
-			android:textAppearance="?textAppearanceSubtitle1"
 			android:layout_width="wrap_content"
-			android:layout_marginStart="8dp"
 			android:layout_height="wrap_content"
+			android:layout_marginStart="8dp"
+			android:textAppearance="?textAppearanceSubtitle1"
 			android:textColor="@color/white"
-			app:layout_constraintTop_toBottomOf="@id/chat_name"
 			app:layout_constraintStart_toEndOf="@id/image_calendar"
-			tools:text="Tomorrow, 7:00 a.m."/>
+			app:layout_constraintTop_toBottomOf="@id/chat_name"
+			tools:text="Tomorrow, 7:00 a.m." />
 
 	</androidx.constraintlayout.widget.ConstraintLayout>
 

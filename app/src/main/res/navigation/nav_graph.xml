@@ -7,7 +7,7 @@
 
 	<fragment
 		android:id="@+id/passengerHomeFragment"
-		android:name="com.abmodel.uwheels.ui.passenger.HomeFragment"
+		android:name="com.abmodel.uwheels.ui.passenger.home.HomeFragment"
 		android:label="fragment_passenger_home"
 		tools:layout="@layout/fragment_passenger_home">
 		<action
