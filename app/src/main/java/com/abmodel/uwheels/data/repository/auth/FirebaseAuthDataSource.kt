@@ -1,7 +1,9 @@
-package com.abmodel.uwheels.data
+package com.abmodel.uwheels.data.repository.auth
 
 import android.net.Uri
 import android.util.Log
+import com.abmodel.uwheels.data.FirestorePaths
+import com.abmodel.uwheels.data.Result
 import com.abmodel.uwheels.data.model.LoggedInUser
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.UserProfileChangeRequest
@@ -16,6 +18,13 @@ import kotlinx.coroutines.tasks.await
 class FirebaseAuthDataSource {
 
 	companion object {
+		@Volatile
+		private var instance: FirebaseAuthDataSource? = null
+
+		fun getInstance() = instance ?: synchronized(this) {
+			instance ?: FirebaseAuthDataSource().also { instance = it }
+		}
+
 		const val TAG = "FirebaseAuthDataSource"
 	}
 
@@ -80,9 +89,11 @@ class FirebaseAuthDataSource {
 		val user = hashMapOf(
 			"name" to name,
 			"lastName" to lastName,
-			"phone" to phone
+			"phone" to phone,
+			"isDriver" to false,
+			"driverMode" to false,
 		)
-		mDatabase.collection(FirebasePaths.USERS).document(uid).set(user)
+		mDatabase.collection(FirestorePaths.USERS).document(uid).set(user)
 	}
 
 	fun logout() {
@@ -96,13 +107,13 @@ class FirebaseAuthDataSource {
 		return false
 	}
 
-	fun getCurrentUser(): LoggedInUser {
+	suspend fun getCurrentUser(): LoggedInUser {
 		val firebaseUser = mAuth.currentUser
 		val databaseUser = mDatabase
-			.collection(FirebasePaths.USERS)
+			.collection(FirestorePaths.USERS)
 			.document(firebaseUser?.uid ?: "")
 			.get()
-			.result
+			.await()
 			.data
 
 		return LoggedInUser(
@@ -113,6 +124,24 @@ class FirebaseAuthDataSource {
 			databaseUser?.get("lastName") as String?,
 			databaseUser?.get("phone") as String?,
 			firebaseUser?.photoUrl,
+			databaseUser?.get("isDriver") as Boolean,
+			databaseUser["driverMode"] as Boolean
 		)
+	}
+
+	suspend fun makeUserDriver(userId: String) {
+		mDatabase
+			.collection(FirestorePaths.USERS)
+			.document(userId)
+			.update("isDriver", true)
+			.await()
+	}
+
+	suspend fun setDriverMode(userId: String, mode: Boolean) {
+		mDatabase
+			.collection(FirestorePaths.USERS)
+			.document(userId)
+			.update("driverMode", mode)
+			.await()
 	}
 }

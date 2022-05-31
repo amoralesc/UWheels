@@ -7,7 +7,7 @@
 
 	<fragment
 		android:id="@+id/passengerHomeFragment"
-		android:name="com.abmodel.uwheels.ui.passenger.home.HomeFragment"
+		android:name="com.abmodel.uwheels.ui.passenger.home.PassengerHomeFragment"
 		android:label="fragment_passenger_home"
 		tools:layout="@layout/fragment_passenger_home">
 		<action
@@ -28,7 +28,16 @@
 		<action
 			android:id="@+id/action_passengerHomeFragment_to_loginFragment"
 			app:destination="@id/loginFragment"
-			app:popUpTo="@id/loginFragment" />
+			app:popUpTo="@id/nav_graph.xml"
+			app:popUpToInclusive="true" />
+		<action
+			android:id="@+id/action_passengerHomeFragment_to_becomeDriverFragment"
+			app:destination="@id/becomeDriverFragment" />
+		<action
+			android:id="@+id/action_passengerHomeFragment_to_driverHomeFragment"
+			app:destination="@id/driverHomeFragment"
+			app:popUpTo="@id/nav_graph.xml"
+			app:popUpToInclusive="true" />
 	</fragment>
 	<fragment
 		android:id="@+id/loginFragment"
@@ -41,7 +50,8 @@
 		<action
 			android:id="@+id/action_loginFragment_to_passengerHomeFragment"
 			app:destination="@id/passengerHomeFragment"
-			app:popUpTo="@id/passengerHomeFragment" />
+			app:popUpTo="@id/nav_graph.xml"
+			app:popUpToInclusive="true" />
 	</fragment>
 	<fragment
 		android:id="@+id/signUpFragment"
@@ -49,17 +59,14 @@
 		android:label="fragment_sign_up"
 		tools:layout="@layout/fragment_sign_up">
 		<action
-			android:id="@+id/action_signUpFragment_to_loginFragment"
-			app:destination="@id/loginFragment"
-			app:popUpTo="@id/loginFragment" />
-		<action
 			android:id="@+id/action_signUpFragment_to_becomeDriverFragment"
 			app:destination="@id/becomeDriverFragment"
-			app:popUpTo="@id/becomeDriverFragment" />
+			app:popUpTo="@id/nav_graph.xml" />
 		<action
 			android:id="@+id/action_signUpFragment_to_passengerHomeFragment"
 			app:destination="@id/passengerHomeFragment"
-			app:popUpTo="@id/passengerHomeFragment" />
+			app:popUpTo="@id/nav_graph.xml"
+			app:popUpToInclusive="true" />
 	</fragment>
 	<fragment
 		android:id="@+id/becomeDriverFragment"
@@ -72,7 +79,8 @@
 		<action
 			android:id="@+id/action_becomeDriverFragment_to_passengerHomeFragment"
 			app:destination="@id/passengerHomeFragment"
-			app:popUpTo="@id/passengerHomeFragment" />
+			app:popUpTo="@id/nav_graph.xml"
+			app:popUpToInclusive="true" />
 	</fragment>
 	<fragment
 		android:id="@+id/driverApplicationFragment"
@@ -80,9 +88,10 @@
 		android:label="fragment_driver_application"
 		tools:layout="@layout/fragment_driver_application">
 		<action
-			android:id="@+id/action_driverApplicationFragment_to_passengerHomeFragment"
-			app:destination="@id/passengerHomeFragment"
-			app:popUpTo="@id/passengerHomeFragment" />
+			android:id="@+id/action_driverApplicationFragment_to_driverHomeFragment"
+			app:destination="@id/driverHomeFragment"
+			app:popUpTo="@id/nav_graph.xml"
+			app:popUpToInclusive="true" />
 	</fragment>
 	<fragment
 		android:id="@+id/myRidesFragment"
@@ -142,4 +151,9 @@
 			android:id="@+id/action_createRideFragment_to_searchAddressFragment"
 			app:destination="@id/searchAddressFragment" />
 	</fragment>
+	<fragment
+		android:id="@+id/driverHomeFragment"
+		android:name="com.abmodel.uwheels.ui.driver.home.DriverHomeFragment"
+		android:label="fragment_driver_home"
+		tools:layout="@layout/fragment_driver_home" />
 </navigation>

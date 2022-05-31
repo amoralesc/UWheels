@@ -17,9 +17,9 @@
 	</string-array>
 
 	<string-array name="driver_application_files">
-		<item><b>Supported files:</b> PNG, JPG, JPEG, PDF, DOCX</item>
-		<item><b>Supported files:</b> PDF, DOCX</item>
-		<item><b>Supported files:</b> PDF, DOCX</item>
+		<item><b>Supported files:</b> PNG, JPG, JPEG, PDF, WORD</item>
+		<item><b>Supported files:</b> PNG, JPG, JPEG, PDF, WORD</item>
+		<item><b>Supported files:</b> PNG, JPG, JPEG, PDF, WORD</item>
 		<item><b>Supported files:</b> PNG, JPG, JPEG</item>
 		<item>All the information will be reviewed by our team</item>
 	</string-array>

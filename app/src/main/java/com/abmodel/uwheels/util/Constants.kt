@@ -15,5 +15,8 @@ const val POLYLINE_WIDTH = 8f
 
 const val DEFAULT_ZOOM_LEVEL = 15f
 
+const val TEMP_IMG_FILE_NAME = "temp_img"
+const val TEMP_IMG_FILE_EXT = ".png"
+
 // Debug properties
 const val DEBUG_USE_SENSORS = false

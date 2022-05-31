@@ -9,7 +9,7 @@
 	android:clipToPadding="false"
 	android:paddingHorizontal="@dimen/side_margin"
 	android:paddingVertical="24dp"
-	tools:context=".ui.passenger.home.HomeFragment">
+	tools:context=".ui.passenger.home.PassengerHomeFragment">
 
 	<!-- TODO: Per android's design recommendations,
 	 	this view shouldn't be full of buttons but

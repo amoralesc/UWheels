@@ -9,30 +9,35 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.abmodel.uwheels.R
+import com.abmodel.uwheels.data.repository.auth.FirebaseAuthRepository
 import com.abmodel.uwheels.databinding.FragmentPassengerHomeBinding
 import com.abmodel.uwheels.ui.shared.sensor.ShakeDetector
 import com.google.firebase.auth.FirebaseAuth
-
-enum class FromHomeFragmentDestination {
-	PROFILE,
-	RIDES,
-	CONTACTS,
-	CHATS,
-	REQUEST_RIDE,
-	CREATE_RIDE,
-	SETTINGS
-}
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 /**
  * The landing page of the app for a passenger user.
  */
-class HomeFragment : Fragment() {
+class PassengerHomeFragment : Fragment() {
 
 	companion object {
 		const val TAG = "HomeFragment"
+
+		enum class FromPassengerHomeFragmentDestination {
+			PROFILE,
+			RIDES,
+			CONTACTS,
+			CHATS,
+			REQUEST_RIDE,
+			CREATE_RIDE,
+			SETTINGS
+		}
 	}
 
 	// Binding objects to access the view elements
@@ -72,6 +77,10 @@ class HomeFragment : Fragment() {
 	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 		super.onViewCreated(view, savedInstanceState)
 
+		if (FirebaseAuthRepository.getInstance().isDriverModeOn()) {
+			goToDriverHome(false)
+		}
+
 		binding.apply {
 			// Set the greeting
 			userName.text = getString(
@@ -80,26 +89,31 @@ class HomeFragment : Fragment() {
 			)
 
 			// Set the click listeners for the navigation buttons
+			// Driver mode needs an additional check
+			driverMode.setOnClickListener {
+				onDriverModePressed()
+			}
+			// The other buttons are set to navigate to the corresponding destinations
 			userImage.setOnClickListener {
-				goToNextScreen(FromHomeFragmentDestination.PROFILE)
+				goToNextScreen(FromPassengerHomeFragmentDestination.PROFILE)
 			}
 			myRides.setOnClickListener {
-				goToNextScreen(FromHomeFragmentDestination.RIDES)
+				goToNextScreen(FromPassengerHomeFragmentDestination.RIDES)
 			}
 			contacts.setOnClickListener {
-				goToNextScreen(FromHomeFragmentDestination.CONTACTS)
+				goToNextScreen(FromPassengerHomeFragmentDestination.CONTACTS)
 			}
 			chats.setOnClickListener {
-				goToNextScreen(FromHomeFragmentDestination.CHATS)
+				goToNextScreen(FromPassengerHomeFragmentDestination.CHATS)
 			}
 			requestRide.setOnClickListener {
-				goToNextScreen(FromHomeFragmentDestination.REQUEST_RIDE)
+				goToNextScreen(FromPassengerHomeFragmentDestination.REQUEST_RIDE)
 			}
 			createRide.setOnClickListener {
-				goToNextScreen(FromHomeFragmentDestination.CREATE_RIDE)
+				goToNextScreen(FromPassengerHomeFragmentDestination.CREATE_RIDE)
 			}
 			settings.setOnClickListener {
-				goToNextScreen(FromHomeFragmentDestination.SETTINGS)
+				goToNextScreen(FromPassengerHomeFragmentDestination.SETTINGS)
 			}
 		}
 	}
@@ -126,9 +140,9 @@ class HomeFragment : Fragment() {
 	/**
 	 * Navigate to the destination fragment
 	 */
-	private fun goToNextScreen(destination: FromHomeFragmentDestination) {
+	private fun goToNextScreen(destination: FromPassengerHomeFragmentDestination) {
 		when (destination) {
-			FromHomeFragmentDestination.PROFILE -> {
+			FromPassengerHomeFragmentDestination.PROFILE -> {
 				// TODO: replace with actual profile fragment
 				Log.i(TAG, "Not implemented yet")
 				FirebaseAuth.getInstance().signOut()
@@ -136,34 +150,70 @@ class HomeFragment : Fragment() {
 					R.id.action_passengerHomeFragment_to_loginFragment
 				)
 			}
-			FromHomeFragmentDestination.RIDES -> {
+			FromPassengerHomeFragmentDestination.RIDES -> {
 				findNavController().navigate(
 					R.id.action_passengerHomeFragment_to_myRidesFragment
 				)
 			}
-			FromHomeFragmentDestination.CONTACTS -> {
+			FromPassengerHomeFragmentDestination.CONTACTS -> {
 				findNavController().navigate(
 					R.id.action_passengerHomeFragment_to_contactsFragment
 				)
 			}
-			FromHomeFragmentDestination.CHATS -> {
+			FromPassengerHomeFragmentDestination.CHATS -> {
 				findNavController().navigate(
 					R.id.action_passengerHomeFragment_to_chatsFragment
 				)
 			}
-			FromHomeFragmentDestination.REQUEST_RIDE -> {
+			FromPassengerHomeFragmentDestination.REQUEST_RIDE -> {
 				findNavController().navigate(
 					R.id.action_passengerHomeFragment_to_requestRideFragment
 				)
 			}
-			FromHomeFragmentDestination.CREATE_RIDE -> {
+			FromPassengerHomeFragmentDestination.CREATE_RIDE -> {
 				findNavController().navigate(
 					R.id.action_passengerHomeFragment_to_passengerCreateRideFragment
 				)
 			}
-			FromHomeFragmentDestination.SETTINGS -> {
+			FromPassengerHomeFragmentDestination.SETTINGS -> {
 				Log.i(TAG, "Not implemented yet")
 			}
 		}
+	}
+
+	/**
+	 * Setup an alert dialog to ask the user if they want to go to the driver screen
+	 * * If the user is a driver, it should navigate to the driver's home
+	 * * If the user is not a driver, it should navigate to the become driver screen
+	 */
+	private fun onDriverModePressed() {
+		AlertDialog
+			.Builder(requireContext())
+			.setTitle(getString(R.string.activate_driver_mode))
+			.setPositiveButton(R.string.ok) { _, _ ->
+				if (FirebaseAuthRepository.getInstance().isDriver()) {
+					goToDriverHome()
+				} else {
+					binding.driverMode.isChecked = false
+					findNavController().navigate(
+						R.id.action_passengerHomeFragment_to_becomeDriverFragment
+					)
+				}
+			}
+			.setNegativeButton(R.string.cancel) { _, _ ->
+				binding.driverMode.isChecked = false
+			}
+			.show()
+	}
+
+	private fun goToDriverHome(setDriverModeOn: Boolean = true) {
+		if (setDriverModeOn) {
+			lifecycleScope.launch(Dispatchers.Main) {
+				FirebaseAuthRepository.getInstance().setDriverMode(true)
+			}
+		}
+		findNavController().navigate(
+			R.id.action_passengerHomeFragment_to_driverHomeFragment
+		)
 	}
 }

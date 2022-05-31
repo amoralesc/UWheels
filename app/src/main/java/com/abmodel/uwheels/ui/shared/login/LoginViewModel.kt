@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.abmodel.uwheels.R
-import com.abmodel.uwheels.data.FirebaseAuthRepository
+import com.abmodel.uwheels.data.repository.auth.FirebaseAuthRepository
 import com.abmodel.uwheels.ui.shared.data.FormResult
 import com.abmodel.uwheels.util.isEmailValid
 import com.abmodel.uwheels.util.isPasswordValid
@@ -21,7 +21,13 @@ class LoginViewModel : ViewModel() {
 
 	init {
 		if (authRepository.isLoggedIn()) {
-			_loginResult.value = FormResult(true)
+			// Launch a coroutine to fetch the user
+			// [Dispatchers.Main] is used to ensure
+			// the user is fetched blocking the ui thread
+			viewModelScope.launch(Dispatchers.Main) {
+				authRepository.fetchLoggedInUser()
+				_loginResult.postValue(FormResult(true))
+			}
 		} else {
 			_loginResult.value = FormResult()
 		}

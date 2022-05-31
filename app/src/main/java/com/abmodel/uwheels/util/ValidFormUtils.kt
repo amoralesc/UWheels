@@ -4,7 +4,7 @@ import android.util.Patterns
 import java.util.regex.Pattern
 
 /**
- * Checks if the email is valid. It uses ReGex pattern matching.
+ * Checks if the email is valid. It uses [Patterns.EMAIL_ADDRESS] Regex pattern.
  *
  * @param email the email to be checked
  * @return true if the email is valid, false otherwise

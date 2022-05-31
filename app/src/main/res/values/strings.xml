@@ -106,4 +106,12 @@
 	<!-- Permissions -->
 	<string name="request_permission">Request permission</string>
 	<string name="dismiss">Dismiss</string>
+	<string name="activate_driver_mode">Activate Driver Mode?</string>
+	<string name="ok">OK</string>
+	<string name="welcome_driver">Welcome to the Drivers Family!</string>
+	<string name="license_files_name">license%d.%s</string>
+	<string name="ownership_files_name">ownership%d.%s</string>
+	<string name="insurance_files_name">insurance%d.%s</string>
+	<string name="vehicle_pics_name">picture%d.%s</string>
+	<string name="vehicle_detail_name">detail%d.%s</string>
 </resources>

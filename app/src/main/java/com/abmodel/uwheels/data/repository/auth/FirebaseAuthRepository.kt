@@ -1,24 +1,10 @@
-package com.abmodel.uwheels.data
+package com.abmodel.uwheels.data.repository.auth
 
 import android.net.Uri
 import android.util.Log
+import com.abmodel.uwheels.data.Result
 import com.abmodel.uwheels.data.model.LoggedInUser
 import com.google.firebase.auth.AuthResult
-
-/**
- * Login repository interface that provides the data access layer for the login
- */
-interface AuthRepository {
-	suspend fun login(email: String, password: String): Boolean
-	suspend fun signUp(
-		email: String, password: String, name: String,
-		lastName: String, phone: String, photoUri: Uri?
-	): Boolean
-
-	fun logout()
-	fun isLoggedIn(): Boolean
-	fun getLoggedInUser(): LoggedInUser
-}
 
 /**
  * Class that requests authentication and user information from the remote data source and
@@ -34,12 +20,13 @@ class FirebaseAuthRepository internal constructor(
 	 * throughout the application lifecycle.
 	 */
 	companion object {
+		@Volatile
 		private var instance: FirebaseAuthRepository? = null
 
 		fun getInstance(): FirebaseAuthRepository {
 			return instance ?: synchronized(this) {
 				instance ?: FirebaseAuthRepository(
-					FirebaseAuthDataSource()
+					FirebaseAuthDataSource.getInstance()
 				).also { instance = it }
 			}
 		}
@@ -48,13 +35,11 @@ class FirebaseAuthRepository internal constructor(
 	}
 
 	// in-memory cache of the loggedInUser object
+	// TODO: Could use Flow to update in real-time
 	private var _user: LoggedInUser? = null
 
 	init {
 		_user = null
-		if (isLoggedIn()) {
-			updateLoggedInUser()
-		}
 	}
 
 	override suspend fun login(email: String, password: String): Boolean {
@@ -62,7 +47,7 @@ class FirebaseAuthRepository internal constructor(
 		Log.d(TAG, "Login: $result")
 
 		if (result is Result.Success<AuthResult> && result.data.user != null) {
-			updateLoggedInUser()
+			fetchLoggedInUser()
 			return true
 		}
 		return false
@@ -78,14 +63,21 @@ class FirebaseAuthRepository internal constructor(
 		Log.d(TAG, "Sign up: $result")
 
 		if (result is Result.Success<AuthResult> && result.data.user != null) {
-			updateLoggedInUser()
+			fetchLoggedInUser()
 			return true
 		}
 		return false
 	}
 
+	override suspend fun fetchLoggedInUser() {
+		mAuth.getCurrentUser().run {
+			_user = this
+		}
+	}
+
 	override fun logout() {
 		mAuth.logout()
+		_user = null
 	}
 
 	override fun isLoggedIn(): Boolean {
@@ -93,13 +85,24 @@ class FirebaseAuthRepository internal constructor(
 	}
 
 	override fun getLoggedInUser(): LoggedInUser {
-		if (_user == null) {
-			updateLoggedInUser()
-		}
 		return _user!!
 	}
 
-	private fun updateLoggedInUser() {
-	    _user = mAuth.getCurrentUser()
+	override fun isDriver(): Boolean {
+		return _user!!.isDriver
+	}
+
+	override fun isDriverModeOn(): Boolean {
+		return _user!!.driverMode
+	}
+
+	override suspend fun makeUserDriver() {
+		_user!!.isDriver = true
+		mAuth.makeUserDriver(_user!!.uid)
+	}
+
+	override suspend fun setDriverMode(driverMode: Boolean) {
+		_user!!.driverMode = driverMode
+		mAuth.setDriverMode(_user!!.uid, driverMode)
 	}
 }

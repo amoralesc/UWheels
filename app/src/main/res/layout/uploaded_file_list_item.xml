@@ -4,6 +4,8 @@
 	xmlns:tools="http://schemas.android.com/tools"
 	android:layout_width="match_parent"
 	android:layout_height="wrap_content"
+	android:clickable="true"
+	android:focusable="true"
 	android:foreground="?attr/selectableItemBackground"
 	android:orientation="horizontal"
 	android:padding="8dp"
@@ -11,15 +13,15 @@
 	tools:ignore="RtlSymmetry">
 
 	<ImageView
-		android:id="@+id/image_file_preview"
+		android:id="@+id/file_preview"
 		android:layout_width="60dp"
 		android:layout_height="60dp"
 		android:scaleType="fitCenter"
 		app:layout_constraintBottom_toBottomOf="parent"
 		app:layout_constraintStart_toStartOf="parent"
 		app:layout_constraintTop_toTopOf="parent"
-		tools:ignore="ContentDescription,ImageContrastCheck"
-		tools:srcCompat="@drawable/ic_file" />
+		app:srcCompat="@drawable/ic_file"
+		tools:ignore="ContentDescription,ImageContrastCheck" />
 
 	<ImageButton
 		android:id="@+id/remove"
@@ -34,20 +36,18 @@
 		app:srcCompat="@drawable/ic_close"
 		app:tint="@color/dark_gray" />
 
-	<EditText
+	<TextView
 		android:id="@+id/file_name"
 		android:layout_width="0dp"
 		android:layout_height="wrap_content"
 		android:layout_marginStart="@dimen/margin_between_elements_short"
-		android:ems="10"
-		android:hint="@string/file_name"
-		android:importantForAutofill="no"
-		android:inputType="text"
-		android:minHeight="@dimen/min_size_clickable"
+		android:letterSpacing="0.02"
+		android:textAppearance="?textAppearanceBody1"
 		android:textColor="@color/dark_gray"
 		app:layout_constraintBottom_toBottomOf="parent"
 		app:layout_constraintEnd_toStartOf="@+id/remove"
-		app:layout_constraintStart_toEndOf="@+id/image_file_preview"
-		app:layout_constraintTop_toTopOf="parent" />
+		app:layout_constraintStart_toEndOf="@+id/file_preview"
+		app:layout_constraintTop_toTopOf="parent"
+		tools:text="@string/file_name" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
