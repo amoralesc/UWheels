@@ -1,26 +1,24 @@
 package com.abmodel.uwheels.ui.shared.login
 
-import android.util.Log
 import androidx.lifecycle.*
 import com.abmodel.uwheels.R
+import com.abmodel.uwheels.data.FirebaseAuthRepository
 import com.abmodel.uwheels.ui.shared.data.FormResult
 import com.abmodel.uwheels.util.isEmailValid
 import com.abmodel.uwheels.util.isPasswordValid
-import com.google.firebase.auth.FirebaseAuth
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
-class LoginViewModel: ViewModel() {
+class LoginViewModel : ViewModel() {
+
+	private val authRepository = FirebaseAuthRepository.getInstance()
 
 	private val _loginResult = MutableLiveData<FormResult>()
 	val loginResult: LiveData<FormResult> = _loginResult
 
-	private val mAuth = FirebaseAuth.getInstance()
-
 	init {
-		// Check if user is already logged in
-		if (mAuth.currentUser != null) {
-			_loginResult.value = FormResult(
-				success = true, error = null
-			)
+		if (authRepository.isLoggedIn()) {
+			_loginResult.value = FormResult(true)
 		} else {
 			_loginResult.value = FormResult()
 		}
@@ -36,22 +34,15 @@ class LoginViewModel: ViewModel() {
 	 */
 	fun login(email: String, password: String) {
 
-		if (checkLoginForm(email, password)) {
+		viewModelScope.launch(Dispatchers.IO) {
+			if (checkLoginForm(email, password)) {
 
-			mAuth.signInWithEmailAndPassword(email, password)
-				.addOnCompleteListener { task ->
-					if (task.isSuccessful) {
-						Log.d(LoginFragment.TAG, "Login successful")
-						_loginResult.value = FormResult(
-							success = true, error = null
-						)
-					} else {
-						Log.d(LoginFragment.TAG, "Login failed")
-						_loginResult.value = FormResult(
-							error = R.string.login_failed
-						)
-					}
+				if (authRepository.login(email, password)) {
+					_loginResult.postValue(FormResult(success = true))
+				} else {
+					_loginResult.postValue(FormResult(error = R.string.login_failed))
 				}
+			}
 		}
 	}
 

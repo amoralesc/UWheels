@@ -1,5 +1,10 @@
 package com.abmodel.uwheels.data.model
 
+enum class VehicleType{
+    CAR,
+    MOTORBIKE
+}
+
 data class Vehicle (
     val nickname : String,
     val vehicleType : VehicleType,
@@ -9,9 +14,3 @@ data class Vehicle (
     val variant : String,
     val status : Boolean
 )
-
-enum class VehicleType{
-    CAR,
-    MOTORBIKE
-}
-

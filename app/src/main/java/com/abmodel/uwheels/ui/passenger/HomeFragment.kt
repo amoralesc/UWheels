@@ -72,10 +72,14 @@ class HomeFragment : Fragment() {
 	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 		super.onViewCreated(view, savedInstanceState)
 
-		createShakeDetector()
-
-		// Set the click listeners for the navigation buttons
 		binding.apply {
+			// Set the greeting
+			userName.text = getString(
+				R.string.greeting_name,
+				FirebaseAuth.getInstance().currentUser?.displayName
+			)
+
+			// Set the click listeners for the navigation buttons
 			userImage.setOnClickListener {
 				goToNextScreen(FromHomeFragmentDestination.PROFILE)
 			}

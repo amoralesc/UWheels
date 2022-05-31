@@ -40,7 +40,7 @@
 	<string name="camera">Camera</string>
 	<string name="profile_is_verified">This profile is verified</string>
 	<string name="press_open_profile">Press to open the profile</string>
-	<string name="greeting_name">Hello!</string>
+	<string name="greeting_name">Hello, %s</string>
 	<string name="driver_mode">Driver mode</string>
 	<string name="my_rides">My rides</string>
 	<string name="my_contacts">My contacts</string>
