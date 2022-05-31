@@ -10,7 +10,7 @@
 	android:orientation="horizontal">
 
 	<TextView
-		android:id="@+id/chat_name"
+		android:id="@+id/name"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
 		android:layout_marginHorizontal="20dp"
@@ -23,33 +23,83 @@
 		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintStart_toStartOf="parent"
 		app:layout_constraintTop_toTopOf="parent"
-		tools:text="Address name" />
+		tools:text="UWheels" />
+
+	<ImageView
+		android:id="@+id/image_source"
+		android:layout_width="16dp"
+		android:layout_height="16dp"
+		android:padding="4dp"
+		app:layout_constraintBottom_toBottomOf="@id/source"
+		app:layout_constraintStart_toStartOf="@id/name"
+		app:layout_constraintTop_toTopOf="@id/source"
+		app:srcCompat="@drawable/ic_circle"
+		app:tint="@color/black"
+		tools:ignore="ContentDescription" />
+
+	<TextView
+		android:id="@+id/source"
+		android:layout_width="0dp"
+		android:layout_height="wrap_content"
+		android:layout_marginStart="12dp"
+		android:layout_marginEnd="20dp"
+		android:ellipsize="end"
+		android:maxLines="1"
+		android:textAppearance="?textAppearanceSubtitle1"
+		app:layout_constraintStart_toEndOf="@id/image_source"
+		app:layout_constraintTop_toBottomOf="@id/name"
+		tools:text="Pontificia Universidad Javeriana" />
+
+	<ImageView
+		android:id="@+id/image_destination"
+		android:layout_width="16dp"
+		android:layout_height="16dp"
+		android:padding="4dp"
+		app:layout_constraintBottom_toBottomOf="@id/destination"
+		app:layout_constraintStart_toStartOf="@id/name"
+		app:layout_constraintTop_toTopOf="@id/destination"
+		app:srcCompat="@drawable/ic_circle"
+		app:tint="@color/color_primary"
+		tools:ignore="ContentDescription" />
+
+	<TextView
+		android:id="@+id/destination"
+		android:layout_width="0dp"
+		android:layout_height="wrap_content"
+		android:layout_marginEnd="20dp"
+		android:ellipsize="end"
+		android:maxLines="1"
+		android:textAppearance="?textAppearanceSubtitle1"
+		app:layout_constraintStart_toStartOf="@id/source"
+		app:layout_constraintTop_toBottomOf="@id/source"
+		tools:text="Andino Shopping Mall" />
 
 	<ImageView
 		android:id="@+id/image_calendar"
 		android:layout_width="16dp"
 		android:layout_height="16dp"
-		app:layout_constraintBottom_toBottomOf="@id/chat_date"
-		app:layout_constraintStart_toStartOf="@id/chat_name"
-		app:layout_constraintTop_toTopOf="@id/chat_date"
+		app:layout_constraintBottom_toBottomOf="@id/date"
+		app:layout_constraintStart_toStartOf="@id/name"
+		app:layout_constraintTop_toTopOf="@id/date"
 		app:srcCompat="@drawable/ic_calendar_padded"
 		app:tint="#575757"
 		tools:ignore="ContentDescription" />
 
 	<TextView
-		android:id="@+id/chat_date"
+		android:id="@+id/date"
 		android:layout_width="0dp"
 		android:layout_height="wrap_content"
-		android:layout_marginStart="8dp"
 		android:layout_marginEnd="20dp"
 		android:layout_marginBottom="6dp"
+		android:ellipsize="end"
+		android:maxLines="1"
 		android:textAppearance="?textAppearanceSubtitle1"
 		android:textColor="#575757"
 		app:layout_constraintBottom_toTopOf="@id/chat_divider"
 		app:layout_constraintEnd_toEndOf="parent"
-		app:layout_constraintStart_toEndOf="@id/image_calendar"
-		app:layout_constraintTop_toBottomOf="@id/chat_name"
-		tools:text="Address line" />
+		app:layout_constraintStart_toStartOf="@id/destination"
+		app:layout_constraintTop_toBottomOf="@id/destination"
+		tools:text="07/06/2022 07:00 a.m." />
 
 	<com.google.android.material.divider.MaterialDivider
 		android:id="@+id/chat_divider"

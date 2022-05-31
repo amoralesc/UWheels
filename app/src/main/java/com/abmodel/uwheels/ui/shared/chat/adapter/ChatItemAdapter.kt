@@ -21,10 +21,12 @@ class ChatItemAdapter(
 
 		fun bind(chat: Chat) {
 			binding.apply {
-				chatName.text = chat.name
+				name.text = chat.name
+				source.text = chat.source.mainText
+				destination.text = chat.destination.mainText
 				chat.date.apply {
-					chatDate.text =
-						chatDate.context.getString(
+					date.text =
+						date.context.getString(
 							R.string.chat_date,
 							formatDateFromMillis(this.millis),
 							formatTime(this.hour, this.minute)
