@@ -60,6 +60,15 @@
 	</style>
 
 	<!-- TextInputLayout OutlinedBox -->
+	<style name="Widget.UWheels.TextInputEditText.OutlinedBox" parent="">
+		<item name="android:fontFamily">@font/poppins</item>
+		<item name="android:minHeight">48dp</item>
+		<item name="android:paddingTop">0dp</item>
+		<item name="android:paddingBottom">0dp</item>
+		<item name="android:textSize">@dimen/text_size_medium</item>
+		<item name="android:textCursorDrawable">@null</item>
+	</style>
+
 	<!-- Light (brighter color) -->
 	<style name="Widget.UWheels.TextInputLayout.OutlinedBox.Light" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 		<item name="boxStrokeColor">@color/text_input_light_color_state_list</item>
@@ -82,10 +91,37 @@
 		<item name="android:textCursorDrawable">@null</item>
 	</style>
 
+	<!-- Dark (darker color) -->
+	<style name="Widget.UWheels.TextInputLayout.OutlinedBox.Dark" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+		<item name="boxStrokeColor">@color/text_input_dark_color_state_list</item>
+		<item name="android:textColorHint">@color/dark_gray_80</item>
+		<item name="hintEnabled">false</item>
+		<item name="colorControlActivated">@color/dark_gray</item>
+		<item name="colorControlNormal">@color/dark_gray</item>
+		<item name="android:textAppearance">@style/Widget.MaterialComponents.Button.OutlinedButton
+		</item>
+	</style>
+
+	<style name="Widget.UWheels.TextInputEditText.OutlinedBox.Dark" parent="Widget.UWheels.TextInputEditText.OutlinedBox">
+		<item name="android:textColor">@color/dark_gray</item>
+		<item name="android:textColorHint">@color/dark_gray_80</item>
+	</style>
+
 	<!-- Chips -->
 	<style name="Widget.UWheels.Chip.Choice" parent="Widget.MaterialComponents.Chip.Choice">
 		<!-- Chip background color selector -->
 		<item name="android:textColor">@color/chip_text_color_state_list</item>
 		<item name="chipBackgroundColor">@color/chip_color_state_list</item>
+	</style>
+
+	<!-- Switch -->
+	<style name="Widget.UWheels.Switch" parent="">
+		<item name="colorAccent">?colorPrimary</item>
+	</style>
+
+	<!-- Shapeable Image View -->
+	<style name="shapeableImageViewRounded">
+		<item name="cornerFamily">rounded</item>
+		<item name="cornerSize">50%</item>
 	</style>
 </resources>

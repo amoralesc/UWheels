@@ -11,4 +11,5 @@ object StoragePaths {
 	const val USERS = "users"
 	const val DRIVER = "driver"
 	const val DRIVER_APPLICATION = "$DRIVER/application"
+	const val IMG = "img"
 }

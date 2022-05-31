@@ -17,6 +17,8 @@ import com.abmodel.uwheels.R
 import com.abmodel.uwheels.data.repository.auth.FirebaseAuthRepository
 import com.abmodel.uwheels.databinding.FragmentPassengerHomeBinding
 import com.abmodel.uwheels.ui.shared.sensor.ShakeDetector
+import com.abmodel.uwheels.util.DEBUG_USE_SENSORS
+import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -27,7 +29,7 @@ import kotlinx.coroutines.launch
 class PassengerHomeFragment : Fragment() {
 
 	companion object {
-		const val TAG = "HomeFragment"
+		const val TAG = "PassengerHomeFragment"
 
 		enum class FromPassengerHomeFragmentDestination {
 			PROFILE,
@@ -82,11 +84,22 @@ class PassengerHomeFragment : Fragment() {
 		}
 
 		binding.apply {
-			// Set the greeting
-			userName.text = getString(
-				R.string.greeting_name,
-				FirebaseAuth.getInstance().currentUser?.displayName
-			)
+			FirebaseAuthRepository.getInstance().getLoggedInUser().let { user ->
+				// Set the greeting
+				userName.text = getString(
+					R.string.greeting_name,
+					user.name
+				)
+
+				// Set the profile photo
+				if (user.photoUrl != null) {
+					Glide.with(requireContext())
+						.load(user.photoUrl)
+						.placeholder(R.drawable.ic_account_circle)
+						.error(R.drawable.ic_account_circle)
+						.into(profilePhoto)
+				}
+			}
 
 			// Set the click listeners for the navigation buttons
 			// Driver mode needs an additional check
@@ -94,7 +107,7 @@ class PassengerHomeFragment : Fragment() {
 				onDriverModePressed()
 			}
 			// The other buttons are set to navigate to the corresponding destinations
-			userImage.setOnClickListener {
+			profilePhoto.setOnClickListener {
 				goToNextScreen(FromPassengerHomeFragmentDestination.PROFILE)
 			}
 			myRides.setOnClickListener {
@@ -120,15 +133,19 @@ class PassengerHomeFragment : Fragment() {
 
 	override fun onResume() {
 		super.onResume()
-		mSensorManager.registerListener(
-			mShakeDetector,
-			mAccelerometer,
-			SensorManager.SENSOR_DELAY_UI
-		)
+		if (DEBUG_USE_SENSORS) {
+			mSensorManager.registerListener(
+				mShakeDetector,
+				mAccelerometer,
+				SensorManager.SENSOR_DELAY_UI
+			)
+		}
 	}
 
 	override fun onPause() {
-		mSensorManager.unregisterListener(mShakeDetector)
+		if (DEBUG_USE_SENSORS) {
+			mSensorManager.unregisterListener(mShakeDetector)
+		}
 		super.onPause()
 	}
 
@@ -143,11 +160,8 @@ class PassengerHomeFragment : Fragment() {
 	private fun goToNextScreen(destination: FromPassengerHomeFragmentDestination) {
 		when (destination) {
 			FromPassengerHomeFragmentDestination.PROFILE -> {
-				// TODO: replace with actual profile fragment
-				Log.i(TAG, "Not implemented yet")
-				FirebaseAuth.getInstance().signOut()
 				findNavController().navigate(
-					R.id.action_passengerHomeFragment_to_loginFragment
+					R.id.action_passengerHomeFragment_to_profileDetailsFragment
 				)
 			}
 			FromPassengerHomeFragmentDestination.RIDES -> {

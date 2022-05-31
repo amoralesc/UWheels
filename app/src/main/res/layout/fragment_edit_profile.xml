@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:background="?colorSecondary"
+	android:clipChildren="false"
+	android:clipToPadding="false"
+	android:paddingHorizontal="24dp"
+	android:paddingVertical="24dp"
+	tools:context=".ui.shared.profile.EditProfileFragment">
+
+	<com.abmodel.uwheels.BackButton
+		android:id="@+id/back"
+		style="@style/Widget.UWheels.Button.BackButton"
+		android:elevation="4dp"
+		android:paddingHorizontal="@dimen/back_button_padding"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toTopOf="parent"
+		tools:ignore="SpeakableTextPresentCheck" />
+
+	<TextView
+		android:id="@+id/text_title"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:fontFamily="@font/poppins_medium"
+		android:text="@string/edit_profile"
+		android:textAppearance="?textAppearanceHeadline4"
+		android:textColor="@color/dark_gray"
+		app:layout_constraintStart_toStartOf="@id/back"
+		app:layout_constraintTop_toBottomOf="@id/back" />
+
+	<androidx.constraintlayout.widget.ConstraintLayout
+		android:id="@+id/profile_photo_layout"
+		android:layout_width="160dp"
+		android:layout_height="160dp"
+		app:layout_constraintEnd_toStartOf="@id/edit_image_layout"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toBottomOf="@id/text_title">
+
+		<com.google.android.material.imageview.ShapeableImageView
+			android:id="@+id/profile_photo"
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			android:clickable="true"
+			android:contentDescription="@string/profile_picture"
+			android:focusable="true"
+			android:padding="5dp"
+			android:scaleType="centerCrop"
+			app:layout_constraintBottom_toTopOf="parent"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toTopOf="parent"
+			app:shapeAppearanceOverlay="@style/shapeableImageViewRounded"
+			app:srcCompat="@drawable/ic_account_circle" />
+
+		<ImageView
+			android:id="@+id/is_verified"
+			android:layout_width="70dp"
+			android:layout_height="70dp"
+			android:contentDescription="@string/profile_is_verified"
+			android:elevation="2dp"
+			android:visibility="gone"
+			app:layout_constraintBottom_toBottomOf="parent"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:srcCompat="@drawable/ic_checkmark"
+			tools:visibility="visible" />
+
+	</androidx.constraintlayout.widget.ConstraintLayout>
+
+	<LinearLayout
+		android:id="@+id/edit_image_layout"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:orientation="vertical"
+		app:layout_constraintBottom_toBottomOf="@id/profile_photo_layout"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toEndOf="@id/profile_photo_layout"
+		app:layout_constraintTop_toTopOf="@id/profile_photo_layout">
+
+		<Button
+			android:id="@+id/upload"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:fontFamily="@font/poppins_medium"
+			android:text="@string/upload"
+			app:icon="@drawable/ic_upload_padded" />
+
+		<Button
+			android:id="@+id/camera"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginTop="8dp"
+			android:fontFamily="@font/poppins_medium"
+			android:text="@string/camera"
+			app:icon="@drawable/ic_camera_padded" />
+
+	</LinearLayout>
+
+	<TextView
+		android:id="@+id/label_name"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginTop="8dp"
+		android:text="@string/name"
+		android:textAppearance="?textAppearanceHeadline5"
+		android:textColor="?colorPrimary"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toBottomOf="@id/profile_photo_layout" />
+
+	<com.google.android.material.textfield.TextInputLayout
+		android:id="@+id/name_layout"
+		style="@style/Widget.UWheels.TextInputLayout.OutlinedBox.Dark"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_marginTop="4dp"
+		android:theme="@style/Widget.UWheels.TextInputLayout.OutlinedBox.Dark"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toBottomOf="@id/label_name">
+
+		<com.google.android.material.textfield.TextInputEditText
+			android:id="@+id/name"
+			style="@style/Widget.UWheels.TextInputEditText.OutlinedBox.Dark"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:hint="@string/name"
+			android:inputType="textPersonName"
+			tools:ignore="TextContrastCheck"
+			tools:text="@tools:sample/first_names" />
+
+	</com.google.android.material.textfield.TextInputLayout>
+
+	<TextView
+		android:id="@+id/label_last_name"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginTop="8dp"
+		android:text="@string/last_name"
+		android:textAppearance="?textAppearanceHeadline5"
+		android:textColor="?colorPrimary"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toBottomOf="@id/name_layout" />
+
+	<com.google.android.material.textfield.TextInputLayout
+		android:id="@+id/last_name_layout"
+		style="@style/Widget.UWheels.TextInputLayout.OutlinedBox.Dark"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_marginTop="4dp"
+		android:theme="@style/Widget.UWheels.TextInputLayout.OutlinedBox.Dark"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toBottomOf="@id/label_last_name">
+
+		<com.google.android.material.textfield.TextInputEditText
+			android:id="@+id/last_name"
+			style="@style/Widget.UWheels.TextInputEditText.OutlinedBox.Dark"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:hint="@string/last_name"
+			android:inputType="textPersonName"
+			tools:ignore="TextContrastCheck"
+			tools:text="@tools:sample/last_names" />
+
+	</com.google.android.material.textfield.TextInputLayout>
+
+	<TextView
+		android:id="@+id/label_phone_number"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginTop="8dp"
+		android:text="@string/phone_number"
+		android:textAppearance="?textAppearanceHeadline5"
+		android:textColor="?colorPrimary"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toBottomOf="@id/last_name_layout" />
+
+	<com.google.android.material.textfield.TextInputLayout
+		android:id="@+id/phone_number_layout"
+		style="@style/Widget.UWheels.TextInputLayout.OutlinedBox.Dark"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_marginTop="4dp"
+		android:theme="@style/Widget.UWheels.TextInputLayout.OutlinedBox.Dark"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toBottomOf="@id/label_phone_number">
+
+		<com.google.android.material.textfield.TextInputEditText
+			android:id="@+id/phone_number"
+			style="@style/Widget.UWheels.TextInputEditText.OutlinedBox.Dark"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:hint="@string/phone_number"
+			android:inputType="textPersonName"
+			tools:ignore="TextContrastCheck"
+			tools:text="@tools:sample/us_phones" />
+
+	</com.google.android.material.textfield.TextInputLayout>
+
+	<Button
+		android:id="@+id/save"
+		style="@style/Widget.UWheels.ButtonPrimary.Medium"
+		android:layout_width="match_parent"
+		android:layout_height="60dp"
+		android:elevation="4dp"
+		android:gravity="center"
+		android:text="@string/save"
+		app:layout_constraintBottom_toTopOf="@id/cancel"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		tools:ignore="TextContrastCheck" />
+
+	<Button
+		android:id="@+id/cancel"
+		style="@style/Widget.UWheels.ButtonPrimary.Medium"
+		android:layout_width="match_parent"
+		android:layout_height="60dp"
+		android:elevation="4dp"
+		android:gravity="center"
+		android:text="@string/cancel"
+		app:layout_constraintBottom_toBottomOf="parent"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		tools:ignore="TextContrastCheck" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

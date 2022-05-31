@@ -114,4 +114,12 @@
 	<string name="insurance_files_name">insurance%d.%s</string>
 	<string name="vehicle_pics_name">picture%d.%s</string>
 	<string name="vehicle_detail_name">detail%d.%s</string>
+	<string name="deactivate_driver_mode">Deactivate Driver Mode?</string>
+	<string name="profile_picture">Profile picture</string>
+	<string name="logout">Logout</string>
+	<string name="edit_profile">Edit Profile</string>
+	<string name="is_driver">Is Driver?</string>
+	<string name="save">Save</string>
+	<string name="empty_fields">All fields must be filled</string>
+	<string name="uploaded_profile_picture_name">profilePicture.%s</string>
 </resources>

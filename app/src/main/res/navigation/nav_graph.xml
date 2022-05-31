@@ -38,6 +38,9 @@
 			app:destination="@id/driverHomeFragment"
 			app:popUpTo="@id/nav_graph.xml"
 			app:popUpToInclusive="true" />
+		<action
+			android:id="@+id/action_passengerHomeFragment_to_profileDetailsFragment"
+			app:destination="@id/profileDetailsFragment" />
 	</fragment>
 	<fragment
 		android:id="@+id/loginFragment"
@@ -155,5 +158,43 @@
 		android:id="@+id/driverHomeFragment"
 		android:name="com.abmodel.uwheels.ui.driver.home.DriverHomeFragment"
 		android:label="fragment_driver_home"
-		tools:layout="@layout/fragment_driver_home" />
+		tools:layout="@layout/fragment_driver_home" >
+		<action
+			android:id="@+id/action_driverHomeFragment_to_loginFragment"
+			app:destination="@id/loginFragment"
+			app:popUpTo="@id/nav_graph.xml"
+			app:popUpToInclusive="true" />
+		<action
+			android:id="@+id/action_driverHomeFragment_to_passengerHomeFragment"
+			app:destination="@id/passengerHomeFragment"
+			app:popUpTo="@id/nav_graph.xml"
+			app:popUpToInclusive="true" />
+		<action
+			android:id="@+id/action_driverHomeFragment_to_profileDetailsFragment"
+			app:destination="@id/profileDetailsFragment" />
+	</fragment>
+	<fragment
+		android:id="@+id/profileDetailsFragment"
+		android:name="com.abmodel.uwheels.ui.shared.profile.ProfileDetailsFragment"
+		android:label="fragment_profile_details"
+		tools:layout="@layout/fragment_profile_details" >
+		<action
+			android:id="@+id/action_profileDetailsFragment_to_loginFragment"
+			app:destination="@id/loginFragment"
+			app:popUpTo="@id/nav_graph.xml"
+			app:popUpToInclusive="true" />
+		<action
+			android:id="@+id/action_profileDetailsFragment_to_editProfileFragment"
+			app:destination="@id/editProfileFragment" />
+	</fragment>
+	<fragment
+		android:id="@+id/editProfileFragment"
+		android:name="com.abmodel.uwheels.ui.shared.profile.EditProfileFragment"
+		android:label="fragment_edit_profile"
+		tools:layout="@layout/fragment_edit_profile" >
+		<action
+			android:id="@+id/action_editProfileFragment_to_profileDetailsFragment"
+			app:destination="@id/profileDetailsFragment"
+			app:popUpTo="@id/profileDetailsFragment" />
+	</fragment>
 </navigation>

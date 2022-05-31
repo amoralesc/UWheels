@@ -29,9 +29,9 @@
 		android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
 		android:textColor="@color/dark_gray"
 		android:textSize="20sp"
-		app:layout_constraintEnd_toStartOf="@id/user_image_layout"
+		app:layout_constraintEnd_toStartOf="@id/profile_photo_layout"
 		app:layout_constraintStart_toStartOf="parent"
-		app:layout_constraintTop_toTopOf="@+id/user_image_layout" />
+		app:layout_constraintTop_toTopOf="@+id/profile_photo_layout" />
 
 	<com.google.android.material.switchmaterial.SwitchMaterial
 		android:id="@+id/driver_mode"
@@ -40,7 +40,8 @@
 		android:layout_marginStart="8dp"
 		android:layout_marginBottom="8dp"
 		android:elevation="4dp"
-		app:layout_constraintBottom_toBottomOf="@id/user_image_layout"
+		android:theme="@style/Widget.UWheels.Switch"
+		app:layout_constraintBottom_toBottomOf="@id/profile_photo_layout"
 		app:layout_constraintStart_toStartOf="parent" />
 
 	<TextView
@@ -57,24 +58,26 @@
 		app:layout_constraintTop_toTopOf="@id/driver_mode" />
 
 	<androidx.constraintlayout.widget.ConstraintLayout
-		android:id="@+id/user_image_layout"
+		android:id="@+id/profile_photo_layout"
 		android:layout_width="90dp"
 		android:layout_height="90dp"
 		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintTop_toTopOf="parent">
 
 		<com.google.android.material.imageview.ShapeableImageView
-			android:id="@+id/user_image"
+			android:id="@+id/profile_photo"
 			android:layout_width="match_parent"
 			android:layout_height="match_parent"
 			android:clickable="true"
 			android:contentDescription="@string/press_open_profile"
 			android:focusable="true"
 			android:padding="5dp"
+			android:scaleType="centerCrop"
 			app:layout_constraintBottom_toTopOf="parent"
 			app:layout_constraintEnd_toEndOf="parent"
 			app:layout_constraintStart_toStartOf="parent"
 			app:layout_constraintTop_toTopOf="parent"
+			app:shapeAppearanceOverlay="@style/shapeableImageViewRounded"
 			app:srcCompat="@drawable/ic_account_circle" />
 
 		<ImageView
@@ -105,7 +108,7 @@
 		app:iconTint="@color/color_brand_blend"
 		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintStart_toStartOf="parent"
-		app:layout_constraintTop_toBottomOf="@id/user_image_layout"
+		app:layout_constraintTop_toBottomOf="@id/profile_photo_layout"
 		tools:ignore="TextContrastCheck" />
 
 	<com.abmodel.uwheels.AlertBubbleView

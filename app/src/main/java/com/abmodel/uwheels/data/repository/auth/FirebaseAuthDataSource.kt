@@ -4,12 +4,16 @@ import android.net.Uri
 import android.util.Log
 import com.abmodel.uwheels.data.FirestorePaths
 import com.abmodel.uwheels.data.Result
+import com.abmodel.uwheels.data.StoragePaths
 import com.abmodel.uwheels.data.model.LoggedInUser
+import com.abmodel.uwheels.data.model.UploadedFile
+import com.abmodel.uwheels.data.model.firebase.UserDocument
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.UserProfileChangeRequest
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.ktx.storage
 import kotlinx.coroutines.tasks.await
 
 /**
@@ -30,6 +34,7 @@ class FirebaseAuthDataSource {
 
 	private val mAuth = Firebase.auth
 	private val mDatabase = Firebase.firestore
+	private val mStorage = Firebase.storage
 
 	suspend fun login(email: String, password: String): Result<AuthResult> {
 		try {
@@ -142,6 +147,57 @@ class FirebaseAuthDataSource {
 			.collection(FirestorePaths.USERS)
 			.document(userId)
 			.update("driverMode", mode)
+			.await()
+	}
+
+	suspend fun updateUser(
+		userId: String, name: String?, lastName: String?,
+		phone: String?, uploadedPhotoFile: UploadedFile?
+	) {
+		// Get the user from the database
+		val databaseUser = mDatabase
+			.collection(FirestorePaths.USERS)
+			.document(userId)
+			.get()
+			.await()
+			.toObject(UserDocument::class.java)!!
+
+		// Update the user
+		databaseUser.name = name ?: databaseUser.name
+		databaseUser.lastName = lastName ?: databaseUser.lastName
+		databaseUser.phone = phone ?: databaseUser.phone
+
+		// Update the user in the database
+		mDatabase
+			.collection(FirestorePaths.USERS)
+			.document(userId)
+			.set(databaseUser)
+			.await()
+
+		// If the photoUri is not null, upload the photo to the storage
+		if (uploadedPhotoFile != null) {
+			val photoUri = mStorage.reference
+				.child(StoragePaths.USERS)
+				.child(userId)
+				.child(StoragePaths.IMG)
+				.child(uploadedPhotoFile.name)
+				.putFile(uploadedPhotoFile.uri)
+				.await()
+				.storage
+				.downloadUrl
+				.await()
+
+			uploadedPhotoFile.uri = photoUri
+		}
+
+		// Update the FirebaseUser
+		val firebaseUser = mAuth.currentUser!!
+		firebaseUser.updateProfile(
+			UserProfileChangeRequest.Builder()
+				.setDisplayName(name ?: firebaseUser.displayName)
+				.setPhotoUri(uploadedPhotoFile?.uri ?: firebaseUser.photoUrl)
+				.build()
+		)
 			.await()
 	}
 }

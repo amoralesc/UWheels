@@ -4,6 +4,7 @@ import android.net.Uri
 import android.util.Log
 import com.abmodel.uwheels.data.Result
 import com.abmodel.uwheels.data.model.LoggedInUser
+import com.abmodel.uwheels.data.model.UploadedFile
 import com.google.firebase.auth.AuthResult
 
 /**
@@ -104,5 +105,14 @@ class FirebaseAuthRepository internal constructor(
 	override suspend fun setDriverMode(driverMode: Boolean) {
 		_user!!.driverMode = driverMode
 		mAuth.setDriverMode(_user!!.uid, driverMode)
+	}
+
+	override suspend fun updateUser(
+		newName: String?,
+		newLastName: String?,
+		newPhone: String?,
+		newPhotoFile: UploadedFile?
+	) {
+		mAuth.updateUser(_user!!.uid, newName, newLastName, newPhone, newPhotoFile)
 	}
 }

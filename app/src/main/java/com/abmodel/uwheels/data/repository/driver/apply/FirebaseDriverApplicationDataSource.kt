@@ -46,12 +46,6 @@ class FirebaseDriverApplicationDataSource {
 				.child(filesType)
 				.child(file.name)
 				.putFile(file.uri)
-				.addOnSuccessListener {
-					Log.d(TAG, "File uploaded successfully: $file")
-				}
-				.addOnFailureListener {
-					Log.d(TAG, "File upload failed: $file")
-				}
 				.await()
 				.storage
 				.downloadUrl

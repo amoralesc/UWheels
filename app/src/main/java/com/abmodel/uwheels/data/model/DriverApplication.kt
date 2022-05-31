@@ -1,13 +1,5 @@
 package com.abmodel.uwheels.data.model
 
-import android.net.Uri
-
-data class UploadedFile(
-	val name: String,
-	val mimeType: String,
-	var uri: Uri
-)
-
 data class VehicleDetail(
 	var make: String? = null,
 	var model: String? = null,
@@ -21,5 +13,5 @@ data class DriverApplication(
 	var ownershipFiles: MutableList<UploadedFile>,
 	var insuranceFiles: MutableList<UploadedFile>,
 	var vehiclePics: MutableList<UploadedFile>,
-	val vehicleDetail: VehicleDetail
+	var vehicleDetail: VehicleDetail
 )

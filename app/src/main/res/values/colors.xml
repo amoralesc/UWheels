@@ -14,7 +14,12 @@
 	<color name="color_on_secondary">@color/black</color>
 
 	<color name="black">#FF000000</color>
+
 	<color name="dark_gray">#303030</color>
+	<color name="dark_gray_80">#CC303030</color>
+	<color name="dark_gray_60">#99303030</color>
+	<color name="dark_gray_40">#66303030</color>
+	<color name="dark_gray_20">#33303030</color>
 
 	<color name="white">#FFFFFFFF</color>
 	<color name="white_80">#CCFFFFFF</color>
