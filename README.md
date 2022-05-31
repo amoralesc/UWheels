@@ -64,7 +64,6 @@ _El equipo de ABMODEL pertenece a la Pontificia Universidad Javeriana y está co
 * **Fabio Alejandro Camargo Díaz** - [alejo2300](https://github.com/alejo2300)
 * **Alejandro Morales Contreras** - [amoralesc](https://github.com/amoralesc)
 * **Jessica Tatiana Naizaque Guevara** - [JessicaNaizaque](https://github.com/JessicaNaizaque)
-* **David Santiago Suárez Barragán** - [sdsuarez](https://github.com/sdsuarez)
 
 ### Licencia 📝
 
@@ -72,4 +71,4 @@ Este proyecto está bajo licencia Apache 2.0. Una copia de la licencia es adjunt
 
 ---
 
-⌨️con ❤️por [ABMODEL](https://github.com/orgs/IntroCompuMovil202210J/teams/abmodel) 😊
+Hecho️con ❤️por [ABMODEL](https://github.com/orgs/IntroCompuMovil202210J/teams/abmodel) 😊
