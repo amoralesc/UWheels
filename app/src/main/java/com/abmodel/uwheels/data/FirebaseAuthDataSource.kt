@@ -1,14 +1,14 @@
 package com.abmodel.uwheels.data
 
+import android.net.Uri
 import android.util.Log
-import androidx.annotation.MainThread
-import com.abmodel.uwheels.ui.shared.login.LoginFragment
+import androidx.core.net.toUri
 import com.google.firebase.auth.AuthResult
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.UserProfileChangeRequest
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.tasks.await
-import java.io.IOException
 
 /**
  * Class that handles authentication w/ login credentials and retrieves user information.
@@ -19,7 +19,7 @@ class FirebaseAuthDataSource {
 		const val TAG = "FirebaseAuthDataSource"
 	}
 
-	private val mAuth = FirebaseAuth.getInstance()
+	private val mAuth = Firebase.auth
 
 	suspend fun login(email: String, password: String): Result<AuthResult> {
 		try {
@@ -40,7 +40,9 @@ class FirebaseAuthDataSource {
 		}
 	}
 
-	suspend fun signUp(email: String, password: String, displayName: String): Result<AuthResult> {
+	suspend fun signUp(
+		email: String, password: String, displayName: String, photoUri: Uri?
+	): Result<AuthResult> {
 		try {
 			val task =
 				mAuth.createUserWithEmailAndPassword(email, password)
@@ -52,6 +54,7 @@ class FirebaseAuthDataSource {
 						user?.updateProfile(
 							UserProfileChangeRequest.Builder()
 								.setDisplayName(displayName)
+								.setPhotoUri(photoUri)
 								.build()
 						)
 					}

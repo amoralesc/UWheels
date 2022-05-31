@@ -1,8 +1,12 @@
 package com.abmodel.uwheels.data
 
+import android.net.Uri
 import android.util.Log
 import com.abmodel.uwheels.data.model.LoggedInUser
 import com.google.firebase.auth.AuthResult
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 
 /**
  * Login repository interface that provides the data access layer for the login
@@ -11,8 +15,9 @@ interface AuthRepository {
 	suspend fun login(email: String, password: String): Boolean
 	suspend fun signUp(
 		email: String, password: String, name: String,
-		lastName: String, phone: String, photoUri: String?
+		lastName: String, phone: String, photoUri: Uri?
 	): Boolean
+
 	fun logout()
 	fun isLoggedIn(): Boolean
 	fun getLoggedInUser(): LoggedInUser?
@@ -24,6 +29,7 @@ interface AuthRepository {
  */
 class FirebaseAuthRepository internal constructor(
 	private val mAuth: FirebaseAuthDataSource,
+	private val mDatabase: FirebaseFirestore
 ) : AuthRepository {
 
 	/**
@@ -37,7 +43,8 @@ class FirebaseAuthRepository internal constructor(
 		fun getInstance(): FirebaseAuthRepository {
 			return instance ?: synchronized(this) {
 				instance ?: FirebaseAuthRepository(
-					FirebaseAuthDataSource()
+					FirebaseAuthDataSource(),
+					Firebase.firestore
 				).also { instance = it }
 			}
 		}
@@ -49,10 +56,10 @@ class FirebaseAuthRepository internal constructor(
 	private var _user: LoggedInUser? = null
 
 	init {
-		// If user credentials will be cached in local storage, it is recommended it be encrypted
-		// @see https://developer.android.com/training/articles/keystore
 		_user = null
-		isLoggedIn()
+		if (isLoggedIn()) {
+			updateLoggedInUser()
+		}
 	}
 
 	override suspend fun login(email: String, password: String): Boolean {
@@ -68,12 +75,18 @@ class FirebaseAuthRepository internal constructor(
 
 	override suspend fun signUp(
 		email: String, password: String, name: String,
-		lastName: String, phone: String, photoUri: String?
+		lastName: String, phone: String, photoUri: Uri?
 	): Boolean {
-		val result = mAuth.signUp(email, password, name)
+		val result = mAuth.signUp(email, password, name, photoUri)
 		Log.d(TAG, "Sign up: $result")
 
 		if (result is Result.Success<AuthResult> && result.data.user != null) {
+			createDatabaseUser(
+				result.data.user!!.uid,
+				name,
+				lastName,
+				phone
+			)
 			updateLoggedInUser()
 			return true
 		}
@@ -90,6 +103,17 @@ class FirebaseAuthRepository internal constructor(
 
 	override fun getLoggedInUser(): LoggedInUser? {
 		return _user
+	}
+
+	private fun createDatabaseUser(
+		uid: String, name: String, lastName: String, phone: String
+	) {
+		val user = hashMapOf(
+			"name" to name,
+			"lastName" to lastName,
+			"phone" to phone
+		)
+		mDatabase.collection(FirebasePaths.USERS).document(uid).set(user)
 	}
 
 	private fun updateLoggedInUser() {
