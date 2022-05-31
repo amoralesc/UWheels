@@ -6,4 +6,5 @@ data class VehicleDetailDocument(
 	var year: Int? = null,
 	var plate: String? = null,
 	var capacity: Int? = null,
+	var color: Int? = null,
 )

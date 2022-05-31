@@ -23,10 +23,13 @@ import com.abmodel.uwheels.ui.driver.apply.data.DriverApplicationView
 import com.abmodel.uwheels.util.TEMP_IMG_FILE_EXT
 import com.abmodel.uwheels.util.TEMP_IMG_FILE_NAME
 import com.abmodel.uwheels.util.TakePictureWithUriReturnContract
+import com.flask.colorpicker.ColorPickerView
+import com.flask.colorpicker.builder.ColorPickerDialogBuilder
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.io.File
+
 
 class DriverApplicationFragment : Fragment() {
 
@@ -57,6 +60,8 @@ class DriverApplicationFragment : Fragment() {
 	// Binding objects to access the view elements
 	private var _binding: FragmentDriverApplicationBinding? = null
 	private val binding get() = _binding!!
+
+	private var selectedColor: Int = 0xFFFFFFFF.toInt()
 
 	private val viewModel: DriverApplicationViewModel by viewModels()
 
@@ -98,6 +103,14 @@ class DriverApplicationFragment : Fragment() {
 			}
 			camera.setOnClickListener {
 				onCameraPressed()
+			}
+
+			// Pick color
+			pickColor.setOnClickListener {
+				onPickColorPressed()
+			}
+			color.setOnClickListener {
+				onPickColorPressed()
 			}
 
 			// (Navigation between pages)
@@ -161,6 +174,46 @@ class DriverApplicationFragment : Fragment() {
 		)
 	}
 
+	private fun updateUI() {
+
+		binding.apply {
+
+			textTitle.text = _pageData[currentPage].title
+			textDescription.text = _pageData[currentPage].description
+			textSupportedFiles.text = _pageData[currentPage].supportedFiles
+
+			if (_pageData[currentPage].swapToVehicleDetail) {
+				layoutUploadFiles.visibility = View.GONE
+				layoutVehicleDetails.visibility = View.VISIBLE
+			} else {
+				layoutVehicleDetails.visibility = View.GONE
+				layoutUploadFiles.visibility = View.VISIBLE
+			}
+		}
+	}
+
+	private fun onPickColorPressed() {
+		ColorPickerDialogBuilder
+			.with(context)
+			.initialColor(0xFFFFFFFF.toInt())
+			.wheelType(ColorPickerView.WHEEL_TYPE.CIRCLE)
+			.density(10)
+			.setOnColorSelectedListener { color ->
+				selectedColor = color
+			}
+			.setPositiveButton(
+				getString(R.string.ok)
+			) { _, _, _ ->
+				binding.color.drawable.setTint(selectedColor)
+				Log.d(TAG, "Selected color: $selectedColor")
+			}
+			.setNegativeButton(
+				getString(R.string.cancel)
+			) { _, _ -> }
+			.build()
+			.show()
+	}
+
 	private fun onBackPressed() {
 
 		if (currentPage > 0) {
@@ -179,29 +232,25 @@ class DriverApplicationFragment : Fragment() {
 			viewModel.setCurrentFilesIndex(currentPage)
 			updateUI()
 		} else { // Finished the application
-			CoroutineScope(Dispatchers.Main).launch {
-				viewModel.submitApplication()
-			}
-			goToHomeScreen()
+			onApplicationFinished()
 		}
 	}
 
-	private fun updateUI() {
-
+	private fun onApplicationFinished() {
 		binding.apply {
-
-			textTitle.text = _pageData[currentPage].title
-			textDescription.text = _pageData[currentPage].description
-			textSupportedFiles.text = _pageData[currentPage].supportedFiles
-
-			if (_pageData[currentPage].swapToVehicleDetail) {
-				layoutUploadFiles.visibility = View.GONE
-				layoutVehicleDetails.visibility = View.VISIBLE
-			} else {
-				layoutVehicleDetails.visibility = View.GONE
-				layoutUploadFiles.visibility = View.VISIBLE
-			}
+			viewModel.setVehicleDetail(
+				vehicleMake.text.toString(),
+				vehicleModel.text.toString(),
+				vehicleYear.text.toString().toInt(),
+				vehiclePlate.text.toString(),
+				vehicleCapacity.text.toString().toInt(),
+				selectedColor
+			)
 		}
+		CoroutineScope(Dispatchers.Main).launch {
+			viewModel.submitApplication()
+		}
+		goToHomeScreen()
 	}
 
 	private fun goToHomeScreen() {

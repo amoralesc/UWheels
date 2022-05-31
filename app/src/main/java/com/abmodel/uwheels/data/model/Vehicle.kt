@@ -1,16 +1,11 @@
 package com.abmodel.uwheels.data.model
 
-enum class VehicleType{
-    CAR,
-    MOTORBIKE
-}
-
-data class Vehicle (
-    val nickname : String,
-    val vehicleType : VehicleType,
-    val registrationPlate : String,
-    val model : String,
-    val make : String,
-    val variant : String,
-    val status : Boolean
+data class Vehicle(
+    var make: String,
+    var model: String,
+    var year: Int,
+    var plate: String,
+    var capacity: Int,
+    var color: Int,
+    val current: Boolean = true
 )

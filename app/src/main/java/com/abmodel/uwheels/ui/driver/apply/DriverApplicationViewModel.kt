@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 import com.abmodel.uwheels.R
 import com.abmodel.uwheels.data.model.DriverApplication
 import com.abmodel.uwheels.data.model.UploadedFile
-import com.abmodel.uwheels.data.model.VehicleDetail
+import com.abmodel.uwheels.data.model.Vehicle
 import com.abmodel.uwheels.data.repository.driver.apply.FirebaseDriverApplicationRepository
 
 class DriverApplicationViewModel : ViewModel() {
@@ -28,7 +28,7 @@ class DriverApplicationViewModel : ViewModel() {
 		ownershipFiles = mutableListOf(),
 		insuranceFiles = mutableListOf(),
 		vehiclePics = mutableListOf(),
-		vehicleDetail = VehicleDetail()
+		vehicleDetail = null
 	)
 
 	private var _currentFilesIndex = 0
@@ -96,6 +96,15 @@ class DriverApplicationViewModel : ViewModel() {
 			"vehicleDetail" -> _currentFiles.value =
 				mutableListOf()
 		}
+	}
+
+	fun setVehicleDetail(
+		make: String, model: String, year: Int,
+		plate: String, capacity: Int, color: Int,
+	) {
+		_driverApplication.vehicleDetail = Vehicle(
+			make, model, year, plate, capacity, color
+		)
 	}
 
 	suspend fun submitApplication() {

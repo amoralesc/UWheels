@@ -23,3 +23,10 @@ fun LatLng.distanceTo(other: LatLng, units: String = "M"): Double {
 fun parseLatLng(latLng: LatLng): String {
 	return "${latLng.latitude},${latLng.longitude}"
 }
+
+fun LatLng.midPointTo(other: LatLng): LatLng {
+	return LatLng(
+		(this.latitude + other.latitude) / 2,
+		(this.longitude + other.longitude) / 2
+	)
+}

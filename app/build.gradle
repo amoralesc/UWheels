@@ -100,6 +100,9 @@ dependencies {
 	implementation 'com.github.bumptech.glide:glide:4.12.0'
 	implementation 'jp.wasabeef:glide-transformations:4.3.0'
 
+	// Color picker
+	implementation 'com.github.QuadFlask:colorpicker:0.0.15'
+
     // Unit testing
 	testImplementation 'junit:junit:4.13.2'
 

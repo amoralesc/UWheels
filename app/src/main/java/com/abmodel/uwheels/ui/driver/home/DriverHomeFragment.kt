@@ -97,7 +97,6 @@ class DriverHomeFragment : Fragment() {
 		_binding = null
 	}
 
-
 	/**
 	 * Navigate to the destination fragment
 	 */

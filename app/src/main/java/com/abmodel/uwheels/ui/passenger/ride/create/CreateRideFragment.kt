@@ -4,19 +4,25 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.setFragmentResultListener
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.abmodel.uwheels.R
+import com.abmodel.uwheels.data.model.CustomAddress
 import com.abmodel.uwheels.databinding.FragmentPassengerCreateRideBinding
+import com.abmodel.uwheels.ui.shared.search.SearchAddressFragment
 import com.abmodel.uwheels.util.*
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.*
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
+
 
 class CreateRideFragment : Fragment(), OnMapReadyCallback {
 
@@ -29,6 +35,31 @@ class CreateRideFragment : Fragment(), OnMapReadyCallback {
 	private val binding get() = _binding!!
 
 	private var mMap: GoogleMap? = null
+	private var sourceMarker: Marker? = null
+	private var destinationMarker: Marker? = null
+	private var polyline: Polyline? = null
+
+	private val viewModel: CreateRideViewModel by viewModels()
+
+	override fun onCreate(savedInstanceState: Bundle?) {
+		super.onCreate(savedInstanceState)
+
+		// Listen to results of the [SearchAddressFragment]
+		setFragmentResultListener(
+			SearchAddressFragment.REQUEST_KEY
+		) { _, bundle ->
+
+			val source: CustomAddress? = bundle.getParcelable(
+				SearchAddressFragment.RESULT_KEY_SOURCE
+			)
+			val destination: CustomAddress? = bundle.getParcelable(
+				SearchAddressFragment.RESULT_KEY_DESTINATION
+			)
+
+			viewModel.updateSourceAddress(source)
+			viewModel.updateDestinationAddress(destination)
+		}
+	}
 
 	override fun onCreateView(
 		inflater: LayoutInflater,
@@ -55,17 +86,14 @@ class CreateRideFragment : Fragment(), OnMapReadyCallback {
 			binding.date.setText(
 				formatDateFromMillis(dateSelected)
 			)
-
 			// TODO: Also set the date in the view model
 		}
-
 		// Setup the time picker
 		timePicker.addOnPositiveButtonClickListener {
 			// Set the time in the time EditText
 			binding.time.setText(
 				formatTime(timePicker.hour, timePicker.minute)
 			)
-
 			// TODO: Also set the time in the view model
 		}
 
@@ -76,7 +104,6 @@ class CreateRideFragment : Fragment(), OnMapReadyCallback {
 				showDatePicker()
 			}
 		}
-
 		binding.time.apply {
 			showSoftInputOnFocus = false
 			setOnClickListener {
@@ -85,15 +112,24 @@ class CreateRideFragment : Fragment(), OnMapReadyCallback {
 			}
 		}
 
-		binding.source.apply {
-			setOnClickListener {
+		binding.apply {
+			source.setOnClickListener {
 				goToSearchAddress("source")
 			}
-		}
-
-		binding.destination.apply {
-			setOnClickListener {
+			destination.setOnClickListener {
 				goToSearchAddress("destination")
+			}
+
+			viewModel.route.observe(viewLifecycleOwner) {
+				drawRoute(it)
+			}
+			viewModel.sourceAddress.observe(viewLifecycleOwner) {
+				source.setText(it?.mainText)
+				drawSourceMarker(it?.latLng)
+			}
+			viewModel.destinationAddress.observe(viewLifecycleOwner) {
+				destination.setText(it?.mainText)
+				drawDestinationMarker(it?.latLng)
 			}
 		}
 	}
@@ -116,19 +152,69 @@ class CreateRideFragment : Fragment(), OnMapReadyCallback {
 			.navigate(action)
 	}
 
+
+	private fun drawRoute(points: List<LatLng>?) {
+		when {
+			points == null || points.isEmpty() -> {
+				polyline?.remove()
+				polyline = null
+				return
+			}
+			else -> {
+				polyline?.remove()
+				polyline = mMap?.addPolyline(
+					PolylineOptions()
+						.addAll(points)
+						.color(ContextCompat.getColor(requireContext(), R.color.color_primary))
+						.width(POLYLINE_WIDTH)
+				)
+				moveCameraToRoute()
+			}
+		}
+	}
+
+	private fun drawSourceMarker(latLng: LatLng?) {
+		when {
+			latLng == null -> {
+				sourceMarker?.remove()
+				sourceMarker = null
+			}
+			sourceMarker == null -> {
+				sourceMarker = mMap?.addMarker(
+					MarkerOptions()
+						.position(latLng)
+						.title("Source")
+				)
+			}
+			else ->
+				sourceMarker!!.position = latLng
+		}
+	}
+
+	private fun drawDestinationMarker(latLng: LatLng?) {
+		when {
+			latLng == null -> {
+				destinationMarker?.remove()
+				destinationMarker = null
+			}
+			destinationMarker == null -> {
+				destinationMarker = mMap?.addMarker(
+					MarkerOptions()
+						.position(latLng)
+						.title("Destination")
+				)
+			}
+			else ->
+				destinationMarker!!.position = latLng
+		}
+	}
+
 	/**
 	 * Manipulates the map once available. The callback is triggered
 	 * when the map is ready to be used.
 	 */
 	override fun onMapReady(googleMap: GoogleMap) {
 		mMap = googleMap
-
-		// Deactivate all ui controls
-		mMap!!.uiSettings.setAllGesturesEnabled(false)
-		// Enable compass back
-		mMap!!.uiSettings.isCompassEnabled = true
-
-		// Move camera to default city location
 		moveCameraToDefault()
 	}
 
@@ -138,6 +224,20 @@ class CreateRideFragment : Fragment(), OnMapReadyCallback {
 			CameraUpdateFactory.newLatLngZoom(
 				LatLng(BOGOTA_LAT, BOGOTA_LNG),
 				BOGOTA_ZOOM
+			)
+		)
+	}
+
+	private fun moveCameraToRoute() {
+		val bounds = LatLngBounds.Builder()
+			.include(sourceMarker!!.position)
+			.include(destinationMarker!!.position)
+			.build()
+
+		mMap!!.moveCamera(
+			CameraUpdateFactory.newLatLngBounds(
+				bounds,
+				120
 			)
 		)
 	}
