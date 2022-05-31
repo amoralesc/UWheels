@@ -1,13 +1,16 @@
 package com.abmodel.uwheels.ui.shared.search
 
 import android.util.Log
-import androidx.lifecycle.*
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.abmodel.uwheels.BuildConfig.MAPS_API_KEY
-import com.abmodel.uwheels.network.maps.GeocodingApi
-import com.abmodel.uwheels.network.maps.GeocodingResponse
-import com.abmodel.uwheels.network.maps.PlacesAutocompleteApi
-import com.abmodel.uwheels.network.maps.PlacesAutocompleteResponse
 import com.abmodel.uwheels.data.model.CustomAddress
+import com.abmodel.uwheels.network.maps.GeocodingApi
+import com.abmodel.uwheels.network.maps.PlacesAutocompleteApi
+import com.abmodel.uwheels.network.maps.response.GeocodingResponse
+import com.abmodel.uwheels.network.maps.response.PlacesAutocompleteResponse
 import com.abmodel.uwheels.util.*
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.libraries.places.api.model.AutocompleteSessionToken

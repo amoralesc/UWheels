@@ -1,4 +1,4 @@
-package com.abmodel.uwheels.network.maps
+package com.abmodel.uwheels.network.maps.response
 
 import com.squareup.moshi.Json
 

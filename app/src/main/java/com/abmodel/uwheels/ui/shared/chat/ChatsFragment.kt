@@ -1,10 +1,10 @@
 package com.abmodel.uwheels.ui.shared.chat
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import com.abmodel.uwheels.databinding.FragmentChatsBinding
 
 class ChatsFragment : Fragment() {

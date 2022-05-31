@@ -1,12 +1,14 @@
 package com.abmodel.uwheels.ui.passenger.ride.request
 
 import android.util.Log
-import androidx.lifecycle.*
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.abmodel.uwheels.BuildConfig.MAPS_API_KEY
-import com.abmodel.uwheels.network.maps.DirectionsApi
-import com.abmodel.uwheels.network.maps.DirectionsResponse
-import com.abmodel.uwheels.network.maps.DirectionsRoute
 import com.abmodel.uwheels.data.model.CustomAddress
+import com.abmodel.uwheels.network.maps.DirectionsApi
+import com.abmodel.uwheels.network.maps.response.DirectionsResponse
+import com.abmodel.uwheels.network.maps.response.DirectionsRoute
 import com.abmodel.uwheels.util.PolyUtil
 import com.abmodel.uwheels.util.parseLatLng
 import com.google.android.gms.maps.model.LatLng

@@ -8,7 +8,6 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.ColorRes
 import androidx.core.content.ContextCompat
-import com.abmodel.uwheels.R
 
 /**
  * This custom view is used to display an alert bubble with a number inside.

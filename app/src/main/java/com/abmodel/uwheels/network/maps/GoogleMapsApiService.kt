@@ -1,11 +1,10 @@
 package com.abmodel.uwheels.network.maps
 
-import android.gesture.Prediction
-import com.google.maps.android.data.Geometry
-import com.squareup.moshi.Json
+import com.abmodel.uwheels.network.maps.response.DirectionsResponse
+import com.abmodel.uwheels.network.maps.response.GeocodingResponse
+import com.abmodel.uwheels.network.maps.response.PlacesAutocompleteResponse
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
-import okhttp3.Route
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.GET

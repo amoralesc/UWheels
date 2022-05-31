@@ -4,9 +4,6 @@ import android.net.Uri
 import android.util.Log
 import com.abmodel.uwheels.data.model.LoggedInUser
 import com.google.firebase.auth.AuthResult
-import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.ktx.Firebase
 
 /**
  * Login repository interface that provides the data access layer for the login

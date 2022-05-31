@@ -5,8 +5,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.abmodel.uwheels.databinding.AddressListItemBinding
 import com.abmodel.uwheels.data.model.CustomAddress
+import com.abmodel.uwheels.databinding.AddressListItemBinding
 
 /**
  * [ListAdapter] to inflate the address list item and populate
