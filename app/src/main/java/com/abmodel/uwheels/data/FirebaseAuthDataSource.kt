@@ -2,11 +2,11 @@ package com.abmodel.uwheels.data
 
 import android.net.Uri
 import android.util.Log
-import androidx.core.net.toUri
+import com.abmodel.uwheels.data.model.LoggedInUser
 import com.google.firebase.auth.AuthResult
-import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.UserProfileChangeRequest
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.tasks.await
 
@@ -20,6 +20,7 @@ class FirebaseAuthDataSource {
 	}
 
 	private val mAuth = Firebase.auth
+	private val mDatabase = Firebase.firestore
 
 	suspend fun login(email: String, password: String): Result<AuthResult> {
 		try {
@@ -41,7 +42,8 @@ class FirebaseAuthDataSource {
 	}
 
 	suspend fun signUp(
-		email: String, password: String, displayName: String, photoUri: Uri?
+		email: String, password: String, name: String,
+		lastName: String, phone: String, photoUri: Uri?
 	): Result<AuthResult> {
 		try {
 			val task =
@@ -49,14 +51,16 @@ class FirebaseAuthDataSource {
 					.addOnSuccessListener { result ->
 						Log.d(TAG, "Sign up successful")
 
-						val user = result.user
-						user?.sendEmailVerification()
-						user?.updateProfile(
+						val user = result.user!!
+						user.sendEmailVerification()
+						user.updateProfile(
 							UserProfileChangeRequest.Builder()
-								.setDisplayName(displayName)
+								.setDisplayName(name)
 								.setPhotoUri(photoUri)
 								.build()
 						)
+
+						createDatabaseUser(user.uid, name, lastName, phone)
 					}
 					.addOnFailureListener {
 						Log.e(TAG, "Sign up failed: ${it.message}")
@@ -70,6 +74,17 @@ class FirebaseAuthDataSource {
 		}
 	}
 
+	private fun createDatabaseUser(
+		uid: String, name: String, lastName: String, phone: String
+	) {
+		val user = hashMapOf(
+			"name" to name,
+			"lastName" to lastName,
+			"phone" to phone
+		)
+		mDatabase.collection(FirebasePaths.USERS).document(uid).set(user)
+	}
+
 	fun logout() {
 		mAuth.signOut()
 	}
@@ -81,7 +96,23 @@ class FirebaseAuthDataSource {
 		return false
 	}
 
-	fun getCurrentUser(): FirebaseUser? {
-		return mAuth.currentUser
+	fun getCurrentUser(): LoggedInUser {
+		val firebaseUser = mAuth.currentUser
+		val databaseUser = mDatabase
+			.collection(FirebasePaths.USERS)
+			.document(firebaseUser?.uid ?: "")
+			.get()
+			.result
+			.data
+
+		return LoggedInUser(
+			firebaseUser?.uid ?: "",
+			firebaseUser?.email,
+			firebaseUser?.displayName,
+			databaseUser?.get("name") as String?,
+			databaseUser?.get("lastName") as String?,
+			databaseUser?.get("phone") as String?,
+			firebaseUser?.photoUrl,
+		)
 	}
 }

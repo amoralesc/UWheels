@@ -20,7 +20,7 @@ interface AuthRepository {
 
 	fun logout()
 	fun isLoggedIn(): Boolean
-	fun getLoggedInUser(): LoggedInUser?
+	fun getLoggedInUser(): LoggedInUser
 }
 
 /**
@@ -28,8 +28,7 @@ interface AuthRepository {
  * maintains an in-memory cache of login status and user credentials information.
  */
 class FirebaseAuthRepository internal constructor(
-	private val mAuth: FirebaseAuthDataSource,
-	private val mDatabase: FirebaseFirestore
+	private val mAuth: FirebaseAuthDataSource
 ) : AuthRepository {
 
 	/**
@@ -43,8 +42,7 @@ class FirebaseAuthRepository internal constructor(
 		fun getInstance(): FirebaseAuthRepository {
 			return instance ?: synchronized(this) {
 				instance ?: FirebaseAuthRepository(
-					FirebaseAuthDataSource(),
-					Firebase.firestore
+					FirebaseAuthDataSource()
 				).also { instance = it }
 			}
 		}
@@ -77,16 +75,12 @@ class FirebaseAuthRepository internal constructor(
 		email: String, password: String, name: String,
 		lastName: String, phone: String, photoUri: Uri?
 	): Boolean {
-		val result = mAuth.signUp(email, password, name, photoUri)
+		val result = mAuth.signUp(
+			email, password, name, lastName, phone, photoUri
+		)
 		Log.d(TAG, "Sign up: $result")
 
 		if (result is Result.Success<AuthResult> && result.data.user != null) {
-			createDatabaseUser(
-				result.data.user!!.uid,
-				name,
-				lastName,
-				phone
-			)
 			updateLoggedInUser()
 			return true
 		}
@@ -101,32 +95,14 @@ class FirebaseAuthRepository internal constructor(
 		return mAuth.isLoggedIn()
 	}
 
-	override fun getLoggedInUser(): LoggedInUser? {
-		return _user
-	}
-
-	private fun createDatabaseUser(
-		uid: String, name: String, lastName: String, phone: String
-	) {
-		val user = hashMapOf(
-			"name" to name,
-			"lastName" to lastName,
-			"phone" to phone
-		)
-		mDatabase.collection(FirebasePaths.USERS).document(uid).set(user)
+	override fun getLoggedInUser(): LoggedInUser {
+		if (_user == null) {
+			updateLoggedInUser()
+		}
+		return _user!!
 	}
 
 	private fun updateLoggedInUser() {
-		val firebaseUser = mAuth.getCurrentUser()
-
-		_user = LoggedInUser(
-			firebaseUser?.uid ?: "",
-			firebaseUser?.email,
-			firebaseUser?.displayName,
-			"name",
-			"lastName",
-			"phone",
-			firebaseUser?.photoUrl,
-		)
+	    _user = mAuth.getCurrentUser()
 	}
 }

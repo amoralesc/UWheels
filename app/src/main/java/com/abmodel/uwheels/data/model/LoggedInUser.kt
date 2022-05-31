@@ -3,7 +3,7 @@ package com.abmodel.uwheels.data.model
 import android.net.Uri
 
 /**
- * Data class that captures user information for logged in users retrieved from LoginRepository
+ * Data class that captures user information for logged in users retrieved from AuthRepository
  */
 data class LoggedInUser(
 	val userId: String,
