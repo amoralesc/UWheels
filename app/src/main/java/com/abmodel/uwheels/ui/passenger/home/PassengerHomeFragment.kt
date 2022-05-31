@@ -19,7 +19,6 @@ import com.abmodel.uwheels.databinding.FragmentPassengerHomeBinding
 import com.abmodel.uwheels.ui.shared.sensor.ShakeDetector
 import com.abmodel.uwheels.util.DEBUG_USE_SENSORS
 import com.bumptech.glide.Glide
-import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 

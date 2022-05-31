@@ -3,14 +3,11 @@ package com.abmodel.uwheels.ui.driver.apply
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.abmodel.uwheels.R
 import com.abmodel.uwheels.data.model.DriverApplication
 import com.abmodel.uwheels.data.model.UploadedFile
 import com.abmodel.uwheels.data.model.VehicleDetail
 import com.abmodel.uwheels.data.repository.driver.apply.FirebaseDriverApplicationRepository
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 
 class DriverApplicationViewModel : ViewModel() {
 

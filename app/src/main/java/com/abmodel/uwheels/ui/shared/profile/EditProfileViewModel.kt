@@ -1,6 +1,5 @@
 package com.abmodel.uwheels.ui.shared.profile
 
-import android.net.Uri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel

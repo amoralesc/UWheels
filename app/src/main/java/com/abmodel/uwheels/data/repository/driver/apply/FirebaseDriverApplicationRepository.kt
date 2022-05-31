@@ -1,6 +1,5 @@
 package com.abmodel.uwheels.data.repository.driver.apply
 
-import android.util.Log
 import com.abmodel.uwheels.data.model.DriverApplication
 import com.abmodel.uwheels.data.model.UploadedFile
 import com.abmodel.uwheels.data.repository.auth.FirebaseAuthRepository

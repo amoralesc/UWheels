@@ -1,11 +1,8 @@
 package com.abmodel.uwheels.data.repository.auth
 
 import android.net.Uri
-import android.util.Log
-import com.abmodel.uwheels.data.Result
 import com.abmodel.uwheels.data.model.LoggedInUser
 import com.abmodel.uwheels.data.model.UploadedFile
-import com.google.firebase.auth.AuthResult
 
 /**
  * Auth repository interface that provides the data access layer

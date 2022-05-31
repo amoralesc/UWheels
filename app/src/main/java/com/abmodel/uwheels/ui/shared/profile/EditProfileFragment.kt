@@ -1,10 +1,8 @@
 package com.abmodel.uwheels.ui.shared.profile
 
-import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,9 +10,9 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.StringRes
 import androidx.core.content.FileProvider
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.viewModelScope
 import androidx.navigation.fragment.findNavController
 import com.abmodel.uwheels.BuildConfig
 import com.abmodel.uwheels.R
@@ -26,10 +24,6 @@ import com.abmodel.uwheels.util.TEMP_IMG_FILE_EXT
 import com.abmodel.uwheels.util.TEMP_IMG_FILE_NAME
 import com.abmodel.uwheels.util.TakePictureWithUriReturnContract
 import com.bumptech.glide.Glide
-import com.bumptech.glide.load.DataSource
-import com.bumptech.glide.load.engine.GlideException
-import com.bumptech.glide.request.RequestListener
-import com.bumptech.glide.request.target.Target
 import java.io.File
 
 class EditProfileFragment : Fragment() {

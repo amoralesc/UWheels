@@ -6,8 +6,8 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.abmodel.uwheels.R
-import com.abmodel.uwheels.databinding.UploadedFileListItemBinding
 import com.abmodel.uwheels.data.model.UploadedFile
+import com.abmodel.uwheels.databinding.UploadedFileListItemBinding
 
 class UploadedFileItemAdapter(
 	private val onItemClicked: (UploadedFile) -> Unit,
