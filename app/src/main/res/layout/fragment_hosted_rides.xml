@@ -13,8 +13,7 @@
 	<androidx.constraintlayout.widget.ConstraintLayout
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
-		android:background="?colorSecondary"
-		tools:context=".ui.passenger.ride.rides.PassengerRidesFragment">
+		android:background="?colorSecondary">
 
 		<com.abmodel.uwheels.BackButton
 			android:id="@+id/back"
@@ -32,44 +31,11 @@
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:fontFamily="@font/poppins_medium"
-			android:text="@string/my_rides"
+			android:text="@string/hosted_rides"
 			android:textAppearance="?textAppearanceHeadline4"
 			android:textColor="@color/dark_gray"
 			app:layout_constraintStart_toStartOf="@id/back"
 			app:layout_constraintTop_toBottomOf="@id/back" />
-
-		<com.google.android.material.chip.ChipGroup
-			android:id="@+id/chips"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			app:checkedChip="@id/chip_active"
-			app:layout_constraintStart_toStartOf="@id/text_title"
-			app:layout_constraintTop_toBottomOf="@id/text_title"
-			app:selectionRequired="true"
-			app:singleSelection="true">
-
-			<com.google.android.material.chip.Chip
-				android:id="@+id/chip_active"
-				style="@style/Widget.UWheels.Chip.Choice"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:text="@string/active" />
-
-			<com.google.android.material.chip.Chip
-				android:id="@+id/chip_requested"
-				style="@style/Widget.UWheels.Chip.Choice"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:text="@string/requested" />
-
-			<com.google.android.material.chip.Chip
-				android:id="@+id/chip_completed"
-				style="@style/Widget.UWheels.Chip.Choice"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:text="@string/completed" />
-
-		</com.google.android.material.chip.ChipGroup>
 
 		<androidx.recyclerview.widget.RecyclerView
 			android:id="@+id/rides"
@@ -80,9 +46,9 @@
 			app:layout_constraintBottom_toBottomOf="parent"
 			app:layout_constraintEnd_toEndOf="parent"
 			app:layout_constraintStart_toStartOf="parent"
-			app:layout_constraintTop_toBottomOf="@id/chips"
-			app:rideList="@{dataViewModel.selectedRides}"
-			tools:listitem="@layout/ride_list_item" />
+			app:layout_constraintTop_toBottomOf="@id/text_title"
+			app:hostedRideList="@{dataViewModel.filteredRides}"
+			tools:listitem="@layout/hosted_ride_list_item" />
 
 	</androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

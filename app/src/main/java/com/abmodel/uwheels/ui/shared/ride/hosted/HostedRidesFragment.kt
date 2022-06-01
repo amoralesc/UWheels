@@ -1,25 +1,27 @@
-package com.abmodel.uwheels.ui.passenger.ride.rides
+package com.abmodel.uwheels.ui.shared.ride.hosted
 
 import android.os.Bundle
 import android.util.Log
+import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import com.abmodel.uwheels.databinding.FragmentPassengerRidesBinding
-import com.abmodel.uwheels.ui.passenger.ride.adapter.RideItemAdapter
-import com.abmodel.uwheels.ui.shared.data.RidesPage
+import com.abmodel.uwheels.databinding.FragmentHostedRidesBinding
+import com.abmodel.uwheels.ui.shared.data.RidesFilter
 import com.abmodel.uwheels.ui.shared.data.SharedViewModel
+import com.abmodel.uwheels.ui.shared.ride.adapter.HostedRideItemAdapter
+import com.abmodel.uwheels.ui.shared.ride.adapter.RideItemAdapter
+import com.abmodel.uwheels.ui.shared.ride.rides.RidesFragment
 
-class PassengerRidesFragment : Fragment() {
+class HostedRidesFragment : Fragment() {
 
 	companion object {
-		const val TAG = "PassengerRidesFragment"
+		const val TAG = "HostedRidesFragment"
 	}
 
 	// Binding objects to access the view elements
-	private var _binding: FragmentPassengerRidesBinding? = null
+	private var _binding: FragmentHostedRidesBinding? = null
 	private val binding get() = _binding!!
 
 	private val sharedViewModel: SharedViewModel by activityViewModels()
@@ -30,7 +32,7 @@ class PassengerRidesFragment : Fragment() {
 		savedInstanceState: Bundle?
 	): View {
 		// Inflate the layout and binding for this fragment
-		_binding = FragmentPassengerRidesBinding.inflate(inflater, container, false)
+		_binding = FragmentHostedRidesBinding.inflate(inflater, container, false)
 		return binding.root
 	}
 
@@ -42,20 +44,10 @@ class PassengerRidesFragment : Fragment() {
 			lifecycleOwner = viewLifecycleOwner
 
 			// Set the adapter for the recycler view
-			rides.adapter = RideItemAdapter {
-				Log.d(TAG, "Clicked on ride $it")
+			rides.adapter = HostedRideItemAdapter {
+				Log.d(RidesFragment.TAG, "Clicked on ride $it")
 			}
-
-			chipActive.setOnClickListener {
-				sharedViewModel.setSelectedRidesPage(RidesPage.ACTIVE)
-			}
-			chipRequested.setOnClickListener {
-				sharedViewModel.setSelectedRidesPage(RidesPage.REQUESTED)
-			}
-			chipCompleted.setOnClickListener {
-				sharedViewModel.setSelectedRidesPage(RidesPage.COMPLETED)
-			}
-			sharedViewModel.setSelectedRidesPage(RidesPage.ACTIVE)
+			sharedViewModel.setRidesFilter(RidesFilter.HOSTED)
 		}
 	}
 

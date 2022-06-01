@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.*
 import com.abmodel.uwheels.data.model.Ride
 import com.abmodel.uwheels.data.model.RideStatus
+import com.abmodel.uwheels.data.model.WheelsType
 import com.abmodel.uwheels.data.repository.auth.FirebaseAuthRepository
 import com.abmodel.uwheels.data.repository.ride.FirebaseRidesRepository
 import kotlinx.coroutines.Dispatchers
@@ -58,17 +59,18 @@ class SharedViewModel : ViewModel() {
 			MutableLiveData(filteredRides)
 		}
 
-	private val _selectedRidesPage: MutableLiveData<RidesPage> = MutableLiveData(RidesPage.ACTIVE)
-	val selectedRidesPage: LiveData<RidesPage>
-		get() = _selectedRidesPage
+	private val _ridesFilter: MutableLiveData<RidesFilter> = MutableLiveData(RidesFilter.ACTIVE)
+	val ridesFilter: LiveData<RidesFilter>
+		get() = _ridesFilter
 
-	val selectedRides: LiveData<List<Ride>> =
-		Transformations.switchMap(_selectedRidesPage) { page ->
-			when (page) {
-				RidesPage.ACTIVE -> activeRides
-				RidesPage.REQUESTED -> requestedRides
-				RidesPage.COMPLETED -> completedRides
-				else -> hostedRides // RidesPage.HOSTED
+	val filteredRides: LiveData<List<Ride>> =
+		Transformations.switchMap(_ridesFilter) { filter ->
+			when (filter) {
+				RidesFilter.ACTIVE -> activeRides
+				RidesFilter.REQUESTED -> requestedRides
+				RidesFilter.COMPLETED -> completedRides
+				RidesFilter.HOSTED -> hostedRides
+				else -> null
 			}
 		}
 
@@ -78,23 +80,28 @@ class SharedViewModel : ViewModel() {
 		Log.d(TAG, "SharedViewModel initialized")
 
 		if (authRepository.isDriverModeOn()) {
-			fetchUserRides(true)
+			fetchUserRides(true, WheelsType.CLASSIC_WHEELS)
 		} else {
 			fetchUserRides()
 		}
 	}
 
-	fun setSelectedRidesPage(page: RidesPage) {
-		_selectedRidesPage.postValue(page)
+	fun setRidesFilter(filter: RidesFilter) {
+		_ridesFilter.postValue(filter)
 	}
 
-	private fun fetchUserRides(hostedOnly: Boolean = false) {
+	private fun fetchUserRides(
+		hostedOnly: Boolean = false,
+		wheelsType: WheelsType? = null
+	) {
+
 		fetchUserRidesJob =
 			viewModelScope.launch(Dispatchers.IO) {
 
 				ridesRepository.fetchUserRides(
 					authRepository.getLoggedInUser().uid,
-					hosted = hostedOnly
+					hosted = hostedOnly,
+					wheelsType = wheelsType
 				).cancellable().collect { result ->
 
 					if (result.isSuccess) {
@@ -107,7 +114,13 @@ class SharedViewModel : ViewModel() {
 			}
 	}
 
-	fun stopFetchingUserRides() {
+	fun driverModeChanged(driverMode: Boolean) {
 		fetchUserRidesJob?.cancel()
+
+		if (driverMode) {
+			fetchUserRides(true, WheelsType.CLASSIC_WHEELS)
+		} else {
+			fetchUserRides()
+		}
 	}
 }

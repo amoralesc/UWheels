@@ -39,8 +39,11 @@
 			android:id="@+id/action_passengerHomeFragment_to_profileDetailsFragment"
 			app:destination="@id/profileDetailsFragment" />
 		<action
-			android:id="@+id/action_passengerHomeFragment_to_passengerRidesFragment"
-			app:destination="@id/passengerRidesFragment" />
+			android:id="@+id/action_passengerHomeFragment_to_ridesFragment"
+			app:destination="@id/ridesFragment" />
+		<action
+			android:id="@+id/action_passengerHomeFragment_to_hostedRidesFragment"
+			app:destination="@id/hostedRidesFragment" />
 	</fragment>
 	<fragment
 		android:id="@+id/loginFragment"
@@ -167,6 +170,12 @@
 		<action
 			android:id="@+id/action_driverHomeFragment_to_profileDetailsFragment"
 			app:destination="@id/profileDetailsFragment" />
+		<action
+			android:id="@+id/action_driverHomeFragment_to_ridesFragment"
+			app:destination="@id/ridesFragment" />
+		<action
+			android:id="@+id/action_driverHomeFragment_to_hostedRidesFragment"
+			app:destination="@id/hostedRidesFragment" />
 	</fragment>
 	<fragment
 		android:id="@+id/profileDetailsFragment"
@@ -193,8 +202,11 @@
 			app:popUpTo="@id/profileDetailsFragment" />
 	</fragment>
 	<fragment
-		android:id="@+id/passengerRidesFragment"
-		android:name="com.abmodel.uwheels.ui.passenger.ride.rides.PassengerRidesFragment"
-		android:label="fragment_passenger_rides"
-		tools:layout="@layout/fragment_passenger_rides" />
+		android:id="@+id/ridesFragment"
+		android:name="com.abmodel.uwheels.ui.shared.ride.rides.RidesFragment"
+		android:label="fragment_rides" />
+	<fragment
+		android:id="@+id/hostedRidesFragment"
+		android:name="com.abmodel.uwheels.ui.shared.ride.hosted.HostedRidesFragment"
+		android:label="HostedRidesFragment" />
 </navigation>

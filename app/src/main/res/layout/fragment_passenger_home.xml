@@ -95,15 +95,15 @@
 	</androidx.constraintlayout.widget.ConstraintLayout>
 
 	<Button
-		android:id="@+id/my_rides"
+		android:id="@+id/hosted_rides"
 		style="@style/Widget.UWheels.ButtonPrimary.Medium"
 		android:layout_width="match_parent"
 		android:layout_height="60dp"
 		android:layout_marginTop="24dp"
 		android:elevation="4dp"
 		android:gravity="center_vertical"
-		android:text="@string/my_rides"
-		app:icon="@drawable/ic_car_front"
+		android:text="@string/hosted_rides"
+		app:icon="@drawable/ic_car_cog"
 		app:iconPadding="@dimen/margin_between_elements"
 		app:iconTint="@color/color_brand_blend"
 		app:layout_constraintEnd_toEndOf="parent"
@@ -111,17 +111,34 @@
 		app:layout_constraintTop_toBottomOf="@id/profile_photo_layout"
 		tools:ignore="TextContrastCheck" />
 
+	<Button
+		android:id="@+id/rides"
+		style="@style/Widget.UWheels.ButtonPrimary.Medium"
+		android:layout_width="match_parent"
+		android:layout_height="60dp"
+		android:layout_marginTop="8dp"
+		android:elevation="4dp"
+		android:gravity="center_vertical"
+		android:text="@string/rides"
+		app:icon="@drawable/ic_car_front"
+		app:iconPadding="@dimen/margin_between_elements"
+		app:iconTint="@color/color_brand_blend"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toBottomOf="@id/hosted_rides"
+		tools:ignore="TextContrastCheck" />
+
 	<com.abmodel.uwheels.AlertBubbleView
-		android:id="@+id/my_rides_alert"
+		android:id="@+id/rides_alert"
 		android:layout_width="28dp"
 		android:layout_height="28dp"
 		android:layout_marginEnd="@dimen/margin_between_elements"
 		android:elevation="5dp"
 		android:visibility="gone"
 		app:iconSize="24dp"
-		app:layout_constraintBottom_toBottomOf="@+id/my_rides"
-		app:layout_constraintEnd_toEndOf="@+id/my_rides"
-		app:layout_constraintTop_toTopOf="@+id/my_rides"
+		app:layout_constraintBottom_toBottomOf="@+id/rides"
+		app:layout_constraintEnd_toEndOf="@+id/rides"
+		app:layout_constraintTop_toTopOf="@+id/rides"
 		tools:visibility="visible" />
 
 	<Button
@@ -139,7 +156,7 @@
 		app:iconTint="@color/color_brand_blend"
 		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintStart_toStartOf="parent"
-		app:layout_constraintTop_toBottomOf="@id/my_rides"
+		app:layout_constraintTop_toBottomOf="@id/rides"
 		tools:ignore="TextContrastCheck" />
 
 	<com.abmodel.uwheels.AlertBubbleView

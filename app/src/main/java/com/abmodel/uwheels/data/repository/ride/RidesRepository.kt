@@ -10,7 +10,7 @@ interface RidesRepository {
 	suspend fun cancelRide(rideId: String)
 	suspend fun rateUser(userId: String, rating: Double)
 	suspend fun fetchUserRides(
-		userId: String, hosted: Boolean = false, status: RideStatus? = null
+		userId: String, hosted: Boolean = false, wheelsType: WheelsType? = null
 	): Flow<Result<List<Ride>>>
 	suspend fun searchRides(query: SearchRideQuery): Flow<Result<List<Ride>>>
 	suspend fun requestRide(rideId: String, request: RideRequest)

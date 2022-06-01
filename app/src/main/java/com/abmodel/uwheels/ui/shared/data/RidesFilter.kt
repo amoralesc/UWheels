@@ -1,6 +1,6 @@
 package com.abmodel.uwheels.ui.shared.data
 
-enum class RidesPage {
+enum class RidesFilter {
 	ACTIVE,
 	REQUESTED,
 	COMPLETED,

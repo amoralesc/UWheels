@@ -1,0 +1,26 @@
+<!--- Copyright 2022 Google LLC
+	#
+	# Licensed under the Apache License, Version 2.0 (the 'License');
+	# you may not use this file except in compliance with the License.
+	# You may obtain a copy of the License at
+	#
+	#     https://www.apache.org/licenses/LICENSE-2.0
+	#
+	# Unless required by applicable law or agreed to in writing, software
+	# distributed under the License is distributed on an 'AS IS' BASIS,
+	# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+	# See the License for the specific language governing permissions and# limitations under the License.
+
+	# This file has been modified to fill the full viewport
+-->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+	android:width="24dp"
+	android:height="24dp"
+	android:tint="?attr/colorControlNormal"
+	android:viewportWidth="24"
+	android:viewportHeight="24">
+	<path
+		android:fillColor="#FF000000"
+		android:pathData="m4.229,1.75c-0.798,0 -1.474,0.506 -1.716,1.206L0,10.191v9.647a1.208,1.206 0,0 0,1.208 1.206H2.417A1.208,1.206 0,0 0,3.625 19.838V18.632H10.03A8.459,8.441 0,0 1,9.667 16.221,8.459 8.441,0 0,1 13.788,8.985H2.417L4.229,3.559H17.522l1.426,4.257A8.459,8.441 0,0 1,21.11 8.334L19.237,2.956C18.996,2.256 18.319,1.75 17.522,1.75H4.229m12.688,8.441c-0.157,0 -0.29,0.109 -0.314,0.253l-0.23,1.592c-0.363,0.157 -0.713,0.35 -1.027,0.567L13.848,12c-0.133,0 -0.29,0 -0.375,0.157l-1.208,2.086c-0.072,0.133 -0.048,0.289 0.072,0.386l1.281,0.989c-0.024,0.205 -0.036,0.398 -0.036,0.603 0,0.205 0.012,0.398 0.036,0.603l-1.281,0.989c-0.109,0.096 -0.145,0.253 -0.072,0.386l1.208,2.086c0.072,0.157 0.23,0.157 0.375,0.157l1.498,-0.603c0.314,0.217 0.653,0.422 1.027,0.567l0.23,1.592C16.627,22.141 16.748,22.25 16.917,22.25h2.417c0.133,0 0.266,-0.109 0.29,-0.253L19.854,20.405c0.363,-0.157 0.689,-0.35 1.015,-0.567l1.486,0.603c0.157,0 0.314,0 0.399,-0.157l1.208,-2.086c0.072,-0.133 0.036,-0.289 -0.072,-0.386l-1.293,-0.989c0.024,-0.205 0.048,-0.398 0.048,-0.603 0,-0.205 -0.012,-0.398 -0.048,-0.603l1.281,-0.989c0.109,-0.096 0.145,-0.253 0.072,-0.386L22.742,12.157C22.669,12 22.512,12 22.355,12l-1.486,0.603c-0.326,-0.217 -0.653,-0.422 -1.027,-0.567l-0.23,-1.592c-0.012,-0.145 -0.145,-0.253 -0.278,-0.253h-2.417M4.229,11.397a1.813,1.809 0,0 1,1.813 1.809,1.813 1.809,0 0,1 -1.813,1.809 1.813,1.809 0,0 1,-1.813 -1.809,1.813 1.809,0 0,1 1.813,-1.809m13.896,3.015c1.003,0 1.813,0.808 1.813,1.809 0,1.001 -0.81,1.809 -1.813,1.809 -1.015,0 -1.813,-0.808 -1.813,-1.809 0,-1.001 0.81,-1.809 1.813,-1.809z"
+		android:strokeWidth="1.20713317" />
+</vector>

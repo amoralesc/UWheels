@@ -134,4 +134,9 @@
 	<!-- pluralize ride_capacity %d passengers -->
 	<string name="ride_capacity">%d passengers</string>
 	<string name="ride_info">By %s at %s %s</string>
+	<string name="rides">Rides</string>
+	<string name="hosted_rides">Hosted Rides</string>
+	<string name="hosted_ride_capacity">%d / %d passengers</string>
+	<string name="hosted_ride_info">Created at %s %s</string>
+	<string name="hosted_ride_requests">%d requests</string>
 </resources>

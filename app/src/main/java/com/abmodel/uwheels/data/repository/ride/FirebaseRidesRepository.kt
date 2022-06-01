@@ -174,7 +174,7 @@ class FirebaseRidesRepository internal constructor(
 
 	@OptIn(ExperimentalCoroutinesApi::class)
 	override suspend fun fetchUserRides(
-		userId: String, hosted: Boolean, status: RideStatus?
+		userId: String, hosted: Boolean, wheelsType: WheelsType?
 	): Flow<Result<List<Ride>>> = callbackFlow {
 
 		val listener =
@@ -190,19 +190,19 @@ class FirebaseRidesRepository internal constructor(
 			}
 
 		val subscription = when {
-			hosted && status != null -> {
+			hosted && wheelsType != null -> {
 				mFirestore
 					.collection(FirestorePaths.RIDES)
-					.whereEqualTo("host/uid", userId)
-					.whereEqualTo("status", status.toString())
+					.whereEqualTo("host.uid", userId)
+					.whereEqualTo("wheelsType", wheelsType.toString())
 					.orderBy("status")
 					.addSnapshotListener(listener)
 			}
-			status != null -> {
+			wheelsType != null -> {
 				mFirestore
 					.collection(FirestorePaths.RIDES)
 					.whereArrayContains("subscribers", userId)
-					.whereEqualTo("status", status.toString())
+					.whereEqualTo("wheelsType", wheelsType.toString())
 					.orderBy("status")
 					.addSnapshotListener(listener)
 			}

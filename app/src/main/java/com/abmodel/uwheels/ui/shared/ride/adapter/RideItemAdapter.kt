@@ -1,4 +1,4 @@
-package com.abmodel.uwheels.ui.passenger.ride.adapter
+package com.abmodel.uwheels.ui.shared.ride.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

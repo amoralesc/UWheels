@@ -11,11 +11,13 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.abmodel.uwheels.R
 import com.abmodel.uwheels.data.repository.auth.FirebaseAuthRepository
 import com.abmodel.uwheels.databinding.FragmentPassengerHomeBinding
+import com.abmodel.uwheels.ui.shared.data.SharedViewModel
 import com.abmodel.uwheels.ui.shared.sensor.ShakeDetector
 import com.abmodel.uwheels.util.DEBUG_USE_SENSORS
 import com.bumptech.glide.Glide
@@ -32,6 +34,7 @@ class PassengerHomeFragment : Fragment() {
 
 		enum class FromPassengerHomeFragmentDestination {
 			PROFILE,
+			HOSTED_RIDES,
 			RIDES,
 			CONTACTS,
 			CHATS,
@@ -64,6 +67,8 @@ class PassengerHomeFragment : Fragment() {
 		})
 		return shakeDetector
 	}
+
+	private val sharedViewModel: SharedViewModel by activityViewModels()
 
 	override fun onCreateView(
 		inflater: LayoutInflater,
@@ -109,7 +114,10 @@ class PassengerHomeFragment : Fragment() {
 			profilePhoto.setOnClickListener {
 				goToNextScreen(FromPassengerHomeFragmentDestination.PROFILE)
 			}
-			myRides.setOnClickListener {
+			hostedRides.setOnClickListener {
+				goToNextScreen(FromPassengerHomeFragmentDestination.HOSTED_RIDES)
+			}
+			rides.setOnClickListener {
 				goToNextScreen(FromPassengerHomeFragmentDestination.RIDES)
 			}
 			contacts.setOnClickListener {
@@ -163,9 +171,14 @@ class PassengerHomeFragment : Fragment() {
 					R.id.action_passengerHomeFragment_to_profileDetailsFragment
 				)
 			}
+			FromPassengerHomeFragmentDestination.HOSTED_RIDES -> {
+				findNavController().navigate(
+					R.id.action_passengerHomeFragment_to_hostedRidesFragment
+				)
+			}
 			FromPassengerHomeFragmentDestination.RIDES -> {
 				findNavController().navigate(
-					R.id.action_passengerHomeFragment_to_passengerRidesFragment
+					R.id.action_passengerHomeFragment_to_ridesFragment
 				)
 			}
 			FromPassengerHomeFragmentDestination.CONTACTS -> {
@@ -221,6 +234,7 @@ class PassengerHomeFragment : Fragment() {
 
 	private fun goToDriverHome(setDriverModeOn: Boolean = true) {
 		if (setDriverModeOn) {
+			sharedViewModel.driverModeChanged(true)
 			lifecycleScope.launch(Dispatchers.Main) {
 				FirebaseAuthRepository.getInstance().setDriverMode(true)
 			}
