@@ -128,7 +128,8 @@ class PassengerCreateRideViewModel : ViewModel() {
 						user.photoUrl.toString()
 					),
 					status = RideStatus.OPEN.toString(),
-					subscribers = mutableListOf(user.uid)
+					subscribers = mutableListOf(user.uid),
+					creationDate = getCurrentDateAsCustomDate()
 				)
 				repository.createRide(ride)
 

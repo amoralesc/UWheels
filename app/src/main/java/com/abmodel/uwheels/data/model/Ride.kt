@@ -18,6 +18,7 @@ data class Ride(
 	var chatId: String = "",
 	val price: Double? = null,
 	val vehicle: Vehicle? = null,
+	val creationDate: CustomDate = CustomDate(),
 	val startedDate: CustomDate? = null,
 	val finishedDate: CustomDate? = null,
 	var duration: Long? = null,

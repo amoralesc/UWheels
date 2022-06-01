@@ -217,19 +217,8 @@ class FirebaseRidesRepository internal constructor(
 
 		awaitClose {
 			subscription.remove()
+			Log.d(TAG, "Closing user rides flow")
 		}
-		/*
-	.addSnapshotListener { snapshot, error ->
-		if (error != null) {
-			trySend(Result.failure(error))
-			return@addSnapshotListener
-		}
-
-		if (snapshot != null) {
-			val rides = snapshot.toObjects(Ride::class.java)
-			trySend(Result.success(rides))
-		}
-	} */
 	}
 
 	@OptIn(ExperimentalCoroutinesApi::class)
@@ -269,6 +258,7 @@ class FirebaseRidesRepository internal constructor(
 
 		awaitClose {
 			subscription.remove()
+			Log.d(TAG, "Closing search rides flow")
 		}
 	}
 
@@ -327,11 +317,34 @@ class FirebaseRidesRepository internal constructor(
 			ride.status = RideStatus.FULL.toString()
 		}
 
+		if (ride.status != RideStatus.FULL.toString()) {
+			mFirestore
+				.collection(FirestorePaths.RIDES)
+				.document(ride.id)
+				.set(ride)
+				.await()
+
+		} else {
+			rideIsFull(ride)
+		}
+	}
+
+	private suspend fun rideIsFull(ride: Ride) {
+
+		// Remove all requests and their subscribers
+		ride.requests.stream()
+			.forEach { request ->
+				ride.subscribers.removeIf { it == request.user.uid }
+			}
+		ride.requests.clear()
+
 		mFirestore
 			.collection(FirestorePaths.RIDES)
 			.document(ride.id)
 			.set(ride)
 			.await()
+
+		// TODO: NOTIFY USERS
 	}
 
 	override suspend fun removePassengerFromRide(rideId: String, passengerId: String) {

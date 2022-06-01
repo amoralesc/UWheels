@@ -194,7 +194,7 @@
 	</fragment>
 	<fragment
 		android:id="@+id/passengerRidesFragment"
-		android:name="com.abmodel.uwheels.ui.passenger.ride.PassengerRidesFragment"
+		android:name="com.abmodel.uwheels.ui.passenger.ride.rides.PassengerRidesFragment"
 		android:label="fragment_passenger_rides"
 		tools:layout="@layout/fragment_passenger_rides" />
 </navigation>

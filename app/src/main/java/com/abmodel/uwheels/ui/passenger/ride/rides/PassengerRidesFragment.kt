@@ -1,4 +1,4 @@
-package com.abmodel.uwheels.ui.passenger.ride
+package com.abmodel.uwheels.ui.passenger.ride.rides
 
 import android.os.Bundle
 import android.util.Log
@@ -8,6 +8,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.abmodel.uwheels.databinding.FragmentPassengerRidesBinding
+import com.abmodel.uwheels.ui.passenger.ride.adapter.RideItemAdapter
+import com.abmodel.uwheels.ui.shared.data.RidesPage
 import com.abmodel.uwheels.ui.shared.data.SharedViewModel
 
 class PassengerRidesFragment : Fragment() {
@@ -35,8 +37,25 @@ class PassengerRidesFragment : Fragment() {
 	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 		super.onViewCreated(view, savedInstanceState)
 
-		sharedViewModel.userRides.observe(viewLifecycleOwner) {
-			Log.d(TAG, "Rides: $it")
+		binding.apply {
+			dataViewModel = sharedViewModel
+			lifecycleOwner = viewLifecycleOwner
+
+			// Set the adapter for the recycler view
+			rides.adapter = RideItemAdapter {
+				Log.d(TAG, "Clicked on ride $it")
+			}
+
+			chipActive.setOnClickListener {
+				sharedViewModel.setSelectedRidesPage(RidesPage.ACTIVE)
+			}
+			chipRequested.setOnClickListener {
+				sharedViewModel.setSelectedRidesPage(RidesPage.REQUESTED)
+			}
+			chipCompleted.setOnClickListener {
+				sharedViewModel.setSelectedRidesPage(RidesPage.COMPLETED)
+			}
+			sharedViewModel.setSelectedRidesPage(RidesPage.ACTIVE)
 		}
 	}
 

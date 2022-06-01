@@ -89,6 +89,7 @@
 	<string name="model">Model</string>
 
 	<string name="chat_date">%s %s</string>
+	<string name="ride_date">%s %s</string>
 
 	<!-- Locations permissions -->
 	<string name="permission_location_denied">Location access permissions were denied</string>
@@ -129,4 +130,8 @@
 	<string name="date_in_past">Date must be after current date</string>
 	<string name="creating_ride">Creating ride…</string>
 	<string name="ride_created">Ride created successfully</string>
+
+	<!-- pluralize ride_capacity %d passengers -->
+	<string name="ride_capacity">%d passengers</string>
+	<string name="ride_info">By %s at %s %s</string>
 </resources>
