@@ -1,6 +1,7 @@
 package com.abmodel.uwheels.data.model
 
 data class Ride(
+	var id: String = "",
 	val source: CustomAddress = CustomAddress(),
 	val destination: CustomAddress = CustomAddress(),
 	val date: CustomDate = CustomDate(),
@@ -13,6 +14,7 @@ data class Ride(
 	var status: String = RideStatus.OPEN.toString(),
 	val passengers: MutableList<RideUser> = mutableListOf(),
 	val subscribers: MutableList<String> = mutableListOf(),
+	val requests: MutableList<RideRequest> = mutableListOf(),
 	var chatId: String = "",
 	val price: Double? = null,
 	val vehicle: Vehicle? = null,

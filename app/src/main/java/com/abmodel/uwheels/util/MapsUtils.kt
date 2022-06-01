@@ -1,5 +1,6 @@
 package com.abmodel.uwheels.util
 
+import com.abmodel.uwheels.network.maps.response.DirectionsRoute
 import com.google.android.gms.maps.model.LatLng
 import kotlin.math.*
 
@@ -29,4 +30,18 @@ fun LatLng.midPointTo(other: LatLng): LatLng {
 		(this.latitude + other.latitude) / 2,
 		(this.longitude + other.longitude) / 2
 	)
+}
+
+fun DirectionsRoute.decodeRoute(): List<LatLng> {
+
+	val points: MutableList<LatLng> = mutableListOf()
+	this.legs.forEach { leg ->
+		leg.steps.forEach { step ->
+			points.addAll(
+				PolyUtil.decode(step.polyline.points)
+			)
+		}
+	}
+
+	return points
 }

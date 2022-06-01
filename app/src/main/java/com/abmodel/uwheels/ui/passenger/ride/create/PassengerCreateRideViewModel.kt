@@ -14,10 +14,7 @@ import com.abmodel.uwheels.network.maps.response.DirectionsResponse
 import com.abmodel.uwheels.network.maps.response.DirectionsRoute
 import com.abmodel.uwheels.ui.passenger.ride.request.RequestRideFragment
 import com.abmodel.uwheels.ui.shared.data.FormResult
-import com.abmodel.uwheels.util.PolyUtil
-import com.abmodel.uwheels.util.compareDates
-import com.abmodel.uwheels.util.getCurrentDateAsCustomDate
-import com.abmodel.uwheels.util.parseLatLng
+import com.abmodel.uwheels.util.*
 import com.google.android.gms.maps.model.LatLng
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -80,17 +77,7 @@ class PassengerCreateRideViewModel : ViewModel() {
 						)
 
 					if (response.routes?.isNotEmpty() == true) {
-						val route: DirectionsRoute = response.routes[0]
-
-						val points: MutableList<LatLng> = mutableListOf()
-						route.legs.forEach { leg ->
-							leg.steps.forEach { step ->
-								points.addAll(
-									PolyUtil.decode(step.polyline.points)
-								)
-							}
-						}
-
+						val points = response.routes[0].decodeRoute()
 						_route.postValue(points)
 					}
 				} catch (e: Exception) {
@@ -121,6 +108,9 @@ class PassengerCreateRideViewModel : ViewModel() {
 	) {
 		viewModelScope.launch(Dispatchers.Main) {
 			if (validateForm()) {
+
+				_result.postValue(FormResult(message = R.string.creating_ride))
+
 				val user = FirebaseAuthRepository.getInstance().getLoggedInUser()
 
 				val ride = Ride(
@@ -176,7 +166,6 @@ class PassengerCreateRideViewModel : ViewModel() {
 				false
 			}
 			else -> {
-				_result.postValue(FormResult(message = R.string.creating_ride))
 				true
 			}
 		}

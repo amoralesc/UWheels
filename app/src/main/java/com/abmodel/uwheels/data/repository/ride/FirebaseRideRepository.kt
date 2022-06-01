@@ -1,5 +1,6 @@
 package com.abmodel.uwheels.data.repository.ride
 
+import android.util.Log
 import com.abmodel.uwheels.data.DatabasePaths
 import com.abmodel.uwheels.data.FirestorePaths
 import com.abmodel.uwheels.data.model.*
@@ -54,17 +55,19 @@ class FirebaseRideRepository internal constructor(
 				.getReference(DatabasePaths.CHATS)
 				.push()
 
-		ride.chatId = chatRef.key!!
-		val rideId =
+		val rideDocument =
 			mFirestore
 				.collection(FirestorePaths.RIDES)
-				.add(ride)
-				.await()
-				.id
+				.document()
+		ride.id = rideDocument.id
+		ride.chatId = chatRef.key!!
+
+		rideDocument.set(ride).await()
 
 		// Create the chat of the ride
 		val chat = Chat(
-			rideId = rideId,
+			id = chatRef.key!!,
+			rideId = rideDocument.id,
 			name = ride.wheelsType,
 			date = ride.date,
 			source = ride.source,
@@ -72,44 +75,6 @@ class FirebaseRideRepository internal constructor(
 		)
 
 		chatRef.setValue(chat).await()
-	}
-
-	override suspend fun addPassengerToRide(rideId: String, passenger: RideUser) {
-
-		val ride = getRide(rideId)!!
-			.toObject(Ride::class.java)!!
-
-		ride.passengers.add(passenger)
-		ride.subscribers.add(passenger.uid)
-		ride.currentCapacity++
-		if (ride.currentCapacity == ride.totalCapacity) {
-			ride.status = RideStatus.FULL.toString()
-		}
-
-		mFirestore
-			.collection(FirestorePaths.RIDES)
-			.document(rideId)
-			.set(ride)
-			.await()
-	}
-
-	override suspend fun removePassengerFromRide(rideId: String, passengerId: String) {
-
-		val ride = getRide(rideId)!!
-			.toObject(Ride::class.java)!!
-
-		ride.passengers.removeIf { it.uid == passengerId }
-		ride.subscribers.remove(passengerId)
-		ride.currentCapacity--
-		if (ride.status == RideStatus.FULL.toString()) {
-			ride.status = RideStatus.OPEN.toString()
-		}
-
-		mFirestore
-			.collection(FirestorePaths.RIDES)
-			.document(rideId)
-			.set(ride)
-			.await()
 	}
 
 	override suspend fun startRide(rideId: String, startedDate: CustomDate?) {
@@ -122,6 +87,8 @@ class FirebaseRideRepository internal constructor(
 				"startedDate", startedDate
 			)
 			.await()
+
+		// TODO: NOTIFY SUBSCRIBERS
 	}
 
 	override suspend fun finishRide(rideId: String, finishedDate: CustomDate?) {
@@ -278,7 +245,8 @@ class FirebaseRideRepository internal constructor(
 					// Filter rides according to query parameters
 					rides.stream()
 						.filter { ride ->
-							ride.date.difference(query.date) < query.maxTimeDifference &&
+							!ride.subscribers.contains(query.userId) &&
+									ride.date.difference(query.date) < query.maxTimeDifference &&
 									ride.source.latLng!!.distanceTo(query.source.latLng!!) < query.maxDistance &&
 									ride.destination.latLng!!.distanceTo(query.destination.latLng!!) < query.maxDistance
 						}
@@ -300,10 +268,84 @@ class FirebaseRideRepository internal constructor(
 		}
 	}
 
-	override suspend fun requestRide(rideId: String, user: RideUser) {
+	override suspend fun requestRide(rideId: String, request: RideRequest) {
 		val ride = getRide(rideId)!!
 			.toObject(Ride::class.java)!!
 
+		if (request.user.uid in ride.subscribers) {
+			Log.d(TAG, "User is already subscribed to ride")
+			return
+		}
 
+		ride.requests.add(request)
+		ride.subscribers.add(request.user.uid)
+
+		mFirestore
+			.collection(FirestorePaths.RIDES)
+			.document(rideId)
+			.set(ride)
+			.await()
+
+		// TODO: NOTIFY HOST
+	}
+
+	override suspend fun acceptRideRequest(rideId: String, request: RideRequest) {
+		val ride = getRide(rideId)!!
+			.toObject(Ride::class.java)!!
+
+		ride.requests.remove(request)
+		addPassengerToRide(ride, request)
+
+		// TODO: NOTIFY USER
+	}
+
+	override suspend fun rejectRideRequest(rideId: String, request: RideRequest) {
+		val ride = getRide(rideId)!!
+			.toObject(Ride::class.java)!!
+
+		ride.requests.remove(request)
+		ride.subscribers.remove(request.user.uid)
+
+		mFirestore
+			.collection(FirestorePaths.RIDES)
+			.document(rideId)
+			.set(ride)
+			.await()
+	}
+
+	private suspend fun addPassengerToRide(ride: Ride, request: RideRequest) {
+
+		ride.passengers.add(request.user)
+		if (request.user.uid !in ride.subscribers)
+			ride.subscribers.add(request.user.uid)
+		ride.currentCapacity++
+		if (ride.currentCapacity == ride.totalCapacity) {
+			ride.status = RideStatus.FULL.toString()
+		}
+
+		mFirestore
+			.collection(FirestorePaths.RIDES)
+			.document(ride.id)
+			.set(ride)
+			.await()
+	}
+
+	override suspend fun removePassengerFromRide(rideId: String, passengerId: String) {
+
+		val ride = getRide(rideId)!!
+			.toObject(Ride::class.java)!!
+
+		ride.passengers.removeIf { it.uid == passengerId }
+		ride.subscribers.remove(passengerId)
+		ride.currentCapacity--
+		if (ride.status == RideStatus.FULL.toString()) {
+			ride.status = RideStatus.OPEN.toString()
+		}
+
+		mFirestore
+			.collection(FirestorePaths.RIDES)
+			.document(rideId)
+			.set(ride)
+			.await()
 	}
 }

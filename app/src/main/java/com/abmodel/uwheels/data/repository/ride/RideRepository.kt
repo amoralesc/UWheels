@@ -5,8 +5,6 @@ import kotlinx.coroutines.flow.Flow
 
 interface RideRepository {
 	suspend fun createRide(ride: Ride)
-	suspend fun addPassengerToRide(rideId: String, passenger: RideUser)
-	suspend fun removePassengerFromRide(rideId: String, passengerId: String)
 	suspend fun startRide(rideId: String, startedDate: CustomDate? = null)
 	suspend fun finishRide(rideId: String, finishedDate: CustomDate? = null)
 	suspend fun cancelRide(rideId: String)
@@ -15,5 +13,8 @@ interface RideRepository {
 		userId: String, hosted: Boolean = false, status: RideStatus? = null
 	): Flow<Result<List<Ride>>>
 	suspend fun searchRides(query: SearchRideQuery): Flow<Result<List<Ride>>>
-	suspend fun requestRide(rideId: String, user: RideUser)
+	suspend fun requestRide(rideId: String, request: RideRequest)
+	suspend fun acceptRideRequest(rideId: String, request: RideRequest)
+	suspend fun rejectRideRequest(rideId: String, request: RideRequest)
+	suspend fun removePassengerFromRide(rideId: String, passengerId: String)
 }
