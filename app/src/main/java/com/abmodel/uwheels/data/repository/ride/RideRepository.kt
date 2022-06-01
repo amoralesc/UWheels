@@ -1,16 +1,19 @@
 package com.abmodel.uwheels.data.repository.ride
 
-import com.abmodel.uwheels.data.model.CustomDate
-import com.abmodel.uwheels.data.model.Ride
-import com.abmodel.uwheels.data.model.RideUser
+import com.abmodel.uwheels.data.model.*
 import kotlinx.coroutines.flow.Flow
 
 interface RideRepository {
 	suspend fun createRide(ride: Ride)
 	suspend fun addPassengerToRide(rideId: String, passenger: RideUser)
 	suspend fun removePassengerFromRide(rideId: String, passengerId: String)
-	suspend fun startRide(rideId: String, startedDate: CustomDate?)
-	suspend fun finishRide(rideId: String, finishedDate: CustomDate?)
+	suspend fun startRide(rideId: String, startedDate: CustomDate? = null)
+	suspend fun finishRide(rideId: String, finishedDate: CustomDate? = null)
 	suspend fun cancelRide(rideId: String)
-	suspend fun fetchUserRides(userId: String): Flow<Result<List<Ride>>>
+	suspend fun rateUser(userId: String, rating: Double)
+	suspend fun fetchUserRides(
+		userId: String, hosted: Boolean = false, status: RideStatus? = null
+	): Flow<Result<List<Ride>>>
+	suspend fun searchRides(query: SearchRideQuery): Flow<Result<List<Ride>>>
+	suspend fun requestRide(rideId: String, user: RideUser)
 }

@@ -1,11 +1,11 @@
 package com.abmodel.uwheels.data.model
 
 enum class RideStatus(val status: String) {
-	CREATED("CREATED"),
+	OPEN("OPEN"),
+	FULL("FULL"),
 	ACTIVE("ACTIVE"),
-	STARTED("STARTED"),
-	ONROUTE("ONROUTE"),
-	ARRIVED("ARRIVED"),
+	//ONROUTE("ONROUTE"),
+	//ARRIVED("ARRIVED"),
 	CANCELLED("CANCELLED"),
 	COMPLETED("COMPLETED");
 

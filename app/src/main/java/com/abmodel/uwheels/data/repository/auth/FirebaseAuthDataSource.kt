@@ -124,6 +124,9 @@ class FirebaseAuthDataSource {
 			.await()
 			.toObject(UserDocument::class.java)!!
 
+		Log.d("FirebaseAuthDataSource", "Firebase User: $firebaseUser")
+		Log.d("FirebaseAuthDataSource", "Database User: $databaseUser")
+
 		return LoggedInUser(
 			uid = firebaseUser.uid,
 			email = firebaseUser.email ?: "",
@@ -136,14 +139,14 @@ class FirebaseAuthDataSource {
 			driverMode = databaseUser.driverMode as Boolean,
 			passengerRating = databaseUser.passengerRating?.let {
 				Rating(
-					it.rating as Double,
-					it.ratingCount as Int
+					it.value as Double,
+					it.count as Long
 				)
 			} as Rating,
 			driverRating = databaseUser.driverRating?.let {
 				Rating(
-					it.rating as Double,
-					it.ratingCount as Int
+					it.value as Double,
+					it.count as Long
 				)
 			} as Rating
 		)

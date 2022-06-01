@@ -3,10 +3,11 @@ package com.abmodel.uwheels.data.repository.ride
 import com.abmodel.uwheels.data.DatabasePaths
 import com.abmodel.uwheels.data.FirestorePaths
 import com.abmodel.uwheels.data.model.*
+import com.abmodel.uwheels.util.difference
+import com.abmodel.uwheels.util.distanceTo
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ktx.database
-import com.google.firebase.firestore.DocumentSnapshot
-import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.*
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -14,6 +15,7 @@ import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.tasks.await
+import java.util.stream.Collectors
 
 class FirebaseRideRepository internal constructor(
 	private val mDatabase: FirebaseDatabase,
@@ -34,6 +36,15 @@ class FirebaseRideRepository internal constructor(
 		}
 
 		const val TAG = "FirebaseRideRepository"
+	}
+
+	private suspend fun getRide(rideId: String): DocumentSnapshot? {
+
+		return mFirestore
+			.collection(FirestorePaths.RIDES)
+			.document(rideId)
+			.get()
+			.await()
 	}
 
 	override suspend fun createRide(ride: Ride) {
@@ -63,15 +74,6 @@ class FirebaseRideRepository internal constructor(
 		chatRef.setValue(chat).await()
 	}
 
-	private suspend fun getRide(rideId: String): DocumentSnapshot? {
-
-		return mFirestore
-			.collection(FirestorePaths.RIDES)
-			.document(rideId)
-			.get()
-			.await()
-	}
-
 	override suspend fun addPassengerToRide(rideId: String, passenger: RideUser) {
 
 		val ride = getRide(rideId)!!
@@ -79,14 +81,15 @@ class FirebaseRideRepository internal constructor(
 
 		ride.passengers.add(passenger)
 		ride.subscribers.add(passenger.uid)
+		ride.currentCapacity++
+		if (ride.currentCapacity == ride.totalCapacity) {
+			ride.status = RideStatus.FULL.toString()
+		}
 
 		mFirestore
 			.collection(FirestorePaths.RIDES)
 			.document(rideId)
-			.update(
-				"passengers", ride.passengers,
-				"subscribers", ride.subscribers
-			)
+			.set(ride)
 			.await()
 	}
 
@@ -97,14 +100,15 @@ class FirebaseRideRepository internal constructor(
 
 		ride.passengers.removeIf { it.uid == passengerId }
 		ride.subscribers.remove(passengerId)
+		ride.currentCapacity--
+		if (ride.status == RideStatus.FULL.toString()) {
+			ride.status = RideStatus.OPEN.toString()
+		}
 
 		mFirestore
 			.collection(FirestorePaths.RIDES)
 			.document(rideId)
-			.update(
-				"passengers", ride.passengers,
-				"subscribers", ride.subscribers
-			)
+			.set(ride)
 			.await()
 	}
 
@@ -114,7 +118,7 @@ class FirebaseRideRepository internal constructor(
 			.collection(FirestorePaths.RIDES)
 			.document(rideId)
 			.update(
-				"status", RideStatus.STARTED.toString(),
+				"status", RideStatus.ACTIVE.toString(),
 				"startedDate", startedDate
 			)
 			.await()
@@ -123,18 +127,21 @@ class FirebaseRideRepository internal constructor(
 	override suspend fun finishRide(rideId: String, finishedDate: CustomDate?) {
 
 		val ride = getRide(rideId)!!
+			.toObject(Ride::class.java)!!
+
+		if (ride.startedDate != null && finishedDate != null) {
+			ride.duration = ride.startedDate.difference(finishedDate)
+		}
+		ride.status = RideStatus.COMPLETED.toString()
 
 		mFirestore
 			.collection(FirestorePaths.RIDES)
 			.document(rideId)
-			.update(
-				"status", RideStatus.COMPLETED.toString(),
-				"finishedDate", finishedDate
-			)
+			.set(ride)
 			.await()
 
 		// Delete the associated chat
-		deleteChat(ride.getString("chatId")!!)
+		deleteChat(ride.chatId)
 	}
 
 	override suspend fun cancelRide(rideId: String) {
@@ -163,28 +170,140 @@ class FirebaseRideRepository internal constructor(
 			.await()
 	}
 
+	override suspend fun rateUser(userId: String, rating: Double) {
+
+		val user = mFirestore
+			.collection(FirestorePaths.USERS)
+			.document(userId)
+			.get()
+			.await()
+
+		val currentRating = (user.get("rating") as HashMap<*, *>).let {
+			val value = if (it["value"] is Number) {
+				(it["value"] as Number).toDouble()
+			} else {
+				throw IllegalStateException("Rating value is not a number")
+			}
+
+			Rating(value, it["count"] as Long)
+		}
+		val newRating = Rating(
+			(currentRating.value * currentRating.count + rating) / (currentRating.count + 1),
+			currentRating.count + 1
+		)
+
+		mFirestore
+			.collection(FirestorePaths.USERS)
+			.document(userId)
+			.update(
+				"rating", newRating
+			)
+			.await()
+	}
+
 	@OptIn(ExperimentalCoroutinesApi::class)
-	override suspend fun fetchUserRides(userId: String): Flow<Result<List<Ride>>> = callbackFlow {
+	override suspend fun fetchUserRides(
+		userId: String, hosted: Boolean, status: RideStatus?
+	): Flow<Result<List<Ride>>> = callbackFlow {
 
-		val subscription =
-			mFirestore
-				.collection(FirestorePaths.RIDES)
-				.whereArrayContains("subscribers", userId)
-				.orderBy("state")
-				.addSnapshotListener { snapshot, error ->
-					if (error != null) {
-						trySend(Result.failure(error))
-						return@addSnapshotListener
-					}
-
-					if (snapshot != null) {
-						val rides = snapshot.toObjects(Ride::class.java)
-						trySend(Result.success(rides))
-					}
+		val listener =
+			EventListener<QuerySnapshot> { snapshot, error ->
+				if (error != null) {
+					trySend(Result.failure(error))
 				}
+
+				if (snapshot != null) {
+					val rides = snapshot.toObjects(Ride::class.java)
+					trySend(Result.success(rides))
+				}
+			}
+
+		val subscription = when {
+			hosted && status != null -> {
+				mFirestore
+					.collection(FirestorePaths.RIDES)
+					.whereEqualTo("host/uid", userId)
+					.whereEqualTo("status", status.toString())
+					.orderBy("status")
+					.addSnapshotListener(listener)
+			}
+			status != null -> {
+				mFirestore
+					.collection(FirestorePaths.RIDES)
+					.whereArrayContains("subscribers", userId)
+					.whereEqualTo("status", status.toString())
+					.orderBy("status")
+					.addSnapshotListener(listener)
+			}
+			else -> {
+				mFirestore
+					.collection(FirestorePaths.RIDES)
+					.whereArrayContains("subscribers", userId)
+					.orderBy("status")
+					.addSnapshotListener(listener)
+			}
+		}
 
 		awaitClose {
 			subscription.remove()
 		}
+		/*
+	.addSnapshotListener { snapshot, error ->
+		if (error != null) {
+			trySend(Result.failure(error))
+			return@addSnapshotListener
+		}
+
+		if (snapshot != null) {
+			val rides = snapshot.toObjects(Ride::class.java)
+			trySend(Result.success(rides))
+		}
+	} */
+	}
+
+	@OptIn(ExperimentalCoroutinesApi::class)
+	override suspend fun searchRides(
+		query: SearchRideQuery
+	): Flow<Result<List<Ride>>> = callbackFlow {
+
+		val listener =
+			EventListener<QuerySnapshot> { snapshot, error ->
+				if (error != null) {
+					trySend(Result.failure(error))
+				}
+
+				if (snapshot != null) {
+					val rides = snapshot.toObjects(Ride::class.java)
+
+					// Filter rides according to query parameters
+					rides.stream()
+						.filter { ride ->
+							ride.date.difference(query.date) < query.maxTimeDifference &&
+									ride.source.latLng!!.distanceTo(query.source.latLng!!) < query.maxDistance &&
+									ride.destination.latLng!!.distanceTo(query.destination.latLng!!) < query.maxDistance
+						}
+						.collect(Collectors.toList())
+						.let { filteredRides ->
+							trySend(Result.success(filteredRides))
+						}
+				}
+			}
+
+		val subscription = mFirestore
+			.collection(FirestorePaths.RIDES)
+			.whereEqualTo("status", RideStatus.OPEN.toString())
+			.orderBy("wheelsType")
+			.addSnapshotListener(listener)
+
+		awaitClose {
+			subscription.remove()
+		}
+	}
+
+	override suspend fun requestRide(rideId: String, user: RideUser) {
+		val ride = getRide(rideId)!!
+			.toObject(Ride::class.java)!!
+
+
 	}
 }

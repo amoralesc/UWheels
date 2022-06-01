@@ -13,6 +13,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.abmodel.uwheels.R
 import com.abmodel.uwheels.data.model.CustomAddress
+import com.abmodel.uwheels.data.model.WheelsType
 import com.abmodel.uwheels.databinding.FragmentPassengerCreateRideBinding
 import com.abmodel.uwheels.ui.shared.search.SearchAddressFragment
 import com.abmodel.uwheels.util.*
@@ -30,18 +31,6 @@ class PassengerCreateRideFragment : Fragment(), OnMapReadyCallback {
 	companion object {
 		const val TAG = "PassengerCreateRideFragment"
 
-		val WheelsTypeList = listOf(
-			Triple(
-				"Shared Wheels",
-				arrayOf("Taxi", "Uber", "Beat", "Didi", "Cabify"),
-				1..4
-			),
-			Triple(
-				"We Wheels",
-				arrayOf("Transmilenio", "SITP", "Bus"),
-				1..10
-			)
-		)
 	}
 
 	// Binding objects to access the view elements
@@ -145,7 +134,7 @@ class PassengerCreateRideFragment : Fragment(), OnMapReadyCallback {
 			wheelsType.adapter = ArrayAdapter(
 				requireContext(),
 				android.R.layout.simple_spinner_dropdown_item,
-				WheelsTypeList.map { it.first }
+				arrayOf(WheelsType.SHARED_WHEELS, WheelsType.WE_WHEELS.type)
 			)
 
 			wheelsType.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
@@ -157,18 +146,23 @@ class PassengerCreateRideFragment : Fragment(), OnMapReadyCallback {
 					position: Int,
 					id: Long
 				) {
+					val type = when (position) {
+						0 -> WheelsType.SHARED_WHEELS
+						else -> WheelsType.WE_WHEELS
+					}
+
 					// Populate the transportation spinner
 					transportation.adapter = ArrayAdapter(
 						requireContext(),
 						android.R.layout.simple_spinner_dropdown_item,
-						WheelsTypeList.map { it.second }[position]
+						type.transportation
 					)
 
 					// Populate the capacity spinner
 					capacity.adapter = ArrayAdapter(
 						requireContext(),
 						android.R.layout.simple_spinner_dropdown_item,
-						WheelsTypeList.map { it.third.toList() }[position]
+						type.capacity!!.toList()
 					)
 				}
 			}

@@ -3,6 +3,7 @@ package com.abmodel.uwheels.util
 import com.abmodel.uwheels.data.model.CustomDate
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.math.abs
 
 /**
  * Formats a given time in the form HH:MM a.m./p.m.
@@ -63,4 +64,18 @@ fun getCurrentDateAsCustomDate(): CustomDate {
 		calendar.get(Calendar.HOUR_OF_DAY),
 		calendar.get(Calendar.MINUTE),
 	)
+}
+
+fun CustomDate.difference(other: CustomDate): Long {
+	val calendar1 = Calendar.getInstance()
+	calendar1.timeInMillis = this.millis!!
+	calendar1.set(Calendar.HOUR_OF_DAY, this.hour!!)
+	calendar1.set(Calendar.MINUTE, this.minute!!)
+
+	val calendar2 = Calendar.getInstance()
+	calendar2.timeInMillis = other.millis!!
+	calendar2.set(Calendar.HOUR_OF_DAY, other.hour!!)
+	calendar2.set(Calendar.MINUTE, other.minute!!)
+
+	return abs(calendar1.timeInMillis - calendar2.timeInMillis)
 }

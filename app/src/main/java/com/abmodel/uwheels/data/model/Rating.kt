@@ -1,6 +1,6 @@
 package com.abmodel.uwheels.data.model
 
 data class Rating(
-	val rating: Double = 0.0,
-	val ratingCount: Int = 0,
+	val value: Double = 0.0,
+	val count: Long = 0,
 )
