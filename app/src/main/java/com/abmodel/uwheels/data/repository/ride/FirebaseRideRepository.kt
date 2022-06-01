@@ -6,6 +6,7 @@ import com.abmodel.uwheels.data.FirestorePaths
 import com.abmodel.uwheels.data.model.*
 import com.abmodel.uwheels.util.difference
 import com.abmodel.uwheels.util.distanceTo
+import com.abmodel.uwheels.util.toLatLng
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ktx.database
 import com.google.firebase.firestore.*
@@ -247,8 +248,8 @@ class FirebaseRideRepository internal constructor(
 						.filter { ride ->
 							!ride.subscribers.contains(query.userId) &&
 									ride.date.difference(query.date) < query.maxTimeDifference &&
-									ride.source.latLng!!.distanceTo(query.source.latLng!!) < query.maxDistance &&
-									ride.destination.latLng!!.distanceTo(query.destination.latLng!!) < query.maxDistance
+									ride.source.latLng!!.toLatLng().distanceTo(query.source.latLng!!.toLatLng()) < query.maxDistance &&
+									ride.destination.latLng!!.toLatLng().distanceTo(query.destination.latLng!!.toLatLng()) < query.maxDistance
 						}
 						.collect(Collectors.toList())
 						.let { filteredRides ->
