@@ -1,11 +1,21 @@
 package com.abmodel.uwheels.data.repository.driver.apply
 
+import android.util.Log
+import com.abmodel.uwheels.data.FirestorePaths
+import com.abmodel.uwheels.data.StoragePaths
 import com.abmodel.uwheels.data.model.DriverApplication
 import com.abmodel.uwheels.data.model.UploadedFile
 import com.abmodel.uwheels.data.repository.auth.FirebaseAuthRepository
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.ktx.storage
+import kotlinx.coroutines.tasks.await
 
 class FirebaseDriverApplicationRepository internal constructor(
-	private val dataSource: FirebaseDriverApplicationDataSource
+	private val mFirestore: FirebaseFirestore,
+	private val mStorage: FirebaseStorage
 ) : DriverApplicationRepository {
 
 	/**
@@ -19,7 +29,8 @@ class FirebaseDriverApplicationRepository internal constructor(
 		fun getInstance(): FirebaseDriverApplicationRepository {
 			return instance ?: synchronized(this) {
 				instance ?: FirebaseDriverApplicationRepository(
-					FirebaseDriverApplicationDataSource.getInstance()
+					Firebase.firestore,
+					Firebase.storage
 				).also { instance = it }
 			}
 		}
@@ -44,7 +55,7 @@ class FirebaseDriverApplicationRepository internal constructor(
 			userId, "vehiclePics", driverApplication.vehiclePics
 		)
 
-		dataSource.uploadDriverApplication(userId, driverApplication)
+		uploadDriverApplication(userId, driverApplication)
 		FirebaseAuthRepository.getInstance().makeUserDriver()
 		FirebaseAuthRepository.getInstance().setDriverMode(true)
 	}
@@ -54,12 +65,46 @@ class FirebaseDriverApplicationRepository internal constructor(
 		filesType: String,
 		files: MutableList<UploadedFile>,
 	): MutableList<UploadedFile> {
-		val uploadedUris =
-			dataSource.uploadDriverApplicationFiles(userId, filesType, files)
 
-		for (i in 0 until files.size) {
-			files[i].uri = uploadedUris[i]
+		files.forEach { file ->
+			val uri = mStorage.reference
+				.child(StoragePaths.USERS)
+				.child(userId)
+				.child(StoragePaths.DRIVER_APPLICATION)
+				.child(filesType)
+				.child(file.name)
+				.putFile(file.uri)
+				.await()
+				.storage
+				.downloadUrl
+				.await()
+
+			// Update the file's uri
+			file.uri = uri
 		}
+
 		return files
+	}
+
+	private suspend fun uploadDriverApplication(
+		userId: String,
+		driverApplication: DriverApplication
+	) {
+		mFirestore
+			.collection(FirestorePaths.USERS)
+			.document(userId)
+			.update(
+				FirestorePaths.DRIVER_APPLICATION,
+				driverApplication
+			)
+			.addOnSuccessListener {
+				Log.d(
+					TAG, "Driver application uploaded successfully"
+				)
+			}
+			.addOnFailureListener {
+				Log.d(TAG, "Driver application upload failed")
+			}
+			.await()
 	}
 }

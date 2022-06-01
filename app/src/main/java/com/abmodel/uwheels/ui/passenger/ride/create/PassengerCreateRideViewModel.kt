@@ -138,7 +138,8 @@ class PassengerCreateRideViewModel : ViewModel() {
 						user.passengerRating,
 						user.photoUrl.toString()
 					),
-					state = RideState.CREATED.toString()
+					state = RideState.CREATED.toString(),
+					subscribers = mutableListOf(user.uid)
 				)
 				repository.createRide(ride)
 

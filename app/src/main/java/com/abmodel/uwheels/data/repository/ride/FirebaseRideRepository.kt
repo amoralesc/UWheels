@@ -1,9 +1,21 @@
 package com.abmodel.uwheels.data.repository.ride
 
+import com.abmodel.uwheels.data.FirestorePaths
 import com.abmodel.uwheels.data.model.Ride
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ktx.database
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.channels.awaitClose
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.callbackFlow
+import kotlinx.coroutines.tasks.await
 
 class FirebaseRideRepository internal constructor(
-	private val dataSource: FirebaseRideDataSource
+	private val mDatabase: FirebaseDatabase,
+	private val mFirestore: FirebaseFirestore
 ) : RideRepository {
 
 	companion object {
@@ -13,7 +25,8 @@ class FirebaseRideRepository internal constructor(
 		fun getInstance(): FirebaseRideRepository {
 			return instance ?: synchronized(this) {
 				instance ?: FirebaseRideRepository(
-					FirebaseRideDataSource.getInstance()
+					Firebase.database,
+					Firebase.firestore
 				).also { instance = it }
 			}
 		}
@@ -22,10 +35,35 @@ class FirebaseRideRepository internal constructor(
 	}
 
 	override suspend fun createRide(ride: Ride) {
-		dataSource.createRide(ride)
+
+		mFirestore
+			.collection(FirestorePaths.RIDES)
+			.add(ride)
+			.await()
 	}
 
-	override suspend fun getUserRides(userId: String): List<Ride> {
-		TODO("Not yet implemented")
+	@OptIn(ExperimentalCoroutinesApi::class)
+	override suspend fun fetchUserRides(userId: String): Flow<Result<List<Ride>>> = callbackFlow {
+
+		val subscription =
+			mFirestore
+				.collection(FirestorePaths.RIDES)
+				.whereArrayContains("subscribers", userId)
+				.orderBy("state")
+				.addSnapshotListener{ snapshot, error ->
+					if (error != null) {
+						trySend(Result.failure(error))
+						return@addSnapshotListener
+					}
+
+					if (snapshot != null) {
+						val rides = snapshot.toObjects(Ride::class.java)
+						trySend(Result.success(rides))
+					}
+				}
+
+		awaitClose {
+			subscription.remove()
+		}
 	}
 }

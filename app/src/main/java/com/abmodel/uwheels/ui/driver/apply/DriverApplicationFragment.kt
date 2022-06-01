@@ -25,6 +25,8 @@ import com.abmodel.uwheels.util.TEMP_IMG_FILE_NAME
 import com.abmodel.uwheels.util.TakePictureWithUriReturnContract
 import com.flask.colorpicker.ColorPickerView
 import com.flask.colorpicker.builder.ColorPickerDialogBuilder
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

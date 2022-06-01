@@ -12,6 +12,7 @@ data class Ride(
 	val host: RideUser = RideUser(),
 	val state: String = RideState.CREATED.toString(),
 	val passengers: MutableList<RideUser> = mutableListOf(),
+	val subscribers: MutableList<String> = mutableListOf(),
 	val price: Double? = null,
 	val vehicle: Vehicle? = null,
 )
