@@ -19,7 +19,6 @@ import com.abmodel.uwheels.util.compareDates
 import com.abmodel.uwheels.util.getCurrentDateAsCustomDate
 import com.abmodel.uwheels.util.parseLatLng
 import com.google.android.gms.maps.model.LatLng
-import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
