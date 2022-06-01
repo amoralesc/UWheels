@@ -7,11 +7,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
+import com.abmodel.uwheels.R
 import com.abmodel.uwheels.databinding.FragmentHostedRidesBinding
 import com.abmodel.uwheels.ui.shared.data.RidesFilter
 import com.abmodel.uwheels.ui.shared.data.SharedViewModel
 import com.abmodel.uwheels.ui.shared.ride.adapter.HostedRideItemAdapter
-import com.abmodel.uwheels.ui.shared.ride.adapter.RideItemAdapter
 import com.abmodel.uwheels.ui.shared.ride.rides.RidesFragment
 
 class HostedRidesFragment : Fragment() {
@@ -46,6 +47,7 @@ class HostedRidesFragment : Fragment() {
 			// Set the adapter for the recycler view
 			rides.adapter = HostedRideItemAdapter {
 				Log.d(RidesFragment.TAG, "Clicked on ride $it")
+				onRideSelected(it.id)
 			}
 			sharedViewModel.setRidesFilter(RidesFilter.HOSTED)
 		}
@@ -54,5 +56,12 @@ class HostedRidesFragment : Fragment() {
 	override fun onDestroyView() {
 		super.onDestroyView()
 		_binding = null
+	}
+
+	private fun onRideSelected(rideId: String) {
+		sharedViewModel.selectRide(rideId)
+		findNavController().navigate(
+			R.id.action_hostedRidesFragment_to_hostedRideRequestsFragment
+		)
 	}
 }

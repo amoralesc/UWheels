@@ -208,5 +208,13 @@
 	<fragment
 		android:id="@+id/hostedRidesFragment"
 		android:name="com.abmodel.uwheels.ui.shared.ride.hosted.HostedRidesFragment"
-		android:label="HostedRidesFragment" />
+		android:label="fragment_hosted_rides" >
+		<action
+			android:id="@+id/action_hostedRidesFragment_to_hostedRideRequestsFragment"
+			app:destination="@id/hostedRideRequestsFragment" />
+	</fragment>
+	<fragment
+		android:id="@+id/hostedRideRequestsFragment"
+		android:name="com.abmodel.uwheels.ui.shared.ride.hosted.HostedRideRequestsFragment"
+		android:label="HostedRideRequestsFragment" />
 </navigation>

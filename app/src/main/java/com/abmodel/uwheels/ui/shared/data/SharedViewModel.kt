@@ -3,6 +3,7 @@ package com.abmodel.uwheels.ui.shared.data
 import android.util.Log
 import androidx.lifecycle.*
 import com.abmodel.uwheels.data.model.Ride
+import com.abmodel.uwheels.data.model.RideRequest
 import com.abmodel.uwheels.data.model.RideStatus
 import com.abmodel.uwheels.data.model.WheelsType
 import com.abmodel.uwheels.data.repository.auth.FirebaseAuthRepository
@@ -74,6 +75,19 @@ class SharedViewModel : ViewModel() {
 			}
 		}
 
+	private val _selectedRideId: MutableLiveData<String> = MutableLiveData()
+	val selectedRideId: LiveData<String>
+		get() = _selectedRideId
+
+	val selectedRide: LiveData<Ride> =
+		Transformations.switchMap(filteredRides) { rides ->
+			Transformations.switchMap(_selectedRideId) { rideId ->
+				MutableLiveData(rides.find { ride ->
+					ride.id == rideId
+				})
+			}
+		}
+
 	private var fetchUserRidesJob: Job? = null
 
 	init {
@@ -88,6 +102,24 @@ class SharedViewModel : ViewModel() {
 
 	fun setRidesFilter(filter: RidesFilter) {
 		_ridesFilter.postValue(filter)
+	}
+
+	fun selectRide(rideId: String) {
+		_selectedRideId.postValue(rideId)
+	}
+
+	fun acceptRideRequest(request: RideRequest) {
+
+		viewModelScope.launch(Dispatchers.IO) {
+			ridesRepository.acceptRideRequest(selectedRideId.value!!, request)
+		}
+	}
+
+	fun rejectRideRequest(request: RideRequest) {
+
+		viewModelScope.launch(Dispatchers.IO) {
+			ridesRepository.rejectRideRequest(selectedRideId.value!!, request)
+		}
 	}
 
 	private fun fetchUserRides(
