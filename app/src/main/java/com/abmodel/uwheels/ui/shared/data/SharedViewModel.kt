@@ -1,28 +1,50 @@
 package com.abmodel.uwheels.ui.shared.data
 
 import android.util.Log
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.abmodel.uwheels.data.model.Ride
+import com.abmodel.uwheels.data.model.RideStatus
 import com.abmodel.uwheels.data.repository.auth.FirebaseAuthRepository
-import com.abmodel.uwheels.data.repository.ride.FirebaseRideRepository
+import com.abmodel.uwheels.data.repository.ride.FirebaseRidesRepository
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 
-class SharedViewModel: ViewModel() {
+class SharedViewModel : ViewModel() {
 
 	companion object {
 		const val TAG = "SharedViewModel"
 	}
 
 	private val authRepository = FirebaseAuthRepository.getInstance()
-	private val rideRepository = FirebaseRideRepository.getInstance()
+	private val ridesRepository = FirebaseRidesRepository.getInstance()
 
 	private val _userRides = MutableLiveData<List<Ride>>()
-	val userRides
-		get() = _userRides
+
+	val hostedRides: LiveData<List<Ride>>
+		get() = Transformations.switchMap(_userRides) { rides ->
+			val filteredRides = rides.filter { ride ->
+				ride.host.uid == authRepository.getLoggedInUser().uid &&
+						ride.status != RideStatus.COMPLETED.toString()
+			}
+			MutableLiveData(filteredRides)
+		}
+
+	val completedRides: LiveData<List<Ride>>
+		get() = Transformations.switchMap(_userRides) { rides ->
+			val filteredRides = rides.filter { ride ->
+				ride.status == RideStatus.COMPLETED.toString()
+			}
+			MutableLiveData(filteredRides)
+		}
+
+	val activeRides: LiveData<List<Ride>>
+		get() = Transformations.switchMap(_userRides) { rides ->
+			val filteredRides = rides.filter { ride ->
+				ride.status != RideStatus.COMPLETED.toString()
+			}
+			MutableLiveData(filteredRides)
+		}
 
 	init {
 		Log.d(TAG, "SharedViewModel initialized")
@@ -33,7 +55,7 @@ class SharedViewModel: ViewModel() {
 	private fun fetchUserRides() {
 		viewModelScope.launch(Dispatchers.IO) {
 
-			rideRepository.fetchUserRides(authRepository.getLoggedInUser().uid).collect { result ->
+			ridesRepository.fetchUserRides(authRepository.getLoggedInUser().uid).collect { result ->
 
 				if (result.isSuccess) {
 					_userRides.postValue(result.getOrNull())

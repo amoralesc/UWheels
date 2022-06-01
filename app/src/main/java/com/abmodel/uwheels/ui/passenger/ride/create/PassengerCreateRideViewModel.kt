@@ -8,10 +8,9 @@ import com.abmodel.uwheels.BuildConfig
 import com.abmodel.uwheels.R
 import com.abmodel.uwheels.data.model.*
 import com.abmodel.uwheels.data.repository.auth.FirebaseAuthRepository
-import com.abmodel.uwheels.data.repository.ride.FirebaseRideRepository
+import com.abmodel.uwheels.data.repository.ride.FirebaseRidesRepository
 import com.abmodel.uwheels.network.maps.DirectionsApi
 import com.abmodel.uwheels.network.maps.response.DirectionsResponse
-import com.abmodel.uwheels.network.maps.response.DirectionsRoute
 import com.abmodel.uwheels.ui.passenger.ride.request.RequestRideFragment
 import com.abmodel.uwheels.ui.shared.data.FormResult
 import com.abmodel.uwheels.util.*
@@ -21,7 +20,7 @@ import kotlinx.coroutines.launch
 
 class PassengerCreateRideViewModel : ViewModel() {
 
-	private val repository = FirebaseRideRepository.getInstance()
+	private val repository = FirebaseRidesRepository.getInstance()
 
 	private val _sourceAddress = MutableLiveData<CustomAddress?>(null)
 	val sourceAddress: MutableLiveData<CustomAddress?>

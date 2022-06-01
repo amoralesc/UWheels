@@ -9,7 +9,10 @@ import com.abmodel.uwheels.util.distanceTo
 import com.abmodel.uwheels.util.toLatLng
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ktx.database
-import com.google.firebase.firestore.*
+import com.google.firebase.firestore.DocumentSnapshot
+import com.google.firebase.firestore.EventListener
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -19,18 +22,18 @@ import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.tasks.await
 import java.util.stream.Collectors
 
-class FirebaseRideRepository internal constructor(
+class FirebaseRidesRepository internal constructor(
 	private val mDatabase: FirebaseDatabase,
 	private val mFirestore: FirebaseFirestore
-) : RideRepository {
+) : RidesRepository {
 
 	companion object {
 		@Volatile
-		private var instance: FirebaseRideRepository? = null
+		private var instance: FirebaseRidesRepository? = null
 
-		fun getInstance(): FirebaseRideRepository {
+		fun getInstance(): FirebaseRidesRepository {
 			return instance ?: synchronized(this) {
-				instance ?: FirebaseRideRepository(
+				instance ?: FirebaseRidesRepository(
 					Firebase.database,
 					Firebase.firestore
 				).also { instance = it }

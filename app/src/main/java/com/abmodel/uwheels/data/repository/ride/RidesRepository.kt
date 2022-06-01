@@ -3,7 +3,7 @@ package com.abmodel.uwheels.data.repository.ride
 import com.abmodel.uwheels.data.model.*
 import kotlinx.coroutines.flow.Flow
 
-interface RideRepository {
+interface RidesRepository {
 	suspend fun createRide(ride: Ride)
 	suspend fun startRide(rideId: String, startedDate: CustomDate? = null)
 	suspend fun finishRide(rideId: String, finishedDate: CustomDate? = null)
