@@ -1,5 +1,6 @@
 package com.abmodel.uwheels.util
 
+import com.abmodel.uwheels.data.model.CustomLatLng
 import com.abmodel.uwheels.network.maps.response.DirectionsRoute
 import com.google.android.gms.maps.model.LatLng
 import kotlin.math.*
@@ -44,4 +45,8 @@ fun DirectionsRoute.decodeRoute(): List<LatLng> {
 	}
 
 	return points
+}
+
+fun CustomLatLng.toLatLng(): LatLng {
+	return LatLng(this.latitude, this.longitude)
 }

@@ -175,11 +175,11 @@ class PassengerCreateRideFragment : Fragment(), OnMapReadyCallback {
 			}
 			viewModel.sourceAddress.observe(viewLifecycleOwner) {
 				source.setText(it?.mainText)
-				drawSourceMarker(it?.latLng)
+				drawSourceMarker(it?.latLng?.toLatLng())
 			}
 			viewModel.destinationAddress.observe(viewLifecycleOwner) {
 				destination.setText(it?.mainText)
-				drawDestinationMarker(it?.latLng)
+				drawDestinationMarker(it?.latLng?.toLatLng())
 			}
 
 			viewModel.result.observe(viewLifecycleOwner) { result ->

@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.abmodel.uwheels.BuildConfig.MAPS_API_KEY
 import com.abmodel.uwheels.data.model.CustomAddress
+import com.abmodel.uwheels.data.model.CustomLatLng
 import com.abmodel.uwheels.network.maps.GeocodingApi
 import com.abmodel.uwheels.network.maps.PlacesAutocompleteApi
 import com.abmodel.uwheels.network.maps.response.GeocodingResponse
@@ -93,7 +94,7 @@ class SearchAddressViewModel: ViewModel() {
 						address.placeId,
 						address.mainText,
 						address.secondaryText,
-						LatLng(
+						CustomLatLng(
 							result.geometry.location.lat,
 							result.geometry.location.lng
 						)

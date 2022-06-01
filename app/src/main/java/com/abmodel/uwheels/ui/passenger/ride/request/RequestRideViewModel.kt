@@ -11,6 +11,7 @@ import com.abmodel.uwheels.network.maps.response.DirectionsResponse
 import com.abmodel.uwheels.network.maps.response.DirectionsRoute
 import com.abmodel.uwheels.util.PolyUtil
 import com.abmodel.uwheels.util.parseLatLng
+import com.abmodel.uwheels.util.toLatLng
 import com.google.android.gms.maps.model.LatLng
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -51,8 +52,8 @@ class RequestRideViewModel: ViewModel() {
 				try {
 					val response: DirectionsResponse =
 						DirectionsApi.retrofitService.getDirections(
-							parseLatLng(sourceAddress.value!!.latLng!!),
-							parseLatLng(destinationAddress.value!!.latLng!!),
+							parseLatLng(sourceAddress.value!!.latLng!!.toLatLng()),
+							parseLatLng(destinationAddress.value!!.latLng!!.toLatLng()),
 							"co",
 							MAPS_API_KEY
 						)

@@ -70,8 +70,8 @@ class PassengerCreateRideViewModel : ViewModel() {
 				try {
 					val response: DirectionsResponse =
 						DirectionsApi.retrofitService.getDirections(
-							parseLatLng(sourceAddress.value!!.latLng!!),
-							parseLatLng(destinationAddress.value!!.latLng!!),
+							parseLatLng(sourceAddress.value!!.latLng!!.toLatLng()),
+							parseLatLng(destinationAddress.value!!.latLng!!.toLatLng()),
 							"co",
 							BuildConfig.MAPS_API_KEY
 						)

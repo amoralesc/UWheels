@@ -5,7 +5,7 @@
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
 	android:background="?colorSecondary"
-	tools:context=".ui.passenger.ride.MyRidesFragment">
+	tools:context=".ui.passenger.ride.PassengerRidesFragment">
 
 	<!--
 	TODO: Remove this if included button back item works

@@ -172,11 +172,11 @@ class RequestRideFragment : Fragment(), OnMapReadyCallback {
 		}
 		viewModel.sourceAddress.observe(viewLifecycleOwner) {
 			binding.source.setText(it?.mainText)
-			drawSourceMarker(it?.latLng)
+			drawSourceMarker(it?.latLng?.toLatLng())
 		}
 		viewModel.destinationAddress.observe(viewLifecycleOwner) {
 			binding.destination.setText(it?.mainText)
-			drawDestinationMarker(it?.latLng)
+			drawDestinationMarker(it?.latLng?.toLatLng())
 		}
 	}
 

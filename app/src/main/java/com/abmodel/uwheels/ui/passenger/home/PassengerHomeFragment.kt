@@ -165,7 +165,7 @@ class PassengerHomeFragment : Fragment() {
 			}
 			FromPassengerHomeFragmentDestination.RIDES -> {
 				findNavController().navigate(
-					R.id.action_passengerHomeFragment_to_myRidesFragment
+					R.id.action_passengerHomeFragment_to_passengerRidesFragment
 				)
 			}
 			FromPassengerHomeFragmentDestination.CONTACTS -> {
