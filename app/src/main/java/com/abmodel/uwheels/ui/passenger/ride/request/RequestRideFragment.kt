@@ -20,12 +20,15 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.abmodel.uwheels.R
-import com.abmodel.uwheels.data.model.CustomAddress
+import com.abmodel.uwheels.data.model.*
 import com.abmodel.uwheels.databinding.FragmentRequestRideBinding
+import com.abmodel.uwheels.ui.adapter.SearchedRideItemAdapter
+import com.abmodel.uwheels.ui.shared.data.SharedViewModel
 import com.abmodel.uwheels.ui.shared.search.SearchAddressFragment
 import com.abmodel.uwheels.util.*
 import com.google.android.gms.common.api.ResolvableApiException
@@ -50,6 +53,7 @@ class RequestRideFragment : Fragment(), OnMapReadyCallback {
 	private val binding get() = _binding!!
 
 	private val viewModel: RequestRideViewModel by viewModels()
+	private val sharedViewModel: SharedViewModel by activityViewModels()
 
 	private var mMap: GoogleMap? = null
 	private var sourceMarker: Marker? = null
@@ -73,6 +77,10 @@ class RequestRideFragment : Fragment(), OnMapReadyCallback {
 	private var hasLocationPermissions = false
 	private var locationSettingsEnabled = false
 
+	private var millis: Long? = null
+	private var hour: Int? = null
+	private var minute: Int? = null
+
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
 
@@ -90,6 +98,7 @@ class RequestRideFragment : Fragment(), OnMapReadyCallback {
 
 			viewModel.updateSourceAddress(source)
 			viewModel.updateDestinationAddress(destination)
+			onInputChange()
 		}
 	}
 
@@ -127,7 +136,8 @@ class RequestRideFragment : Fragment(), OnMapReadyCallback {
 			binding.date.setText(
 				formatDateFromMillis(dateSelected)
 			)
-			// TODO: Also set the date in the view model
+			millis = dateSelected
+			onInputChange()
 		}
 
 		// Setup the time picker
@@ -136,35 +146,59 @@ class RequestRideFragment : Fragment(), OnMapReadyCallback {
 			binding.time.setText(
 				formatTime(timePicker.hour, timePicker.minute)
 			)
-			// TODO: Also set the time in the view model
+			hour = timePicker.hour
+			minute = timePicker.minute
+			onInputChange()
 		}
 
-		binding.date.apply {
-			showSoftInputOnFocus = false
-			setOnClickListener {
+		binding.apply {
+			dataViewModel = sharedViewModel
+			lifecycleOwner = viewLifecycleOwner
+
+			date.showSoftInputOnFocus = false
+			date.setOnClickListener {
 				hideKeyboard()
 				showDatePicker()
 			}
-		}
 
-		binding.time.apply {
-			showSoftInputOnFocus = false
-			setOnClickListener {
+			time.showSoftInputOnFocus = false
+			time.setOnClickListener {
 				hideKeyboard()
 				showTimePicker()
 			}
-		}
 
-		binding.source.apply {
-			setOnClickListener {
+			source.setOnClickListener {
 				goToSearchAddress("source")
 			}
-		}
-
-		binding.destination.apply {
-			setOnClickListener {
+			destination.setOnClickListener {
 				goToSearchAddress("destination")
 			}
+
+			// Filter the search results according to
+			// the selected chip
+			chipClassic.setOnClickListener {
+				sharedViewModel.setSearchedRidesFilter(
+					WheelsType.CLASSIC_WHEELS
+				)
+			}
+			chipShared.setOnClickListener {
+				sharedViewModel.setSearchedRidesFilter(
+					WheelsType.SHARED_WHEELS
+				)
+			}
+			chipWe.setOnClickListener {
+				sharedViewModel.setSearchedRidesFilter(
+					WheelsType.WE_WHEELS
+				)
+			}
+
+			// Set the adapter for the recycler view
+			searchResults.adapter = SearchedRideItemAdapter(
+				onItemClicked = {
+					onRideSelected(it)
+				},
+				query = sharedViewModel.query
+			)
 		}
 
 		viewModel.route.observe(viewLifecycleOwner) {
@@ -206,6 +240,253 @@ class RequestRideFragment : Fragment(), OnMapReadyCallback {
 		}
 		stopLocationUpdates()
 	}
+
+	private fun goToSearchAddress(selectedInput: String) {
+		val action =
+			RequestRideFragmentDirections
+				.actionRequestRideFragmentToSearchAddressFragment(
+					selectedInput = selectedInput,
+					source = viewModel.sourceAddress.value,
+					destination = viewModel.destinationAddress.value
+				)
+
+		findNavController()
+			.navigate(action)
+	}
+
+	private fun onInputChange() {
+		if (
+			millis != null && hour != null && minute != null &&
+			viewModel.sourceAddress.value != null &&
+			viewModel.destinationAddress.value != null
+		) {
+			sharedViewModel.searchRides(
+				source = viewModel.sourceAddress.value!!,
+				destination = viewModel.destinationAddress.value!!,
+				date = CustomDate(
+					millis, hour, minute
+				)
+			)
+
+			// Set the adapter for the recycler view
+			binding.searchResults.adapter = SearchedRideItemAdapter(
+				onItemClicked = {
+					onRideSelected(it)
+				},
+				query = sharedViewModel.query
+			)
+		}
+	}
+
+	private fun onRideSelected(ride: Ride) {
+
+	}
+
+	private val datePicker =
+		MaterialDatePicker.Builder
+			.datePicker()
+			.build()
+
+	private val timePicker =
+		MaterialTimePicker.Builder()
+			.setTimeFormat(TimeFormat.CLOCK_12H)
+			.setHour(7)
+			.setMinute(0)
+			.build()
+
+	/**
+	 * Shows a date picker dialog.
+	 */
+	private fun showDatePicker() {
+		val fragment: Fragment? = childFragmentManager.findFragmentByTag("datePicker")
+		if (fragment != null)
+			childFragmentManager.beginTransaction().remove(fragment).commit()
+
+		datePicker.show(childFragmentManager, "datePicker")
+	}
+
+	/**
+	 * Shows a time picker dialog.
+	 */
+	private fun showTimePicker() {
+		val fragment: Fragment? = childFragmentManager.findFragmentByTag("timePicker")
+		if (fragment != null)
+			childFragmentManager.beginTransaction().remove(fragment).commit()
+
+		timePicker.show(childFragmentManager, "timePicker")
+	}
+
+	/**
+	 * Manipulates the map once available. The callback is triggered
+	 * when the map is ready to be used.
+	 */
+	@SuppressLint("MissingPermission")
+	override fun onMapReady(googleMap: GoogleMap) {
+		mMap = googleMap
+
+		// TODO: Last known location requires permissions
+		fusedLocationClient.lastLocation
+			.addOnSuccessListener { location: Location? ->
+				// Got last known location. In some rare situations this can be null.
+				if (location != null) {
+					// Move the camera to the user's location
+					mMap?.moveCamera(
+						CameraUpdateFactory.newLatLngZoom(
+							LatLng(location.latitude, location.longitude),
+							15f
+						)
+					)
+				}
+			}
+			.addOnFailureListener {
+				Log.w(TAG, "Failed to get last known location")
+				Log.w(TAG, it.message ?: "")
+
+				moveCameraToDefault()
+			}
+			.addOnCanceledListener {
+				Log.w(TAG, "Last known location task was cancelled")
+			}
+
+		if (hasLocationPermissions) {
+			mMap!!.isMyLocationEnabled = true
+		}
+	}
+
+	private fun moveCameraToDefault() {
+		mMap!!.moveCamera(
+			CameraUpdateFactory.newLatLngZoom(
+				LatLng(BOGOTA_LAT, BOGOTA_LNG),
+				BOGOTA_ZOOM
+			)
+		)
+	}
+
+	private fun moveAndZoomToLocation(location: LatLng, zoomLevel: Float = DEFAULT_ZOOM_LEVEL) {
+		mMap?.moveCamera(CameraUpdateFactory.newLatLng(location))
+		mMap?.moveCamera(CameraUpdateFactory.zoomTo(zoomLevel))
+	}
+
+	private fun drawRoute(points: List<LatLng>?) {
+		when {
+			points == null || points.isEmpty() -> {
+				polyline?.remove()
+				polyline = null
+				return
+			}
+			else -> {
+				polyline?.remove()
+				polyline = mMap?.addPolyline(
+					PolylineOptions()
+						.addAll(points)
+						.color(ContextCompat.getColor(requireContext(), R.color.color_primary))
+						.width(POLYLINE_WIDTH)
+				)
+			}
+		}
+	}
+
+	private fun drawSourceMarker(latLng: LatLng?) {
+		when {
+			latLng == null -> {
+				sourceMarker?.remove()
+				sourceMarker = null
+			}
+			sourceMarker == null -> {
+				sourceMarker = mMap?.addMarker(
+					MarkerOptions()
+						.position(latLng)
+						.title("Source")
+				)
+			}
+			else ->
+				sourceMarker!!.position = latLng
+		}
+	}
+
+	private fun drawDestinationMarker(latLng: LatLng?) {
+		when {
+			latLng == null -> {
+				destinationMarker?.remove()
+				destinationMarker = null
+			}
+			destinationMarker == null -> {
+				destinationMarker = mMap?.addMarker(
+					MarkerOptions()
+						.position(latLng)
+						.title("Destination")
+				)
+			}
+			else ->
+				destinationMarker!!.position = latLng
+		}
+	}
+
+	private fun createLightEventListener(): SensorEventListener {
+		return object : SensorEventListener {
+			override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {
+			}
+
+			override fun onSensorChanged(event: SensorEvent?) {
+				if (event != null) {
+					val lux = event.values[0]
+					if (lux < LUX_THRESHOLD) {
+						mMap?.setMapStyle(
+							MapStyleOptions.loadRawResourceStyle(
+								requireContext(), R.raw.dark_map
+							)
+						)
+					} else {
+						mMap?.setMapStyle(
+							MapStyleOptions.loadRawResourceStyle(
+								requireContext(), R.raw.light_map
+							)
+						)
+					}
+				}
+			}
+		}
+	}
+
+	private fun createLocationRequest(): LocationRequest {
+		return LocationRequest.create().apply {
+			interval = LOCATION_REQUEST_INTERVAL
+			fastestInterval = LOCATION_REQUEST_FAST_INTERVAL
+			priority = LocationRequest.PRIORITY_HIGH_ACCURACY
+		}
+	}
+
+	private fun createLocationCallback(): LocationCallback {
+		return object : LocationCallback() {
+			override fun onLocationResult(locationResult: LocationResult) {
+				locationResult.lastLocation.also {
+					val latLng = LatLng(it.latitude, it.longitude)
+					Log.d(TAG, "New user location: $latLng at ${it.time}")
+
+					// sharedViewModel.updateUserLocation(latLng)
+					// drawUserLocationMarker(latLng)
+				}
+			}
+		}
+	}
+
+	@SuppressLint("MissingPermission")
+	private fun startLocationUpdates() {
+		// fusedLocationClient.requestLocationUpdates(
+		// 	locationRequest,
+		// 	locationCallback,
+		// 	Looper.getMainLooper()
+		// )
+	}
+
+	private fun stopLocationUpdates() {
+		// fusedLocationClient.removeLocationUpdates(locationCallback)
+		// sharedViewModel.updateUserLocation(null)
+		// drawUserLocationMarker(null)
+		// drawRoute(null)
+	}
+
+	// PERMISSIONS BOILERPLATE
 
 	/**
 	 * Checks the location permissions and requests them if they are not granted.
@@ -375,223 +656,5 @@ class RequestRideFragment : Fragment(), OnMapReadyCallback {
 
 	private fun onLocationSettingsUnavailable() {
 		locationSettingsEnabled = false
-	}
-
-	private fun goToSearchAddress(selectedInput: String) {
-		val action =
-			RequestRideFragmentDirections
-				.actionRequestRideFragmentToSearchAddressFragment(
-					selectedInput = selectedInput,
-					source = viewModel.sourceAddress.value,
-					destination = viewModel.destinationAddress.value
-				)
-
-		findNavController()
-			.navigate(action)
-	}
-
-	private val datePicker =
-		MaterialDatePicker.Builder.datePicker()
-			.setTitleText("Select date")
-			.build()
-
-	private val timePicker =
-		MaterialTimePicker.Builder()
-			.setTimeFormat(TimeFormat.CLOCK_12H)
-			.setHour(7)
-			.setMinute(0)
-			.setTitleText("Select time")
-			.build()
-
-	/**
-	 * Shows a date picker dialog.
-	 */
-	private fun showDatePicker() {
-		val fragment: Fragment? = childFragmentManager.findFragmentByTag("datePicker")
-		if (fragment != null)
-			childFragmentManager.beginTransaction().remove(fragment).commit()
-
-		datePicker.show(childFragmentManager, "datePicker")
-	}
-
-	/**
-	 * Shows a time picker dialog.
-	 */
-	private fun showTimePicker() {
-		val fragment: Fragment? = childFragmentManager.findFragmentByTag("timePicker")
-		if (fragment != null)
-			childFragmentManager.beginTransaction().remove(fragment).commit()
-
-		timePicker.show(childFragmentManager, "timePicker")
-	}
-
-	/**
-	 * Manipulates the map once available. The callback is triggered
-	 * when the map is ready to be used.
-	 */
-	@SuppressLint("MissingPermission")
-	override fun onMapReady(googleMap: GoogleMap) {
-		mMap = googleMap
-
-		// TODO: Last known location requires permissions
-		fusedLocationClient.lastLocation
-			.addOnSuccessListener { location: Location? ->
-				// Got last known location. In some rare situations this can be null.
-				if (location != null) {
-					// Move the camera to the user's location
-					mMap?.moveCamera(
-						CameraUpdateFactory.newLatLngZoom(
-							LatLng(location.latitude, location.longitude),
-							15f
-						)
-					)
-				}
-			}
-			.addOnFailureListener {
-				Log.w(TAG, "Failed to get last known location")
-				Log.w(TAG, it.message ?: "")
-
-				moveCameraToDefault()
-			}
-			.addOnCanceledListener {
-				Log.w(TAG, "Last known location task was cancelled")
-			}
-
-		if (hasLocationPermissions) {
-			mMap!!.isMyLocationEnabled = true
-		}
-	}
-
-	private fun moveCameraToDefault() {
-		mMap!!.moveCamera(
-			CameraUpdateFactory.newLatLngZoom(
-				LatLng(BOGOTA_LAT, BOGOTA_LNG),
-				BOGOTA_ZOOM
-			)
-		)
-	}
-
-	private fun createLightEventListener(): SensorEventListener {
-		return object : SensorEventListener {
-			override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {
-			}
-
-			override fun onSensorChanged(event: SensorEvent?) {
-				if (event != null) {
-					val lux = event.values[0]
-					if (lux < LUX_THRESHOLD) {
-						mMap?.setMapStyle(
-							MapStyleOptions.loadRawResourceStyle(
-								requireContext(), R.raw.dark_map
-							)
-						)
-					} else {
-						mMap?.setMapStyle(
-							MapStyleOptions.loadRawResourceStyle(
-								requireContext(), R.raw.light_map
-							)
-						)
-					}
-				}
-			}
-		}
-	}
-
-	private fun moveAndZoomToLocation(location: LatLng, zoomLevel: Float = DEFAULT_ZOOM_LEVEL) {
-		mMap?.moveCamera(CameraUpdateFactory.newLatLng(location))
-		mMap?.moveCamera(CameraUpdateFactory.zoomTo(zoomLevel))
-	}
-
-	private fun drawRoute(points: List<LatLng>?) {
-		when {
-			points == null || points.isEmpty() -> {
-				polyline?.remove()
-				polyline = null
-				return
-			}
-			else -> {
-				polyline?.remove()
-				polyline = mMap?.addPolyline(
-					PolylineOptions()
-						.addAll(points)
-						.color(ContextCompat.getColor(requireContext(), R.color.color_primary))
-						.width(POLYLINE_WIDTH)
-				)
-			}
-		}
-	}
-
-	private fun drawSourceMarker(latLng: LatLng?) {
-		when {
-			latLng == null -> {
-				sourceMarker?.remove()
-				sourceMarker = null
-			}
-			sourceMarker == null -> {
-				sourceMarker = mMap?.addMarker(
-					MarkerOptions()
-						.position(latLng)
-						.title("Source")
-				)
-			}
-			else ->
-				sourceMarker!!.position = latLng
-		}
-	}
-
-	private fun drawDestinationMarker(latLng: LatLng?) {
-		when {
-			latLng == null -> {
-				destinationMarker?.remove()
-				destinationMarker = null
-			}
-			destinationMarker == null -> {
-				destinationMarker = mMap?.addMarker(
-					MarkerOptions()
-						.position(latLng)
-						.title("Destination")
-				)
-			}
-			else ->
-				destinationMarker!!.position = latLng
-		}
-	}
-
-	private fun createLocationRequest(): LocationRequest {
-		return LocationRequest.create().apply {
-			interval = LOCATION_REQUEST_INTERVAL
-			fastestInterval = LOCATION_REQUEST_FAST_INTERVAL
-			priority = LocationRequest.PRIORITY_HIGH_ACCURACY
-		}
-	}
-
-	private fun createLocationCallback(): LocationCallback {
-		return object : LocationCallback() {
-			override fun onLocationResult(locationResult: LocationResult) {
-				locationResult.lastLocation.also {
-					val latLng = LatLng(it.latitude, it.longitude)
-					Log.d(TAG, "New user location: $latLng at ${it.time}")
-
-					// sharedViewModel.updateUserLocation(latLng)
-					// drawUserLocationMarker(latLng)
-				}
-			}
-		}
-	}
-
-	@SuppressLint("MissingPermission")
-	private fun startLocationUpdates() {
-		// fusedLocationClient.requestLocationUpdates(
-		// 	locationRequest,
-		// 	locationCallback,
-		// 	Looper.getMainLooper()
-		// )
-	}
-
-	private fun stopLocationUpdates() {
-		// fusedLocationClient.removeLocationUpdates(locationCallback)
-		// sharedViewModel.updateUserLocation(null)
-		// drawUserLocationMarker(null)
-		// drawRoute(null)
 	}
 }

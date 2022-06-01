@@ -22,7 +22,7 @@ class SharedViewModel : ViewModel() {
 
 	// TODO: TOO MUCH BOILERPLATE CODE!!!
 
-	private val _userRides = MutableLiveData<List<Ride>>()
+	private val _userRides = MutableLiveData<List<Ride>>(emptyList())
 
 	private val activeUserRides: LiveData<List<Ride>>
 		get() = Transformations.switchMap(_userRides) { rides ->
@@ -87,7 +87,7 @@ class SharedViewModel : ViewModel() {
 			}
 		}
 
-	private val _searchedRides = MutableLiveData<List<Ride>>()
+	private val _searchedRides = MutableLiveData<List<Ride>>(emptyList())
 
 	private val classicWheelsSearchedRides: LiveData<List<Ride>>
 		get() = Transformations.switchMap(_searchedRides) { rides ->
@@ -130,6 +130,10 @@ class SharedViewModel : ViewModel() {
 	private var fetchUserRidesJob: Job? = null
 	private var fetchSearchedRidesJob: Job? = null
 
+	private var _query: SearchRideQuery? = null
+	val query: SearchRideQuery?
+		get() = _query
+
 	init {
 		Log.d(TAG, "SharedViewModel initialized")
 
@@ -146,6 +150,10 @@ class SharedViewModel : ViewModel() {
 
 	fun selectUserRide(rideId: String) {
 		_selectedUserRideId.postValue(rideId)
+	}
+
+	fun setSearchedRidesFilter(filter: WheelsType) {
+		_searchedRidesFilter.postValue(filter)
 	}
 
 	fun acceptRideRequest(request: RideRequest) {
@@ -196,14 +204,14 @@ class SharedViewModel : ViewModel() {
 	fun searchRides(
 		source: CustomAddress, destination: CustomAddress, date: CustomDate,
 	) {
-		val query = SearchRideQuery(
+		_query = SearchRideQuery(
 			userId = authRepository.getLoggedInUser().uid,
 			source = source,
 			destination = destination,
 			date = date
 		)
 		fetchSearchedRidesJob?.cancel()
-		fetchSearchedRides(query)
+		fetchSearchedRides(query!!)
 	}
 
 	private fun fetchSearchedRides(query: SearchRideQuery) {

@@ -131,7 +131,6 @@
 	<string name="creating_ride">Creating ride…</string>
 	<string name="ride_created">Ride created successfully</string>
 
-	<!-- pluralize ride_capacity %d passengers -->
 	<string name="ride_capacity">%d passengers</string>
 	<string name="ride_info">By %s at %s %s</string>
 	<string name="rides">Rides</string>
@@ -144,5 +143,8 @@
 	<string name="reject">Reject</string>
 	<string name="full_name">%s %s</string>
 	<string name="ride_request_info">Requested at %s %s</string>
-	<string name="ride_request_address">(%d km) %s</string>
+	<string name="ride_request_address">(%.1f km) %s</string>
+	<string name="payment_method">Payment method</string>
+	<string name="ride_capacity_short">%d/%d</string>
+	<string name="address_with_distance">(%.1f km) %s</string>
 </resources>

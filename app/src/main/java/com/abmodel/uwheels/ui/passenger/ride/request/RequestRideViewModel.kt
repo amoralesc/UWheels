@@ -1,6 +1,7 @@
 package com.abmodel.uwheels.ui.passenger.ride.request
 
 import android.util.Log
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -19,15 +20,15 @@ import kotlinx.coroutines.launch
 class RequestRideViewModel: ViewModel() {
 
 	private val _sourceAddress = MutableLiveData<CustomAddress?>(null)
-	val sourceAddress: MutableLiveData<CustomAddress?>
+	val sourceAddress: LiveData<CustomAddress?>
 		get() = _sourceAddress
 
 	private val _destinationAddress = MutableLiveData<CustomAddress?>(null)
-	val destinationAddress: MutableLiveData<CustomAddress?>
+	val destinationAddress: LiveData<CustomAddress?>
 		get() = _destinationAddress
 
 	private val _route = MutableLiveData<List<LatLng>?>(null)
-	val route: MutableLiveData<List<LatLng>?>
+	val route: LiveData<List<LatLng>?>
 		get() = _route
 
 	fun updateSourceAddress(address: CustomAddress?) {
