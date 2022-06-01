@@ -2,10 +2,7 @@ package com.abmodel.uwheels.ui.shared.data
 
 import android.util.Log
 import androidx.lifecycle.*
-import com.abmodel.uwheels.data.model.Ride
-import com.abmodel.uwheels.data.model.RideRequest
-import com.abmodel.uwheels.data.model.RideStatus
-import com.abmodel.uwheels.data.model.WheelsType
+import com.abmodel.uwheels.data.model.*
 import com.abmodel.uwheels.data.repository.auth.FirebaseAuthRepository
 import com.abmodel.uwheels.data.repository.ride.FirebaseRidesRepository
 import kotlinx.coroutines.Dispatchers
@@ -23,9 +20,11 @@ class SharedViewModel : ViewModel() {
 	private val authRepository = FirebaseAuthRepository.getInstance()
 	private val ridesRepository = FirebaseRidesRepository.getInstance()
 
+	// TODO: TOO MUCH BOILERPLATE CODE!!!
+
 	private val _userRides = MutableLiveData<List<Ride>>()
 
-	private val activeRides: LiveData<List<Ride>>
+	private val activeUserRides: LiveData<List<Ride>>
 		get() = Transformations.switchMap(_userRides) { rides ->
 			val filteredRides = rides.filter { ride ->
 				ride.status != RideStatus.COMPLETED.toString()
@@ -33,7 +32,7 @@ class SharedViewModel : ViewModel() {
 			MutableLiveData(filteredRides)
 		}
 
-	private val hostedRides: LiveData<List<Ride>>
+	private val hostedUserRides: LiveData<List<Ride>>
 		get() = Transformations.switchMap(_userRides) { rides ->
 			val filteredRides = rides.filter { ride ->
 				ride.host.uid == authRepository.getLoggedInUser().uid &&
@@ -42,7 +41,7 @@ class SharedViewModel : ViewModel() {
 			MutableLiveData(filteredRides)
 		}
 
-	private val requestedRides: LiveData<List<Ride>>
+	private val requestedUserRides: LiveData<List<Ride>>
 		get() = Transformations.switchMap(_userRides) { rides ->
 			val filteredRides = rides.filter { ride ->
 				ride.requests.any { request ->
@@ -52,7 +51,7 @@ class SharedViewModel : ViewModel() {
 			MutableLiveData(filteredRides)
 		}
 
-	private val completedRides: LiveData<List<Ride>>
+	private val completedUserRides: LiveData<List<Ride>>
 		get() = Transformations.switchMap(_userRides) { rides ->
 			val filteredRides = rides.filter { ride ->
 				ride.status == RideStatus.COMPLETED.toString()
@@ -60,35 +59,76 @@ class SharedViewModel : ViewModel() {
 			MutableLiveData(filteredRides)
 		}
 
-	private val _ridesFilter: MutableLiveData<RidesFilter> = MutableLiveData(RidesFilter.ACTIVE)
-	val ridesFilter: LiveData<RidesFilter>
-		get() = _ridesFilter
+	private val _userRidesFilter = MutableLiveData(UserRidesFilter.ACTIVE)
+	val userRidesFilter: LiveData<UserRidesFilter>
+		get() = _userRidesFilter
 
-	val filteredRides: LiveData<List<Ride>> =
-		Transformations.switchMap(_ridesFilter) { filter ->
+	val filteredUserRides: LiveData<List<Ride>> =
+		Transformations.switchMap(_userRidesFilter) { filter ->
 			when (filter) {
-				RidesFilter.ACTIVE -> activeRides
-				RidesFilter.REQUESTED -> requestedRides
-				RidesFilter.COMPLETED -> completedRides
-				RidesFilter.HOSTED -> hostedRides
+				UserRidesFilter.ACTIVE -> activeUserRides
+				UserRidesFilter.REQUESTED -> requestedUserRides
+				UserRidesFilter.COMPLETED -> completedUserRides
+				UserRidesFilter.HOSTED -> hostedUserRides
 				else -> null
 			}
 		}
 
-	private val _selectedRideId: MutableLiveData<String> = MutableLiveData()
-	val selectedRideId: LiveData<String>
-		get() = _selectedRideId
+	private val _selectedUserRideId: MutableLiveData<String> = MutableLiveData()
+	val selectedUserRideId: LiveData<String>
+		get() = _selectedUserRideId
 
-	val selectedRide: LiveData<Ride> =
-		Transformations.switchMap(filteredRides) { rides ->
-			Transformations.switchMap(_selectedRideId) { rideId ->
+	val selectedUserRide: LiveData<Ride> =
+		Transformations.switchMap(filteredUserRides) { rides ->
+			Transformations.switchMap(_selectedUserRideId) { rideId ->
 				MutableLiveData(rides.find { ride ->
 					ride.id == rideId
 				})
 			}
 		}
 
+	private val _searchedRides = MutableLiveData<List<Ride>>()
+
+	private val classicWheelsSearchedRides: LiveData<List<Ride>>
+		get() = Transformations.switchMap(_searchedRides) { rides ->
+			val filteredRides = rides.filter { ride ->
+				ride.wheelsType == WheelsType.CLASSIC_WHEELS.toString()
+			}
+			MutableLiveData(filteredRides)
+		}
+
+	private val sharedWheelsSearchedRides: LiveData<List<Ride>>
+		get() = Transformations.switchMap(_searchedRides) { rides ->
+			val filteredRides = rides.filter { ride ->
+				ride.wheelsType == WheelsType.SHARED_WHEELS.toString()
+			}
+			MutableLiveData(filteredRides)
+		}
+
+	private val weWheelsSearchedRides: LiveData<List<Ride>>
+		get() = Transformations.switchMap(_searchedRides) { rides ->
+			val filteredRides = rides.filter { ride ->
+				ride.wheelsType == WheelsType.WE_WHEELS.toString()
+			}
+			MutableLiveData(filteredRides)
+		}
+
+	private val _searchedRidesFilter = MutableLiveData(WheelsType.CLASSIC_WHEELS)
+	val searchedRidesFilter: LiveData<WheelsType>
+		get() = _searchedRidesFilter
+
+	val filteredSearchedRides: LiveData<List<Ride>> =
+		Transformations.switchMap(_searchedRidesFilter) { filter ->
+			when (filter) {
+				WheelsType.CLASSIC_WHEELS -> classicWheelsSearchedRides
+				WheelsType.SHARED_WHEELS -> sharedWheelsSearchedRides
+				WheelsType.WE_WHEELS -> weWheelsSearchedRides
+				else -> null
+			}
+		}
+
 	private var fetchUserRidesJob: Job? = null
+	private var fetchSearchedRidesJob: Job? = null
 
 	init {
 		Log.d(TAG, "SharedViewModel initialized")
@@ -100,25 +140,32 @@ class SharedViewModel : ViewModel() {
 		}
 	}
 
-	fun setRidesFilter(filter: RidesFilter) {
-		_ridesFilter.postValue(filter)
+	fun setUserRidesFilter(filter: UserRidesFilter) {
+		_userRidesFilter.postValue(filter)
 	}
 
-	fun selectRide(rideId: String) {
-		_selectedRideId.postValue(rideId)
+	fun selectUserRide(rideId: String) {
+		_selectedUserRideId.postValue(rideId)
 	}
 
 	fun acceptRideRequest(request: RideRequest) {
-
 		viewModelScope.launch(Dispatchers.IO) {
-			ridesRepository.acceptRideRequest(selectedRideId.value!!, request)
+			ridesRepository.acceptRideRequest(selectedUserRideId.value!!, request)
 		}
 	}
 
 	fun rejectRideRequest(request: RideRequest) {
-
 		viewModelScope.launch(Dispatchers.IO) {
-			ridesRepository.rejectRideRequest(selectedRideId.value!!, request)
+			ridesRepository.rejectRideRequest(selectedUserRideId.value!!, request)
+		}
+	}
+
+	fun driverModeChanged(driverMode: Boolean) {
+		fetchUserRidesJob?.cancel()
+		if (driverMode) {
+			fetchUserRides(true, WheelsType.CLASSIC_WHEELS)
+		} else {
+			fetchUserRides()
 		}
 	}
 
@@ -146,13 +193,31 @@ class SharedViewModel : ViewModel() {
 			}
 	}
 
-	fun driverModeChanged(driverMode: Boolean) {
-		fetchUserRidesJob?.cancel()
+	fun searchRides(
+		source: CustomAddress, destination: CustomAddress, date: CustomDate,
+	) {
+		val query = SearchRideQuery(
+			userId = authRepository.getLoggedInUser().uid,
+			source = source,
+			destination = destination,
+			date = date
+		)
+		fetchSearchedRidesJob?.cancel()
+		fetchSearchedRides(query)
+	}
 
-		if (driverMode) {
-			fetchUserRides(true, WheelsType.CLASSIC_WHEELS)
-		} else {
-			fetchUserRides()
-		}
+	private fun fetchSearchedRides(query: SearchRideQuery) {
+		fetchSearchedRidesJob =
+			viewModelScope.launch(Dispatchers.IO) {
+				ridesRepository.searchRides(query).cancellable().collect { result ->
+
+					if (result.isSuccess) {
+						_searchedRides.postValue(result.getOrNull())
+						Log.d(TAG, "fetchSearchedRides: ${result.getOrNull()}")
+					} else {
+						Log.e(TAG, "Error: ${result.exceptionOrNull()}")
+					}
+				}
+			}
 	}
 }

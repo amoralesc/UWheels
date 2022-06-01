@@ -81,7 +81,7 @@
 			app:layout_constraintEnd_toEndOf="parent"
 			app:layout_constraintStart_toStartOf="parent"
 			app:layout_constraintTop_toBottomOf="@id/chips"
-			app:rideList="@{dataViewModel.filteredRides}"
+			app:rideList="@{dataViewModel.filteredUserRides}"
 			tools:listitem="@layout/ride_list_item" />
 
 	</androidx.constraintlayout.widget.ConstraintLayout>

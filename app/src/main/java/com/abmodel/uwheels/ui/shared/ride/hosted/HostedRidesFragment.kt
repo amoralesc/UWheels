@@ -10,7 +10,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.abmodel.uwheels.R
 import com.abmodel.uwheels.databinding.FragmentHostedRidesBinding
-import com.abmodel.uwheels.ui.shared.data.RidesFilter
+import com.abmodel.uwheels.ui.shared.data.UserRidesFilter
 import com.abmodel.uwheels.ui.shared.data.SharedViewModel
 import com.abmodel.uwheels.ui.shared.ride.adapter.HostedRideItemAdapter
 import com.abmodel.uwheels.ui.shared.ride.rides.RidesFragment
@@ -49,7 +49,7 @@ class HostedRidesFragment : Fragment() {
 				Log.d(RidesFragment.TAG, "Clicked on ride $it")
 				onRideSelected(it.id)
 			}
-			sharedViewModel.setRidesFilter(RidesFilter.HOSTED)
+			sharedViewModel.setUserRidesFilter(UserRidesFilter.HOSTED)
 		}
 	}
 
@@ -59,7 +59,7 @@ class HostedRidesFragment : Fragment() {
 	}
 
 	private fun onRideSelected(rideId: String) {
-		sharedViewModel.selectRide(rideId)
+		sharedViewModel.selectUserRide(rideId)
 		findNavController().navigate(
 			R.id.action_hostedRidesFragment_to_hostedRideRequestsFragment
 		)

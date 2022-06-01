@@ -217,7 +217,7 @@
 			android:clipToPadding="false"
 			android:orientation="vertical"
 			android:paddingTop="8dp"
-			app:rideRequestList="@{dataViewModel.selectedRide.requests}"
+			app:rideRequestList="@{dataViewModel.selectedUserRide.requests}"
 			app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
 			app:layout_constraintBottom_toBottomOf="parent"
 			app:layout_constraintEnd_toEndOf="parent"

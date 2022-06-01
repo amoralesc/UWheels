@@ -53,7 +53,7 @@ class HostedRideRequestsFragment : Fragment() {
 			)
 
 			// Load the hosted ride info
-			sharedViewModel.selectedRide.observe(viewLifecycleOwner) {
+			sharedViewModel.selectedUserRide.observe(viewLifecycleOwner) {
 				it?.let { ride ->
 					wheelsType.text = ride.wheelsType
 					source.text = ride.source.mainText

@@ -9,7 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.abmodel.uwheels.databinding.FragmentRidesBinding
 import com.abmodel.uwheels.ui.shared.ride.adapter.RideItemAdapter
-import com.abmodel.uwheels.ui.shared.data.RidesFilter
+import com.abmodel.uwheels.ui.shared.data.UserRidesFilter
 import com.abmodel.uwheels.ui.shared.data.SharedViewModel
 
 class RidesFragment : Fragment() {
@@ -47,15 +47,15 @@ class RidesFragment : Fragment() {
 			}
 
 			chipActive.setOnClickListener {
-				sharedViewModel.setRidesFilter(RidesFilter.ACTIVE)
+				sharedViewModel.setUserRidesFilter(UserRidesFilter.ACTIVE)
 			}
 			chipRequested.setOnClickListener {
-				sharedViewModel.setRidesFilter(RidesFilter.REQUESTED)
+				sharedViewModel.setUserRidesFilter(UserRidesFilter.REQUESTED)
 			}
 			chipCompleted.setOnClickListener {
-				sharedViewModel.setRidesFilter(RidesFilter.COMPLETED)
+				sharedViewModel.setUserRidesFilter(UserRidesFilter.COMPLETED)
 			}
-			sharedViewModel.setRidesFilter(RidesFilter.ACTIVE)
+			sharedViewModel.setUserRidesFilter(UserRidesFilter.ACTIVE)
 		}
 	}
 
