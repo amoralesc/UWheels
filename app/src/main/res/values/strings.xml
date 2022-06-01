@@ -123,4 +123,10 @@
 	<string name="empty_fields">All fields must be filled</string>
 	<string name="uploaded_profile_picture_name">profilePicture.%s</string>
 	<string name="color">Color</string>
+	<string name="source_address_empty">Source address can\'t be empty</string>
+	<string name="destination_address_empty">Destination address can\'t be empty</string>
+	<string name="date_empty">Date can\'t be empty</string>
+	<string name="date_in_past">Date must be after current date</string>
+	<string name="creating_ride">Creating ride…</string>
+	<string name="ride_created">Ride created successfully</string>
 </resources>

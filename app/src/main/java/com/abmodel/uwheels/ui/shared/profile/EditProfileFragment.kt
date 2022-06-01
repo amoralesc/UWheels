@@ -80,7 +80,7 @@ class EditProfileFragment : Fragment() {
 
 		viewModel.saveResult.observe(viewLifecycleOwner) { result ->
 			result ?: return@observe
-			result.error?.let {
+			result.message?.let {
 				showMessage(it)
 			}
 			if (result.success) {

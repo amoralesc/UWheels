@@ -13,3 +13,7 @@ object StoragePaths {
 	const val DRIVER_APPLICATION = "$DRIVER/application"
 	const val IMG = "img"
 }
+
+object DatabasePaths {
+	const val RIDES = "rides"
+}

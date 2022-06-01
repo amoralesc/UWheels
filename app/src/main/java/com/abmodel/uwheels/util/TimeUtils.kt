@@ -1,5 +1,6 @@
 package com.abmodel.uwheels.util
 
+import com.abmodel.uwheels.data.model.CustomDate
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -37,4 +38,29 @@ fun formatDateFromMillis(millis: Long): String {
 	val formatter = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
 
 	return formatter.format(calendar.time)
+}
+
+fun CustomDate.compareDates(other: CustomDate): Int {
+	val calendar1 = Calendar.getInstance()
+	calendar1.timeInMillis = this.millis!!
+	calendar1.set(Calendar.HOUR_OF_DAY, this.hour!!)
+	calendar1.set(Calendar.MINUTE, this.minute!!)
+
+	val calendar2 = Calendar.getInstance()
+	calendar2.timeInMillis = other.millis!!
+	calendar2.set(Calendar.HOUR_OF_DAY, other.hour!!)
+	calendar2.set(Calendar.MINUTE, other.minute!!)
+
+	return calendar1.compareTo(calendar2)
+}
+
+fun getCurrentDateAsCustomDate(): CustomDate {
+	val calendar = Calendar.getInstance()
+	calendar.timeInMillis = System.currentTimeMillis()
+
+	return CustomDate(
+		calendar.timeInMillis - calendar.timeInMillis % (1000 * 60 * 60 * 24),
+		calendar.get(Calendar.HOUR_OF_DAY),
+		calendar.get(Calendar.MINUTE),
+	)
 }

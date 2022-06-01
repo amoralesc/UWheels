@@ -24,7 +24,7 @@ class FirebaseDriverApplicationDataSource {
 		const val TAG = "FirebaseDriverApplicationDataSource"
 	}
 
-	private val mDatabase = Firebase.firestore
+	private val mFirestore = Firebase.firestore
 	private val mStorage = Firebase.storage
 
 	/**
@@ -59,7 +59,7 @@ class FirebaseDriverApplicationDataSource {
 
 	suspend fun uploadDriverApplication(userId: String, driverApplication: DriverApplication) {
 
-		mDatabase
+		mFirestore
 			.collection(FirestorePaths.USERS)
 			.document(userId)
 			.update(

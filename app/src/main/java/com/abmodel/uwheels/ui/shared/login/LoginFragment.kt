@@ -64,7 +64,7 @@ class LoginFragment : Fragment() {
 
 		loginViewModel.loginResult.observe(viewLifecycleOwner) { loginResult ->
 			loginResult ?: return@observe
-			loginResult.error?.let {
+			loginResult.message?.let {
 				showLoginFailed(it)
 			}
 			if (loginResult.success) {

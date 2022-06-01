@@ -36,7 +36,7 @@ class SignUpViewModel : ViewModel() {
 				) {
 					_signUpResult.postValue(FormResult(success = true))
 				} else {
-					_signUpResult.postValue(FormResult(error = R.string.signup_failed))
+					_signUpResult.postValue(FormResult(message = R.string.signup_failed))
 				}
 			}
 		}
@@ -50,16 +50,16 @@ class SignUpViewModel : ViewModel() {
 		return if (name.isEmpty() || lastName.isEmpty() || phone.isEmpty() ||
 			email.isEmpty() || password.isEmpty() || passwordAgain.isEmpty()
 		) {
-			_signUpResult.value = FormResult(error = R.string.signup_failed_empty_fields)
+			_signUpResult.value = FormResult(message = R.string.signup_failed_empty_fields)
 			false
 		} else if (!isEmailValid(email)) {
-			_signUpResult.value = FormResult(error = R.string.invalid_email)
+			_signUpResult.value = FormResult(message = R.string.invalid_email)
 			false
 		} else if (!isPasswordValid(password)) {
-			_signUpResult.postValue(FormResult(error = R.string.invalid_password))
+			_signUpResult.postValue(FormResult(message = R.string.invalid_password))
 			false
 		} else if (password != passwordAgain) {
-			_signUpResult.postValue(FormResult(error = R.string.password_mismatch))
+			_signUpResult.postValue(FormResult(message = R.string.password_mismatch))
 			false
 		} else {
 			true

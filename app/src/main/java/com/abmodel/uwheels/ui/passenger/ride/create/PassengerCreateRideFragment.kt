@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResultListener
@@ -23,11 +25,23 @@ import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
 
-
-class CreateRideFragment : Fragment(), OnMapReadyCallback {
+class PassengerCreateRideFragment : Fragment(), OnMapReadyCallback {
 
 	companion object {
-		const val TAG = "CreateRideFragment"
+		const val TAG = "PassengerCreateRideFragment"
+
+		val WheelsTypeList = listOf(
+			Triple(
+				"Shared Wheels",
+				arrayOf("Taxi", "Uber", "Beat", "Didi", "Cabify"),
+				1..4
+			),
+			Triple(
+				"We Wheels",
+				arrayOf("Transmilenio", "SITP", "Bus"),
+				1..10
+			)
+		)
 	}
 
 	// Binding objects to access the view elements
@@ -39,7 +53,7 @@ class CreateRideFragment : Fragment(), OnMapReadyCallback {
 	private var destinationMarker: Marker? = null
 	private var polyline: Polyline? = null
 
-	private val viewModel: CreateRideViewModel by viewModels()
+	private val viewModel: PassengerCreateRideViewModel by viewModels()
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
@@ -81,12 +95,12 @@ class CreateRideFragment : Fragment(), OnMapReadyCallback {
 		mapFragment?.getMapAsync(this)
 
 		// Setup the date picker
-		datePicker.addOnPositiveButtonClickListener { dateSelected ->
+		datePicker.addOnPositiveButtonClickListener { selectedDate ->
 			// Set the time in the date EditText
 			binding.date.setText(
-				formatDateFromMillis(dateSelected)
+				formatDateFromMillis(selectedDate)
 			)
-			// TODO: Also set the date in the view model
+			viewModel.updateDate(millis = selectedDate)
 		}
 		// Setup the time picker
 		timePicker.addOnPositiveButtonClickListener {
@@ -94,7 +108,10 @@ class CreateRideFragment : Fragment(), OnMapReadyCallback {
 			binding.time.setText(
 				formatTime(timePicker.hour, timePicker.minute)
 			)
-			// TODO: Also set the time in the view model
+			viewModel.updateDate(
+				hour = timePicker.hour,
+				minute = timePicker.minute
+			)
 		}
 
 		binding.date.apply {
@@ -120,6 +137,45 @@ class CreateRideFragment : Fragment(), OnMapReadyCallback {
 				goToSearchAddress("destination")
 			}
 
+			create.setOnClickListener {
+				onCreateRidePressed()
+			}
+
+			// Populate the wheels type spinner
+			wheelsType.adapter = ArrayAdapter(
+				requireContext(),
+				android.R.layout.simple_spinner_dropdown_item,
+				WheelsTypeList.map { it.first }
+			)
+
+			wheelsType.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+				override fun onNothingSelected(parent: AdapterView<*>?) {}
+
+				override fun onItemSelected(
+					parent: AdapterView<*>?,
+					view: View?,
+					position: Int,
+					id: Long
+				) {
+					// Populate the transportation spinner
+					transportation.adapter = ArrayAdapter(
+						requireContext(),
+						android.R.layout.simple_spinner_dropdown_item,
+						WheelsTypeList.map { it.second }[position]
+					)
+
+					// Populate the capacity spinner
+					capacity.adapter = ArrayAdapter(
+						requireContext(),
+						android.R.layout.simple_spinner_dropdown_item,
+						WheelsTypeList.map { it.third.toList() }[position]
+					)
+				}
+			}
+			wheelsType.setSelection(0)
+			transportation.setSelection(0)
+			capacity.setSelection(0)
+
 			viewModel.route.observe(viewLifecycleOwner) {
 				drawRoute(it)
 			}
@@ -131,6 +187,16 @@ class CreateRideFragment : Fragment(), OnMapReadyCallback {
 				destination.setText(it?.mainText)
 				drawDestinationMarker(it?.latLng)
 			}
+
+			viewModel.result.observe(viewLifecycleOwner) { result ->
+				result ?: return@observe
+				result.message?.let {
+					showMessage(it)
+				}
+				if (result.success) {
+					findNavController().navigateUp()
+				}
+			}
 		}
 	}
 
@@ -139,10 +205,18 @@ class CreateRideFragment : Fragment(), OnMapReadyCallback {
 		_binding = null
 	}
 
+	private fun onCreateRidePressed() {
+		viewModel.createRide(
+			binding.wheelsType.selectedItem.toString(),
+			binding.transportation.selectedItem.toString(),
+			binding.capacity.selectedItem as Int,
+		)
+	}
+
 	private fun goToSearchAddress(selectedInput: String) {
 		val action =
-			CreateRideFragmentDirections
-				.actionCreateRideFragmentToSearchAddressFragment(
+			PassengerCreateRideFragmentDirections
+				.actionPassengerCreateRideFragmentToSearchAddressFragment(
 					selectedInput = selectedInput,
 					source = null,
 					destination = null
@@ -151,7 +225,6 @@ class CreateRideFragment : Fragment(), OnMapReadyCallback {
 		findNavController()
 			.navigate(action)
 	}
-
 
 	private fun drawRoute(points: List<LatLng>?) {
 		when {

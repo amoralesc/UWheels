@@ -5,5 +5,5 @@ package com.abmodel.uwheels.ui.shared.data
  */
 data class FormResult(
 	val success: Boolean = false,
-	val error: Int? = null
+	val message: Int? = null
 )

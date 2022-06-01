@@ -51,7 +51,7 @@ class EditProfileViewModel : ViewModel() {
 	): Boolean {
 
 		return if (name.isEmpty() || lastName.isEmpty() || phone.isEmpty()) {
-			_saveResult.value = FormResult(error = R.string.empty_fields)
+			_saveResult.value = FormResult(message = R.string.empty_fields)
 			false
 		} else {
 			true

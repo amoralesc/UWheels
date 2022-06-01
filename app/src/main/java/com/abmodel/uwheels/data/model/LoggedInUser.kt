@@ -7,12 +7,14 @@ import android.net.Uri
  */
 data class LoggedInUser(
 	val uid: String,
-	val email: String?,
-	val displayName: String?,
-	val name: String?,
-	val lastName: String?,
-	val phone: String?,
+	val email: String,
+	val displayName: String,
+	val name: String,
+	val lastName: String,
+	val phone: String,
 	val photoUrl: Uri?,
 	var isDriver: Boolean,
-	var driverMode: Boolean
+	var driverMode: Boolean,
+	val passengerRating: Rating,
+	val driverRating: Rating,
 )

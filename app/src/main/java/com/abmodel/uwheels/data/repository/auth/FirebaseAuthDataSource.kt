@@ -6,6 +6,7 @@ import com.abmodel.uwheels.data.FirestorePaths
 import com.abmodel.uwheels.data.Result
 import com.abmodel.uwheels.data.StoragePaths
 import com.abmodel.uwheels.data.model.LoggedInUser
+import com.abmodel.uwheels.data.model.Rating
 import com.abmodel.uwheels.data.model.UploadedFile
 import com.abmodel.uwheels.data.model.firebase.UserDocument
 import com.google.firebase.auth.AuthResult
@@ -33,7 +34,7 @@ class FirebaseAuthDataSource {
 	}
 
 	private val mAuth = Firebase.auth
-	private val mDatabase = Firebase.firestore
+	private val mFirestore = Firebase.firestore
 	private val mStorage = Firebase.storage
 
 	suspend fun login(email: String, password: String): Result<AuthResult> {
@@ -97,8 +98,10 @@ class FirebaseAuthDataSource {
 			"phone" to phone,
 			"isDriver" to false,
 			"driverMode" to false,
+			"passengerRating" to Rating(0.0, 0),
+			"driverRating" to Rating(0.0, 0),
 		)
-		mDatabase.collection(FirestorePaths.USERS).document(uid).set(user)
+		mFirestore.collection(FirestorePaths.USERS).document(uid).set(user)
 	}
 
 	fun logout() {
@@ -113,29 +116,41 @@ class FirebaseAuthDataSource {
 	}
 
 	suspend fun getCurrentUser(): LoggedInUser {
-		val firebaseUser = mAuth.currentUser
-		val databaseUser = mDatabase
+		val firebaseUser = mAuth.currentUser!!
+		val databaseUser = mFirestore
 			.collection(FirestorePaths.USERS)
-			.document(firebaseUser?.uid ?: "")
+			.document(firebaseUser.uid)
 			.get()
 			.await()
-			.data
+			.toObject(UserDocument::class.java)!!
 
 		return LoggedInUser(
-			firebaseUser?.uid ?: "",
-			firebaseUser?.email,
-			firebaseUser?.displayName,
-			databaseUser?.get("name") as String?,
-			databaseUser?.get("lastName") as String?,
-			databaseUser?.get("phone") as String?,
-			firebaseUser?.photoUrl,
-			databaseUser?.get("isDriver") as Boolean,
-			databaseUser["driverMode"] as Boolean
+			uid = firebaseUser.uid,
+			email = firebaseUser.email ?: "",
+			displayName = firebaseUser.displayName ?: "",
+			name = databaseUser.name as String,
+			lastName = databaseUser.lastName as String,
+			phone = databaseUser.phone as String,
+			photoUrl = firebaseUser.photoUrl,
+			isDriver = databaseUser.isDriver as Boolean,
+			driverMode = databaseUser.driverMode as Boolean,
+			passengerRating = databaseUser.passengerRating?.let {
+				Rating(
+					it.rating as Double,
+					it.ratingCount as Int
+				)
+			} as Rating,
+			driverRating = databaseUser.driverRating?.let {
+				Rating(
+					it.rating as Double,
+					it.ratingCount as Int
+				)
+			} as Rating
 		)
 	}
 
 	suspend fun makeUserDriver(userId: String) {
-		mDatabase
+		mFirestore
 			.collection(FirestorePaths.USERS)
 			.document(userId)
 			.update("isDriver", true)
@@ -143,7 +158,7 @@ class FirebaseAuthDataSource {
 	}
 
 	suspend fun setDriverMode(userId: String, mode: Boolean) {
-		mDatabase
+		mFirestore
 			.collection(FirestorePaths.USERS)
 			.document(userId)
 			.update("driverMode", mode)
@@ -155,7 +170,7 @@ class FirebaseAuthDataSource {
 		phone: String?, uploadedPhotoFile: UploadedFile?
 	) {
 		// Get the user from the database
-		val databaseUser = mDatabase
+		val databaseUser = mFirestore
 			.collection(FirestorePaths.USERS)
 			.document(userId)
 			.get()
@@ -168,7 +183,7 @@ class FirebaseAuthDataSource {
 		databaseUser.phone = phone ?: databaseUser.phone
 
 		// Update the user in the database
-		mDatabase
+		mFirestore
 			.collection(FirestorePaths.USERS)
 			.document(userId)
 			.set(databaseUser)

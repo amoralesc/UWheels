@@ -1,7 +1,7 @@
 package com.abmodel.uwheels.data.model
 
 class CustomDate(
-	val millis: Long,
-	val hour: Int,
-	val minute: Int,
+	var millis: Long? = null,
+	var hour: Int? = null,
+	var minute: Int? = null,
 )

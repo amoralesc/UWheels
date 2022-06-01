@@ -60,7 +60,7 @@ class SignUpFragment : Fragment() {
 
 		signUpViewModel.signUpResult.observe(viewLifecycleOwner) { signUpResult ->
 			signUpResult ?: return@observe
-			signUpResult.error?.let {
+			signUpResult.message?.let {
 				showSignUpFailed(it)
 			}
 			if (signUpResult.success) {

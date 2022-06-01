@@ -147,11 +147,11 @@
 	</fragment>
 	<fragment
 		android:id="@+id/passengerCreateRideFragment"
-		android:name="com.abmodel.uwheels.ui.passenger.ride.create.CreateRideFragment"
+		android:name="com.abmodel.uwheels.ui.passenger.ride.create.PassengerCreateRideFragment"
 		android:label="fragment_passenger_create_ride"
 		tools:layout="@layout/fragment_passenger_create_ride">
 		<action
-			android:id="@+id/action_createRideFragment_to_searchAddressFragment"
+			android:id="@+id/action_passengerCreateRideFragment_to_searchAddressFragment"
 			app:destination="@id/searchAddressFragment" />
 	</fragment>
 	<fragment

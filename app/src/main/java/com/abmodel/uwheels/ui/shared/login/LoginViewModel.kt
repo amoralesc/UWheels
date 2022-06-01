@@ -36,7 +36,7 @@ class LoginViewModel : ViewModel() {
 	/**
 	 * Attempts to sign in the user through Firebase Authentication.
 	 * If the user is successfully signed in, the [FormResult.success] will be true.
-	 * If there is an error, the [FormResult.error] will be set.
+	 * If there is an error, the [FormResult.message] will be set.
 	 *
 	 * @param email the user's email
 	 * @param password the user's password
@@ -49,7 +49,7 @@ class LoginViewModel : ViewModel() {
 				if (authRepository.login(email, password)) {
 					_loginResult.postValue(FormResult(success = true))
 				} else {
-					_loginResult.postValue(FormResult(error = R.string.login_failed))
+					_loginResult.postValue(FormResult(message = R.string.login_failed))
 				}
 			}
 		}
@@ -66,10 +66,10 @@ class LoginViewModel : ViewModel() {
 	private fun checkLoginForm(email: String, password: String): Boolean {
 
 		return if (!isEmailValid(email)) {
-			_loginResult.value = FormResult(error = R.string.invalid_email)
+			_loginResult.value = FormResult(message = R.string.invalid_email)
 			false
 		} else if (!isPasswordValid(password)) {
-			_loginResult.value = FormResult(error = R.string.invalid_password)
+			_loginResult.value = FormResult(message = R.string.invalid_password)
 			false
 		} else {
 			true

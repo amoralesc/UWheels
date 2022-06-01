@@ -7,4 +7,6 @@ data class UserDocument(
 	var lastName: String? = null,
 	var name: String? = null,
 	var phone: String? = null,
+	val passengerRating: RatingDocument? = null,
+	val driverRating: RatingDocument? = null,
 )

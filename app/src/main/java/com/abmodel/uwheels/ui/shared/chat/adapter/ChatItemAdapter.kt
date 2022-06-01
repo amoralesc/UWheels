@@ -28,8 +28,12 @@ class ChatItemAdapter(
 					date.text =
 						date.context.getString(
 							R.string.chat_date,
-							formatDateFromMillis(this.millis),
-							formatTime(this.hour, this.minute)
+							this.millis?.let { formatDateFromMillis(it) } ?: "",
+							this.hour?.let { hour ->
+								this.minute?.let { minute ->
+									formatTime(hour, minute)
+								} ?: ""
+							} ?: ""
 						)
 				}
 			}
