@@ -13,5 +13,5 @@ object StoragePaths {
 }
 
 object DatabasePaths {
-	const val RIDES = "rides"
+	const val CHATS = "chats"
 }

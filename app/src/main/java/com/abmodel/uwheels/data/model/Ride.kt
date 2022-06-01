@@ -10,9 +10,10 @@ data class Ride(
 	val totalCapacity: Int = 0,
 	val rating: Rating = Rating(),
 	val host: RideUser = RideUser(),
-	val state: String = RideState.CREATED.toString(),
+	val state: String = RideStatus.CREATED.toString(),
 	val passengers: MutableList<RideUser> = mutableListOf(),
 	val subscribers: MutableList<String> = mutableListOf(),
+	var chatId: String = "",
 	val price: Double? = null,
 	val vehicle: Vehicle? = null,
 )

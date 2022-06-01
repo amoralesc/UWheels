@@ -65,7 +65,7 @@ class ChatItemAdapter(
 	companion object {
 		private val DiffCallback = object : DiffUtil.ItemCallback<Chat>() {
 			override fun areItemsTheSame(oldItem: Chat, newItem: Chat): Boolean {
-				return oldItem.id == newItem.id
+				return oldItem.rideId == newItem.rideId
 			}
 
 			override fun areContentsTheSame(

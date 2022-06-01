@@ -82,7 +82,7 @@ class SearchAddressViewModel: ViewModel() {
 			try {
 				val response: GeocodingResponse =
 					GeocodingApi.retrofitService.getGeocoding(
-						address.placeId,
+						address.placeId!!,
 						MAPS_API_KEY
 					)
 

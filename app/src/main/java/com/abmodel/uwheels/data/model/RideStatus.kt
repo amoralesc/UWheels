@@ -1,20 +1,21 @@
 package com.abmodel.uwheels.data.model
 
-enum class RideState(val state: String) {
+enum class RideStatus(val status: String) {
 	CREATED("CREATED"),
 	ACTIVE("ACTIVE"),
+	STARTED("STARTED"),
 	ONROUTE("ONROUTE"),
 	ARRIVED("ARRIVED"),
 	CANCELLED("CANCELLED"),
 	COMPLETED("COMPLETED");
 
 	override fun toString(): String {
-		return state
+		return status
 	}
 
 	companion object {
-		fun fromString(state: String): RideState {
-			return values().first { it.state == state }
+		fun fromString(state: String): RideStatus {
+			return values().first { it.status == state }
 		}
 	}
 }
