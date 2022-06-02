@@ -1,5 +1,7 @@
 package com.abmodel.uwheels.data.model.firebase
 
+import com.abmodel.uwheels.data.model.Vehicle
+
 data class UserDocument(
 	var driverApplication: DriverApplicationDocument? = null,
 	var driverMode: Boolean? = null,
@@ -9,4 +11,5 @@ data class UserDocument(
 	var phone: String? = null,
 	val passengerRating: RatingDocument? = null,
 	val driverRating: RatingDocument? = null,
+	val vehicles: List<Vehicle>? = null
 )

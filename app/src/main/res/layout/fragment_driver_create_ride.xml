@@ -1,14 +1,322 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
 	xmlns:tools="http://schemas.android.com/tools"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
+	android:background="?colorSecondary"
+	android:clipChildren="false"
+	android:clipToPadding="false"
+	android:orientation="vertical"
+	android:paddingHorizontal="16dp"
+	android:paddingTop="16dp"
 	tools:context=".ui.driver.ride.create.DriverCreateRideFragment">
 
-	<!-- TODO: Update blank fragment layout -->
+	<com.abmodel.uwheels.BackButton
+		android:id="@+id/back"
+		style="@style/Widget.UWheels.Button.BackButton"
+		android:elevation="4dp"
+		android:paddingHorizontal="@dimen/back_button_padding"
+		tools:ignore="SpeakableTextPresentCheck" />
+
 	<TextView
+		android:id="@+id/title_create"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:fontFamily="@font/poppins_medium"
+		android:text="@string/create_ride"
+		android:textAppearance="?textAppearanceHeadline4"
+		android:textColor="@color/dark_gray"
+		android:textSize="32sp" />
+
+	<ScrollView
+		android:id="@+id/scrollview"
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
-		android:text="@string/hello_blank_fragment" />
+		android:clipChildren="false"
+		android:clipToPadding="false"
+		android:fillViewport="true"
+		android:scrollbars="none">
 
-</FrameLayout>
+		<androidx.constraintlayout.widget.ConstraintLayout
+			android:layout_width="match_parent"
+			android:layout_height="0dp"
+			android:clipChildren="false"
+			android:clipToPadding="false">
+
+			<TextView
+				android:id="@+id/subtitle_ride_information"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:fontFamily="@font/poppins_medium"
+				android:text="@string/ride_information"
+				android:textAppearance="?textAppearanceHeadline5"
+				android:textColor="@color/dark_gray"
+				app:layout_constraintStart_toStartOf="parent"
+				app:layout_constraintTop_toTopOf="parent" />
+
+			<!-- Search address input -->
+
+			<androidx.constraintlayout.widget.ConstraintLayout
+				android:id="@+id/search_address_layout"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginTop="8dp"
+				android:background="@drawable/search_address_background"
+				android:elevation="2dp"
+				android:orientation="vertical"
+				app:layout_constraintEnd_toEndOf="parent"
+				app:layout_constraintStart_toStartOf="parent"
+				app:layout_constraintTop_toBottomOf="@id/subtitle_ride_information">
+
+				<ImageView
+					android:id="@+id/image_source"
+					android:layout_width="16dp"
+					android:layout_height="16dp"
+					android:layout_marginStart="8dp"
+					android:padding="4dp"
+					app:layout_constraintBottom_toBottomOf="@id/source"
+					app:layout_constraintStart_toStartOf="parent"
+					app:layout_constraintTop_toTopOf="@id/source"
+					app:srcCompat="@drawable/ic_circle"
+					app:tint="@color/black"
+					tools:ignore="ContentDescription" />
+
+				<EditText
+					android:id="@+id/source"
+					android:layout_width="0dp"
+					android:layout_height="40dp"
+					android:layout_marginHorizontal="8dp"
+					android:background="@drawable/search_address_input_background"
+					android:focusable="false"
+					android:hint="@string/source"
+					android:importantForAutofill="no"
+					android:inputType="text"
+					app:layout_constraintEnd_toEndOf="parent"
+					app:layout_constraintStart_toEndOf="@id/image_source"
+					app:layout_constraintTop_toTopOf="parent"
+					tools:ignore="TouchTargetSizeCheck" />
+
+				<com.google.android.material.divider.MaterialDivider
+					android:id="@+id/divider1"
+					android:layout_width="match_parent"
+					android:layout_height="1dp"
+					app:dividerColor="@color/dark_gray"
+					app:layout_constraintEnd_toEndOf="parent"
+					app:layout_constraintStart_toStartOf="parent"
+					app:layout_constraintTop_toBottomOf="@id/source" />
+
+				<ImageView
+					android:id="@+id/image_destination"
+					android:layout_width="16dp"
+					android:layout_height="16dp"
+					android:layout_marginStart="8dp"
+					android:padding="4dp"
+					app:layout_constraintBottom_toBottomOf="@id/destination"
+					app:layout_constraintStart_toStartOf="parent"
+					app:layout_constraintTop_toTopOf="@id/destination"
+					app:srcCompat="@drawable/ic_circle"
+					app:tint="@color/color_primary"
+					tools:ignore="ContentDescription" />
+
+				<EditText
+					android:id="@+id/destination"
+					android:layout_width="0dp"
+					android:layout_height="40dp"
+					android:layout_marginHorizontal="8dp"
+					android:background="@drawable/search_address_input_background"
+					android:focusable="false"
+					android:hint="@string/destination"
+					android:importantForAutofill="no"
+					android:inputType="text"
+					app:layout_constraintEnd_toEndOf="parent"
+					app:layout_constraintStart_toEndOf="@id/image_destination"
+					app:layout_constraintTop_toBottomOf="@id/divider1"
+					tools:ignore="TextContrastCheck,TouchTargetSizeCheck" />
+
+				<com.google.android.material.divider.MaterialDivider
+					android:id="@+id/divider2"
+					android:layout_width="match_parent"
+					android:layout_height="1dp"
+					app:dividerColor="@color/dark_gray"
+					app:layout_constraintEnd_toEndOf="parent"
+					app:layout_constraintStart_toStartOf="parent"
+					app:layout_constraintTop_toBottomOf="@id/destination" />
+
+				<ImageView
+					android:id="@+id/image_date"
+					android:layout_width="16dp"
+					android:layout_height="16dp"
+					android:layout_marginStart="8dp"
+					android:padding="1dp"
+					app:layout_constraintBottom_toBottomOf="@id/date"
+					app:layout_constraintEnd_toStartOf="@id/date"
+					app:layout_constraintStart_toStartOf="parent"
+					app:layout_constraintTop_toTopOf="@id/date"
+					app:srcCompat="@drawable/ic_calendar_padded"
+					app:tint="@color/dark_gray"
+					tools:ignore="ContentDescription" />
+
+				<EditText
+					android:id="@+id/date"
+					android:layout_width="0dp"
+					android:layout_height="40dp"
+					android:layout_marginStart="8dp"
+					android:background="@drawable/search_address_input_background"
+					android:focusable="false"
+					android:hint="@string/date"
+					android:importantForAutofill="no"
+					android:inputType="date"
+					app:layout_constraintEnd_toStartOf="@id/divider3"
+					app:layout_constraintHorizontal_weight="1"
+					app:layout_constraintStart_toEndOf="@id/image_date"
+					app:layout_constraintTop_toBottomOf="@id/divider2"
+					tools:ignore="TextContrastCheck,TouchTargetSizeCheck" />
+
+				<com.google.android.material.divider.MaterialDivider
+					android:id="@+id/divider3"
+					android:layout_width="1dp"
+					android:layout_height="0dp"
+					android:layout_marginStart="8dp"
+					app:dividerColor="@color/dark_gray"
+					app:layout_constraintBottom_toBottomOf="parent"
+					app:layout_constraintEnd_toStartOf="@id/image_time"
+					app:layout_constraintStart_toEndOf="@id/date"
+					app:layout_constraintTop_toBottomOf="@id/divider2" />
+
+				<ImageView
+					android:id="@+id/image_time"
+					android:layout_width="16dp"
+					android:layout_height="16dp"
+					android:layout_marginStart="8dp"
+					app:layout_constraintBottom_toBottomOf="@id/time"
+					app:layout_constraintEnd_toStartOf="@id/time"
+					app:layout_constraintStart_toEndOf="@id/divider3"
+					app:layout_constraintTop_toTopOf="@id/time"
+					app:srcCompat="@drawable/ic_time"
+					app:tint="@color/dark_gray"
+					tools:ignore="ContentDescription" />
+
+				<EditText
+					android:id="@+id/time"
+					android:layout_width="0dp"
+					android:layout_height="40dp"
+					android:layout_marginHorizontal="8dp"
+					android:background="@drawable/search_address_input_background"
+					android:focusable="false"
+					android:hint="@string/time"
+					android:importantForAutofill="no"
+					android:inputType="time"
+					app:layout_constraintEnd_toEndOf="parent"
+					app:layout_constraintHorizontal_weight="1"
+					app:layout_constraintStart_toEndOf="@id/image_time"
+					app:layout_constraintTop_toBottomOf="@id/divider2"
+					tools:ignore="TextContrastCheck,TouchTargetSizeCheck" />
+
+			</androidx.constraintlayout.widget.ConstraintLayout>
+
+			<androidx.fragment.app.FragmentContainerView
+				android:id="@+id/map_address_results"
+				android:name="com.google.android.gms.maps.SupportMapFragment"
+				android:layout_width="match_parent"
+				android:layout_height="200dp"
+				android:layout_marginTop="16dp"
+				android:elevation="4dp"
+				app:layout_constraintEnd_toEndOf="parent"
+				app:layout_constraintStart_toStartOf="parent"
+				app:layout_constraintTop_toBottomOf="@id/search_address_layout"
+				tools:background="@color/white"
+				tools:context=".ui.passenger.ride.request.RequestRideFragment" />
+
+			<TextView
+				android:id="@+id/subtitle_ride_config"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_marginTop="16dp"
+				android:fontFamily="@font/poppins_medium"
+				android:text="@string/ride_config"
+				android:textAppearance="?textAppearanceHeadline5"
+				android:textColor="@color/dark_gray"
+				app:layout_constraintStart_toStartOf="parent"
+				app:layout_constraintTop_toBottomOf="@id/map_address_results" />
+
+			<TextView
+				android:id="@+id/text_wheels_type"
+				android:layout_width="0dp"
+				android:layout_height="wrap_content"
+				android:letterSpacing="0.01"
+				android:text="@string/wheels_type"
+				android:textAppearance="?textAppearanceBody1"
+				android:textColor="@color/dark_gray"
+				android:textSize="18sp"
+				app:layout_constraintBottom_toBottomOf="@id/wheels_type"
+				app:layout_constraintEnd_toStartOf="@id/wheels_type"
+				app:layout_constraintHorizontal_weight="0.4"
+				app:layout_constraintStart_toStartOf="parent"
+				app:layout_constraintTop_toTopOf="@id/wheels_type" />
+
+			<Spinner
+				android:id="@+id/wheels_type"
+				android:layout_width="0dp"
+				android:layout_height="40dp"
+				android:layout_marginStart="16dp"
+				android:background="@drawable/spinner_white_background"
+				android:contentDescription="@string/select_wheels_type"
+				android:elevation="2dp"
+				android:paddingStart="8dp"
+				app:layout_constraintEnd_toEndOf="parent"
+				app:layout_constraintHorizontal_weight="0.6"
+				app:layout_constraintStart_toEndOf="@id/text_wheels_type"
+				app:layout_constraintTop_toBottomOf="@id/subtitle_ride_config"
+				tools:ignore="TouchTargetSizeCheck" />
+
+			<TextView
+				android:id="@+id/text_vehicle"
+				android:layout_width="0dp"
+				android:layout_height="wrap_content"
+				android:letterSpacing="0.01"
+				android:text="@string/vehicle"
+				android:textAppearance="?textAppearanceBody1"
+				android:textColor="@color/dark_gray"
+				android:textSize="18sp"
+				app:layout_constraintBottom_toBottomOf="@id/vehicle"
+				app:layout_constraintEnd_toStartOf="@id/vehicle"
+				app:layout_constraintHorizontal_weight="0.4"
+				app:layout_constraintStart_toStartOf="parent"
+				app:layout_constraintTop_toTopOf="@id/vehicle" />
+
+			<Spinner
+				android:id="@+id/vehicle"
+				android:layout_width="0dp"
+				android:layout_height="40dp"
+				android:layout_marginStart="16dp"
+				android:layout_marginTop="12dp"
+				android:background="@drawable/spinner_white_background"
+				android:contentDescription="@string/select_transportation"
+				android:elevation="2dp"
+				android:paddingStart="8dp"
+				app:layout_constraintEnd_toEndOf="parent"
+				app:layout_constraintHorizontal_weight="0.6"
+				app:layout_constraintStart_toEndOf="@id/text_vehicle"
+				app:layout_constraintTop_toBottomOf="@id/wheels_type"
+				tools:ignore="TouchTargetSizeCheck" />
+
+			<Button
+				android:id="@+id/create"
+				style="@style/Widget.UWheels.ButtonPrimary.Medium"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginVertical="16dp"
+				android:elevation="0dp"
+				android:text="@string/create"
+				app:layout_constraintBottom_toBottomOf="parent"
+				app:layout_constraintEnd_toEndOf="parent"
+				app:layout_constraintStart_toStartOf="parent"
+				app:layout_constraintTop_toBottomOf="@id/vehicle"
+				app:layout_constraintVertical_bias="1" />
+
+		</androidx.constraintlayout.widget.ConstraintLayout>
+
+	</ScrollView>
+
+</LinearLayout>

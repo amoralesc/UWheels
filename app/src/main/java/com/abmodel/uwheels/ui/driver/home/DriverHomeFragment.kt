@@ -137,7 +137,9 @@ class DriverHomeFragment : Fragment() {
 				)
 			}
 			FromDriverHomeFragmentDestination.CREATE_RIDE -> {
-
+				findNavController().navigate(
+					R.id.action_driverHomeFragment_to_driverCreateRideFragment
+				)
 			}
 			FromDriverHomeFragmentDestination.SETTINGS -> {
 				Log.i(TAG, "Not implemented yet")

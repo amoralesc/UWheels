@@ -17,4 +17,5 @@ data class LoggedInUser(
 	var driverMode: Boolean,
 	val passengerRating: Rating,
 	val driverRating: Rating,
+	val vehicles: List<Vehicle>
 )

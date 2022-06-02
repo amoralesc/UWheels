@@ -8,6 +8,7 @@ import com.abmodel.uwheels.data.StoragePaths
 import com.abmodel.uwheels.data.model.LoggedInUser
 import com.abmodel.uwheels.data.model.Rating
 import com.abmodel.uwheels.data.model.UploadedFile
+import com.abmodel.uwheels.data.model.Vehicle
 import com.abmodel.uwheels.data.model.firebase.UserDocument
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.UserProfileChangeRequest
@@ -148,7 +149,8 @@ class FirebaseAuthDataSource {
 					it.value as Double,
 					it.count as Long
 				)
-			} as Rating
+			} as Rating,
+			vehicles = databaseUser.vehicles ?: emptyList()
 		)
 	}
 

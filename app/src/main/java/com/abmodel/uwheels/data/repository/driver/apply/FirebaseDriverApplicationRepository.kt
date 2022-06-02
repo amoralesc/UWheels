@@ -5,6 +5,7 @@ import com.abmodel.uwheels.data.FirestorePaths
 import com.abmodel.uwheels.data.StoragePaths
 import com.abmodel.uwheels.data.model.DriverApplication
 import com.abmodel.uwheels.data.model.UploadedFile
+import com.abmodel.uwheels.data.model.Vehicle
 import com.abmodel.uwheels.data.repository.auth.FirebaseAuthRepository
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
@@ -90,12 +91,22 @@ class FirebaseDriverApplicationRepository internal constructor(
 		userId: String,
 		driverApplication: DriverApplication
 	) {
+		val vehicle =
+			Vehicle(
+				make = driverApplication.vehicleDetail?.make ?: "",
+				model = driverApplication.vehicleDetail?.model ?: "",
+				year = driverApplication.vehicleDetail?.year ?: 0,
+				plate = driverApplication.vehicleDetail?.plate ?: "",
+				capacity = driverApplication.vehicleDetail?.capacity ?: 0,
+				color = driverApplication.vehicleDetail?.color ?: 0xFFFFFF,
+			)
+
 		mFirestore
 			.collection(FirestorePaths.USERS)
 			.document(userId)
 			.update(
-				FirestorePaths.DRIVER_APPLICATION,
-				driverApplication
+				FirestorePaths.DRIVER_APPLICATION, driverApplication,
+				"vehicles", listOf(vehicle)
 			)
 			.addOnSuccessListener {
 				Log.d(

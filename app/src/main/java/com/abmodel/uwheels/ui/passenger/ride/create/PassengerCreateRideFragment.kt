@@ -30,7 +30,6 @@ class PassengerCreateRideFragment : Fragment(), OnMapReadyCallback {
 
 	companion object {
 		const val TAG = "PassengerCreateRideFragment"
-
 	}
 
 	// Binding objects to access the view elements

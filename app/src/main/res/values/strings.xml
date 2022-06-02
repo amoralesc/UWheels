@@ -160,4 +160,5 @@
 	<string name="date_format">%s %s</string>
 	<string name="channel_name">UWheels</string>
 	<string name="channel_description">UWheels notification channel</string>
+	<string name="vehicle">Vehicle</string>
 </resources>

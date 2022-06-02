@@ -179,6 +179,9 @@
 		<action
 			android:id="@+id/action_driverHomeFragment_to_chatsFragment"
 			app:destination="@id/chatsFragment" />
+		<action
+			android:id="@+id/action_driverHomeFragment_to_driverCreateRideFragment"
+			app:destination="@id/driverCreateRideFragment" />
 	</fragment>
 	<fragment
 		android:id="@+id/profileDetailsFragment"
@@ -228,5 +231,14 @@
 		<action
 			android:id="@+id/action_hostedRideDetailFragment_to_hostedRideRequestsFragment"
 			app:destination="@id/hostedRideRequestsFragment" />
+	</fragment>
+	<fragment
+		android:id="@+id/driverCreateRideFragment"
+		android:name="com.abmodel.uwheels.ui.driver.ride.create.DriverCreateRideFragment"
+		android:label="fragment_driver_create_ride"
+		tools:layout="@layout/fragment_driver_create_ride" >
+		<action
+			android:id="@+id/action_driverCreateRideFragment_to_searchAddressFragment"
+			app:destination="@id/searchAddressFragment" />
 	</fragment>
 </navigation>

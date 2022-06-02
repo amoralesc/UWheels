@@ -196,6 +196,9 @@ class RequestRideFragment : Fragment(), OnMapReadyCallback {
 					WheelsType.WE_WHEELS
 				)
 			}
+			sharedViewModel.setSearchedRidesFilter(
+				WheelsType.CLASSIC_WHEELS
+			)
 
 			request.setOnClickListener {
 				onRequestPressed()

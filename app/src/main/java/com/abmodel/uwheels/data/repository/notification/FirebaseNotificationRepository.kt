@@ -1,6 +1,6 @@
 package com.abmodel.uwheels.data.repository.notification
 
-import android.app.Notification
+import android.util.Log
 import com.abmodel.uwheels.data.DatabasePaths
 import com.abmodel.uwheels.data.model.CustomNotification
 import com.google.firebase.database.DataSnapshot
@@ -49,6 +49,7 @@ class FirebaseNotificationRepository internal constructor(
 
 			override fun onDataChange(snapshot: DataSnapshot) {
 
+				Log.d(TAG, "Notification onDataChange: $snapshot")
 				val notification = snapshot.getValue(CustomNotification::class.java)
 				if (notification != null) {
 					ref.removeValue()
@@ -57,9 +58,11 @@ class FirebaseNotificationRepository internal constructor(
 			}
 		}
 
+		Log.d(TAG, "Start fetching Notifications for $userId")
 		ref.addValueEventListener(listener)
 
 		awaitClose {
+			Log.d(TAG, "Stop fetching Notifications for $userId")
 			mDatabase.getReference(DatabasePaths.NOTIFICATIONS)
 				.child(userId)
 				.removeEventListener(listener)
@@ -71,5 +74,7 @@ class FirebaseNotificationRepository internal constructor(
 			.child(notification.userId)
 			.setValue(notification)
 			.await()
+
+		Log.d(TAG, "Notification sent to ${notification.userId}")
 	}
 }
