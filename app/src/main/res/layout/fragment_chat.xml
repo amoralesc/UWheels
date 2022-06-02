@@ -1,106 +1,123 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:app="http://schemas.android.com/apk/res-auto"
-	xmlns:tools="http://schemas.android.com/tools"
-	android:layout_width="match_parent"
-	android:layout_height="match_parent"
-	android:orientation="vertical"
-	tools:context=".ui.shared.chat.ChatFragment">
+	xmlns:tools="http://schemas.android.com/tools">
 
-	<androidx.constraintlayout.widget.ConstraintLayout
-		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
-		android:background="@color/color_primary"
-		android:paddingVertical="4dp">
+	<data>
 
-		<ImageButton
-			android:id="@+id/back"
-			style="?attr/buttonBarNeutralButtonStyle"
-			android:layout_width="@dimen/min_size_clickable"
-			android:layout_height="@dimen/min_size_clickable"
-			android:contentDescription="@string/go_back"
-			android:padding="12dp"
-			android:scaleType="fitCenter"
-			app:layout_constraintBottom_toBottomOf="parent"
-			app:layout_constraintStart_toStartOf="parent"
-			app:layout_constraintTop_toTopOf="parent"
-			app:srcCompat="@drawable/ic_back"
-			app:tint="@color/white" />
-
-		<TextView
-			android:id="@+id/chat_name"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:layout_marginStart="8dp"
-			android:textAppearance="?textAppearanceHeadline5"
-			android:textColor="@color/white"
-			app:layout_constraintStart_toEndOf="@+id/back"
-			app:layout_constraintTop_toTopOf="parent"
-			tools:text="Classic Wheels" />
-
-		<ImageView
-			android:id="@+id/image_calendar"
-			android:layout_width="16dp"
-			android:layout_height="16dp"
-			app:layout_constraintBottom_toBottomOf="@id/chat_date"
-			app:layout_constraintStart_toStartOf="@id/chat_name"
-			app:layout_constraintTop_toTopOf="@id/chat_date"
-			app:srcCompat="@drawable/ic_calendar_padded"
-			app:tint="@color/white"
-			tools:ignore="ContentDescription" />
-
-		<TextView
-			android:id="@+id/chat_date"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:layout_marginStart="8dp"
-			android:textAppearance="?textAppearanceSubtitle1"
-			android:textColor="@color/white"
-			app:layout_constraintStart_toEndOf="@id/image_calendar"
-			app:layout_constraintTop_toBottomOf="@id/chat_name"
-			tools:text="Tomorrow, 7:00 a.m." />
-
-	</androidx.constraintlayout.widget.ConstraintLayout>
-
-	<androidx.recyclerview.widget.RecyclerView
-		android:id="@+id/messages"
-		android:layout_width="match_parent"
-		android:layout_height="0dp"
-		android:layout_weight="1"
-		android:background="@color/color_secondary"
-		android:clipToPadding="false"
-		android:paddingVertical="8dp"
-		android:scrollbars="vertical" />
+		<variable
+			name="dataViewModel"
+			type="com.abmodel.uwheels.ui.shared.data.SharedViewModel" />
+	</data>
 
 	<LinearLayout
 		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
-		android:background="?android:attr/windowBackground"
-		android:elevation="4dp"
-		android:minHeight="?attr/actionBarSize">
+		android:layout_height="match_parent"
+		android:orientation="vertical"
+		tools:context=".ui.shared.chat.ChatFragment">
 
-		<EditText
-			android:id="@+id/input"
-			android:layout_width="0dp"
-			android:layout_height="match_parent"
-			android:layout_marginStart="8dp"
+		<androidx.constraintlayout.widget.ConstraintLayout
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:background="@color/color_primary"
+			android:paddingVertical="4dp">
+
+			<ImageButton
+				android:id="@+id/back"
+				style="?attr/buttonBarNeutralButtonStyle"
+				android:layout_width="@dimen/min_size_clickable"
+				android:layout_height="@dimen/min_size_clickable"
+				android:layout_marginStart="16dp"
+				android:contentDescription="@string/go_back"
+				android:padding="12dp"
+				android:scaleType="fitCenter"
+				app:layout_constraintBottom_toBottomOf="parent"
+				app:layout_constraintStart_toStartOf="parent"
+				app:layout_constraintTop_toTopOf="parent"
+				app:srcCompat="@drawable/ic_back"
+				app:tint="@color/white" />
+
+			<TextView
+				android:id="@+id/chat_name"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_marginStart="8dp"
+				android:textAppearance="?textAppearanceHeadline5"
+				android:textColor="@color/white"
+				app:layout_constraintStart_toEndOf="@+id/back"
+				app:layout_constraintTop_toTopOf="parent"
+				tools:text="Classic Wheels" />
+
+			<ImageView
+				android:id="@+id/image_calendar"
+				android:layout_width="16dp"
+				android:layout_height="16dp"
+				app:layout_constraintBottom_toBottomOf="@id/chat_date"
+				app:layout_constraintStart_toStartOf="@id/chat_name"
+				app:layout_constraintTop_toTopOf="@id/chat_date"
+				app:srcCompat="@drawable/ic_calendar_padded"
+				app:tint="@color/white"
+				tools:ignore="ContentDescription" />
+
+			<TextView
+				android:id="@+id/chat_date"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_marginStart="8dp"
+				android:textAppearance="?textAppearanceSubtitle1"
+				android:textColor="@color/white"
+				app:layout_constraintStart_toEndOf="@id/image_calendar"
+				app:layout_constraintTop_toBottomOf="@id/chat_name"
+				tools:text="Tomorrow, 7:00 a.m." />
+
+		</androidx.constraintlayout.widget.ConstraintLayout>
+
+		<androidx.recyclerview.widget.RecyclerView
+			android:id="@+id/messages"
+			android:layout_width="match_parent"
+			android:layout_height="0dp"
 			android:layout_weight="1"
-			android:hint="@string/hint_input"
-			android:imeOptions="actionSend"
-			android:importantForAutofill="no"
-			android:inputType="textCapSentences"
-			android:minHeight="48dp"
-			tools:ignore="TextContrastCheck" />
+			android:background="@color/color_secondary"
+			android:clipChildren="false"
+			android:clipToPadding="false"
+			android:orientation="vertical"
+			android:paddingHorizontal="12dp"
+			android:paddingVertical="8dp"
+			android:scrollbars="vertical"
+			app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+			app:messageList="@{dataViewModel.messages}"
+			tools:listitem="@layout/message_list_item" />
 
-		<ImageButton
-			android:id="@+id/send"
-			style="?attr/buttonBarNeutralButtonStyle"
-			android:layout_width="60dp"
-			android:layout_height="match_parent"
-			android:contentDescription="@string/send"
-			app:srcCompat="@drawable/ic_send_padded"
-			app:tint="@color/color_primary" />
+		<LinearLayout
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:background="?android:attr/windowBackground"
+			android:elevation="4dp"
+			android:minHeight="?attr/actionBarSize">
+
+			<EditText
+				android:id="@+id/input"
+				android:layout_width="0dp"
+				android:layout_height="match_parent"
+				android:layout_marginStart="8dp"
+				android:layout_weight="1"
+				android:hint="@string/hint_input"
+				android:imeOptions="actionSend"
+				android:importantForAutofill="no"
+				android:inputType="textCapSentences"
+				android:minHeight="48dp"
+				tools:ignore="TextContrastCheck" />
+
+			<ImageButton
+				android:id="@+id/send"
+				style="?attr/buttonBarNeutralButtonStyle"
+				android:layout_width="60dp"
+				android:layout_height="match_parent"
+				android:contentDescription="@string/send"
+				app:srcCompat="@drawable/ic_send_padded"
+				app:tint="@color/color_primary" />
+
+		</LinearLayout>
 
 	</LinearLayout>
-
-</LinearLayout>
+</layout>

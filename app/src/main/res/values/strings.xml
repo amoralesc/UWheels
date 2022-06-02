@@ -157,4 +157,5 @@
 	<string name="view_requests">View Requests</string>
 	<string name="passengers">Passengers</string>
 	<string name="rating">%.1f</string>
+	<string name="date_format">%s %s</string>
 </resources>

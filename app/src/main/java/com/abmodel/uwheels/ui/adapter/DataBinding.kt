@@ -22,6 +22,15 @@ fun bindAddressRecyclerView(
 	adapter.submitList(data)
 }
 
+@BindingAdapter("messageList")
+fun bindMessageRecyclerView(
+	recyclerView: RecyclerView,
+	data: List<Message>?
+) {
+	val adapter = recyclerView.adapter as MessageItemAdapter
+	adapter.submitList(data)
+}
+
 @BindingAdapter("rideUserList")
 fun bindRideUserRecyclerView(
 	recyclerView: RecyclerView,

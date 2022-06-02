@@ -98,28 +98,34 @@ class FirebaseChatRepository internal constructor(
 	@OptIn(ExperimentalCoroutinesApi::class)
 	override suspend fun fetchChat(chatId: String): Flow<Result<List<Message>>> = callbackFlow {
 
-		mDatabase
-			.getReference(DatabasePaths.CHATS)
-			.child(chatId)
-			.child(DatabasePaths.MESSAGES)
-			.addValueEventListener(object : ValueEventListener {
-				override fun onCancelled(error: DatabaseError) {
-					trySend(Result.failure(error.toException()))
-				}
-
-				override fun onDataChange(snapshot: DataSnapshot) {
-					val messages = snapshot.children.map {
-						val data = snapshot.value as Map<*, *>
-						Message(
-							uid = data["uid"] as String,
-							userName = data["userName"] as String,
-							message = data["message"] as String,
-							date = data["date"] as String
-						)
+		val subscription =
+			mDatabase
+				.getReference(DatabasePaths.CHATS)
+				.child(chatId)
+				.child(DatabasePaths.MESSAGES)
+				.addValueEventListener(object : ValueEventListener {
+					override fun onCancelled(error: DatabaseError) {
+						trySend(Result.failure(error.toException()))
 					}
-					trySend(Result.success(messages))
-				}
-			})
+
+					override fun onDataChange(snapshot: DataSnapshot) {
+						val messages = snapshot.children.map {
+							Log.d(TAG, "Message: ${it.value}")
+							val data = it.value as Map<*, *>
+							Message(
+								uid = data["uid"] as String,
+								name = data["name"] as String,
+								message = data["message"] as String,
+								date = data["date"] as String
+							)
+						}
+						trySend(Result.success(messages))
+					}
+				})
+
+		awaitClose {
+			Log.d(FirebaseRidesRepository.TAG, "Closing user chats flow")
+		}
 	}
 
 	override suspend fun sendMessage(chatId: String, message: Message) {

@@ -5,6 +5,7 @@ import androidx.lifecycle.*
 import com.abmodel.uwheels.R
 import com.abmodel.uwheels.data.model.*
 import com.abmodel.uwheels.data.repository.auth.FirebaseAuthRepository
+import com.abmodel.uwheels.data.repository.chat.FirebaseChatRepository
 import com.abmodel.uwheels.data.repository.ride.FirebaseRidesRepository
 import com.abmodel.uwheels.util.difference
 import com.abmodel.uwheels.util.distanceTo
@@ -15,7 +16,6 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.cancellable
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
-import java.text.Normalizer
 
 class SharedViewModel : ViewModel() {
 
@@ -25,6 +25,7 @@ class SharedViewModel : ViewModel() {
 
 	private val authRepository = FirebaseAuthRepository.getInstance()
 	private val ridesRepository = FirebaseRidesRepository.getInstance()
+	private val chatRepository = FirebaseChatRepository.getInstance()
 
 	// TODO: TOO MUCH BOILERPLATE CODE!!!
 
@@ -155,8 +156,31 @@ class SharedViewModel : ViewModel() {
 	val requestResult: LiveData<FormResult>
 		get() = _requestResult
 
+	private val _chats = MutableLiveData<List<Chat>>(emptyList())
+	val chats: LiveData<List<Chat>>
+		get() = _chats
+
+	private val _selectedChatId: MutableLiveData<String> = MutableLiveData()
+	val selectedChatId: LiveData<String>
+		get() = _selectedChatId
+
+	val selectedChat: LiveData<Chat> =
+		Transformations.switchMap(chats) { chats ->
+			Transformations.switchMap(_selectedChatId) { chatId ->
+				MutableLiveData(chats.find { chat ->
+					chat.id == chatId
+				})
+			}
+		}
+
+	private val _messages = MutableLiveData<List<Message>>(emptyList())
+	val messages: LiveData<List<Message>>
+		get() = _messages
+
 	private var fetchUserRidesJob: Job? = null
 	private var fetchSearchedRidesJob: Job? = null
+	private var fetchChatsJob: Job? = null
+	private var fetchChatJob: Job? = null
 
 	private var _query: SearchRideQuery? = null
 	val query: SearchRideQuery?
@@ -170,6 +194,7 @@ class SharedViewModel : ViewModel() {
 		} else {
 			fetchUserRides()
 		}
+		startChatsUpdates()
 
 		restartSearch()
 	}
@@ -188,6 +213,10 @@ class SharedViewModel : ViewModel() {
 
 	fun selectSearchedRide(rideId: String) {
 		_selectedSearchedRideId.value = rideId
+	}
+
+	fun selectChat(chatId: String) {
+		_selectedChatId.value = chatId
 	}
 
 	fun acceptRideRequest(request: RideRequest) {
@@ -312,5 +341,73 @@ class SharedViewModel : ViewModel() {
 		_searchedRides.postValue(emptyList())
 		_selectedSearchedRideId.postValue("")
 		_requestResult.postValue(FormResult())
+	}
+
+	fun startChatsUpdates() {
+		fetchChatsJob?.cancel()
+		fetchChats(authRepository.getLoggedInUser().uid)
+	}
+
+	fun stopChatsUpdates() {
+		fetchChatsJob?.cancel()
+	}
+
+	private fun fetchChats(userId: String) {
+		fetchChatsJob =
+			viewModelScope.launch(Dispatchers.IO) {
+				chatRepository.fetchChats(userId).cancellable().collect { result ->
+
+					if (result.isSuccess) {
+						_chats.postValue(result.getOrNull())
+						Log.d(TAG, "Chats: ${result.getOrNull()}")
+					} else {
+						Log.e(TAG, "Error: ${result.exceptionOrNull()}")
+					}
+				}
+			}
+	}
+
+	fun startChatUpdates(chatId: String) {
+		_messages.postValue(emptyList())
+		fetchChat(chatId)
+	}
+
+	fun stopChatUpdates() {
+		fetchChatJob?.cancel()
+	}
+
+	private fun fetchChat(chatId: String) {
+		fetchChatJob =
+			viewModelScope.launch(Dispatchers.IO) {
+				chatRepository.fetchChat(chatId).cancellable().collect { result ->
+
+					if (result.isSuccess) {
+						_messages.postValue(result.getOrNull())
+					} else {
+						Log.e(TAG, "Error: ${result.exceptionOrNull()}")
+					}
+				}
+			}
+	}
+
+	fun sendMessage(text: String, date: String) {
+
+		val name = authRepository.getLoggedInUser().let {
+			it.name + " " + it.lastName
+		}
+
+		viewModelScope.launch(Dispatchers.IO) {
+			val message = Message(
+				uid = authRepository.getLoggedInUser().uid,
+				name = name,
+				message = text,
+				date = date
+			)
+
+			chatRepository.sendMessage(
+				chatId = _selectedChatId.value!!,
+				message = message
+			)
+		}
 	}
 }

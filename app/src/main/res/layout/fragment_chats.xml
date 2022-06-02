@@ -1,44 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:app="http://schemas.android.com/apk/res-auto"
-	xmlns:tools="http://schemas.android.com/tools"
-	android:layout_width="match_parent"
-	android:layout_height="match_parent"
-	android:background="?colorSecondary"
-	tools:context=".ui.shared.chat.ChatsFragment">
+	xmlns:tools="http://schemas.android.com/tools">
 
-	<com.abmodel.uwheels.BackButton
-		android:id="@+id/back"
-		style="@style/Widget.UWheels.Button.BackButton"
-		android:layout_marginStart="24dp"
-		android:layout_marginTop="24dp"
-		android:elevation="4dp"
-		android:paddingHorizontal="@dimen/back_button_padding"
-		app:layout_constraintStart_toStartOf="parent"
-		app:layout_constraintTop_toTopOf="parent"
-		tools:ignore="SpeakableTextPresentCheck" />
+	<data>
 
-	<TextView
-		android:id="@+id/text_title"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:fontFamily="@font/poppins_medium"
-		android:text="@string/chats"
-		android:textAppearance="?textAppearanceHeadline4"
-		android:textColor="@color/dark_gray"
-		app:layout_constraintStart_toStartOf="@id/back"
-		app:layout_constraintTop_toBottomOf="@id/back" />
+		<variable
+			name="dataViewModel"
+			type="com.abmodel.uwheels.ui.shared.data.SharedViewModel" />
+	</data>
 
-	<androidx.recyclerview.widget.RecyclerView
-		android:id="@+id/chats"
+	<androidx.constraintlayout.widget.ConstraintLayout
 		android:layout_width="match_parent"
-		android:layout_height="0dp"
-		android:orientation="vertical"
-		app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-		app:layout_constraintBottom_toBottomOf="parent"
-		app:layout_constraintEnd_toEndOf="parent"
-		app:layout_constraintStart_toStartOf="parent"
-		app:layout_constraintTop_toBottomOf="@id/text_title"
-		tools:listitem="@layout/chat_list_item" />
+		android:layout_height="match_parent"
+		android:background="?colorSecondary"
+		tools:context=".ui.shared.chat.ChatsFragment">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+		<com.abmodel.uwheels.BackButton
+			android:id="@+id/back"
+			style="@style/Widget.UWheels.Button.BackButton"
+			android:layout_marginStart="24dp"
+			android:layout_marginTop="24dp"
+			android:elevation="4dp"
+			android:paddingHorizontal="@dimen/back_button_padding"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toTopOf="parent"
+			tools:ignore="SpeakableTextPresentCheck" />
+
+		<TextView
+			android:id="@+id/text_title"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:fontFamily="@font/poppins_medium"
+			android:text="@string/chats"
+			android:textAppearance="?textAppearanceHeadline4"
+			android:textColor="@color/dark_gray"
+			app:layout_constraintStart_toStartOf="@id/back"
+			app:layout_constraintTop_toBottomOf="@id/back" />
+
+		<androidx.recyclerview.widget.RecyclerView
+			android:id="@+id/chats"
+			android:layout_width="match_parent"
+			android:layout_height="0dp"
+			android:orientation="vertical"
+			app:chatList="@{dataViewModel.chats}"
+			app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+			app:layout_constraintBottom_toBottomOf="parent"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toBottomOf="@id/text_title"
+			tools:listitem="@layout/chat_list_item" />
+
+	</androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
