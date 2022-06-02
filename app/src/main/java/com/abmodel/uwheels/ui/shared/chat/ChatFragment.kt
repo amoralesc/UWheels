@@ -12,6 +12,7 @@ import com.abmodel.uwheels.data.repository.auth.FirebaseAuthRepository
 import com.abmodel.uwheels.databinding.FragmentChatBinding
 import com.abmodel.uwheels.ui.adapter.MessageItemAdapter
 import com.abmodel.uwheels.ui.shared.data.SharedViewModel
+import com.abmodel.uwheels.ui.shared.data.SharedViewModelFactory
 import com.abmodel.uwheels.util.formatDateFromMillis
 import com.abmodel.uwheels.util.formatTime
 import com.abmodel.uwheels.util.getCurrentDateAsCustomDate
@@ -22,7 +23,9 @@ class ChatFragment : Fragment() {
 	private var _binding: FragmentChatBinding? = null
 	private val binding get() = _binding!!
 
-	private val sharedViewModel: SharedViewModel by activityViewModels()
+	private val sharedViewModel: SharedViewModel by activityViewModels {
+		SharedViewModelFactory(requireActivity().application)
+	}
 
 	override fun onCreateView(
 		inflater: LayoutInflater, container: ViewGroup?,

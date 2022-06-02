@@ -4,6 +4,7 @@ import android.util.Log
 import com.abmodel.uwheels.data.DatabasePaths
 import com.abmodel.uwheels.data.FirestorePaths
 import com.abmodel.uwheels.data.model.*
+import com.abmodel.uwheels.data.repository.notification.FirebaseNotificationRepository
 import com.abmodel.uwheels.util.compareDates
 import com.abmodel.uwheels.util.difference
 import com.abmodel.uwheels.util.distanceTo
@@ -91,7 +92,18 @@ class FirebaseRidesRepository internal constructor(
 			)
 			.await()
 
-		// TODO: NOTIFY SUBSCRIBERS
+		val ride = getRide(rideId)!!
+			.toObject(Ride::class.java)!!
+
+		ride.subscribers.forEach {
+			FirebaseNotificationRepository.getInstance().sendNotification(
+				CustomNotification(
+					it,
+					"The ride has started",
+					"${ride.host.name} has started the ride",
+				)
+			)
+		}
 	}
 
 	override suspend fun finishRide(rideId: String, finishedDate: CustomDate?) {
@@ -291,17 +303,29 @@ class FirebaseRidesRepository internal constructor(
 			.set(ride)
 			.await()
 
-		// TODO: NOTIFY HOST
+		FirebaseNotificationRepository.getInstance().sendNotification(
+			CustomNotification(
+				ride.host.uid,
+				"New request for ride",
+				"${request.user.name} has requested to join your ride"
+			)
+		)
 	}
 
 	override suspend fun acceptRideRequest(rideId: String, request: RideRequest) {
 		val ride = getRide(rideId)!!
 			.toObject(Ride::class.java)!!
 
+		FirebaseNotificationRepository.getInstance().sendNotification(
+			CustomNotification(
+				request.user.uid,
+				"Ride request accepted",
+				"${ride.host.name} has accepted your request to join their ride"
+			)
+		)
+
 		ride.requests.removeIf { it.user.uid == request.user.uid }
 		addPassengerToRide(ride, request)
-
-		// TODO: NOTIFY USER
 	}
 
 	override suspend fun rejectRideRequest(rideId: String, request: RideRequest) {

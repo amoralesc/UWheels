@@ -14,6 +14,7 @@ import com.abmodel.uwheels.R
 import com.abmodel.uwheels.data.repository.auth.FirebaseAuthRepository
 import com.abmodel.uwheels.databinding.FragmentDriverHomeBinding
 import com.abmodel.uwheels.ui.shared.data.SharedViewModel
+import com.abmodel.uwheels.ui.shared.data.SharedViewModelFactory
 import com.bumptech.glide.Glide
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -38,7 +39,9 @@ class DriverHomeFragment : Fragment() {
 	private var _binding: FragmentDriverHomeBinding? = null
 	private val binding get() = _binding!!
 
-	private val sharedViewModel: SharedViewModel by activityViewModels()
+	private val sharedViewModel: SharedViewModel by activityViewModels {
+		SharedViewModelFactory(requireActivity().application)
+	}
 
 	override fun onCreateView(
 		inflater: LayoutInflater, container: ViewGroup?,
@@ -161,7 +164,7 @@ class DriverHomeFragment : Fragment() {
 
 	private fun goToPassengerHome(setDriverModeOff: Boolean = true) {
 		if (setDriverModeOff) {
-			sharedViewModel.driverModeChanged(false)
+			sharedViewModel.restartUserRidesUpdates(false)
 			lifecycleScope.launch(Dispatchers.Main) {
 				FirebaseAuthRepository.getInstance().setDriverMode(false)
 			}

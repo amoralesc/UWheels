@@ -18,6 +18,7 @@ import com.abmodel.uwheels.R
 import com.abmodel.uwheels.data.repository.auth.FirebaseAuthRepository
 import com.abmodel.uwheels.databinding.FragmentPassengerHomeBinding
 import com.abmodel.uwheels.ui.shared.data.SharedViewModel
+import com.abmodel.uwheels.ui.shared.data.SharedViewModelFactory
 import com.abmodel.uwheels.ui.shared.sensor.ShakeDetector
 import com.abmodel.uwheels.util.DEBUG_USE_SENSORS
 import com.bumptech.glide.Glide
@@ -68,7 +69,9 @@ class PassengerHomeFragment : Fragment() {
 		return shakeDetector
 	}
 
-	private val sharedViewModel: SharedViewModel by activityViewModels()
+	private val sharedViewModel: SharedViewModel by activityViewModels {
+		SharedViewModelFactory(requireActivity().application)
+	}
 
 	override fun onCreateView(
 		inflater: LayoutInflater,
@@ -234,7 +237,7 @@ class PassengerHomeFragment : Fragment() {
 
 	private fun goToDriverHome(setDriverModeOn: Boolean = true) {
 		if (setDriverModeOn) {
-			sharedViewModel.driverModeChanged(true)
+			sharedViewModel.restartUserRidesUpdates(true)
 			lifecycleScope.launch(Dispatchers.Main) {
 				FirebaseAuthRepository.getInstance().setDriverMode(true)
 			}

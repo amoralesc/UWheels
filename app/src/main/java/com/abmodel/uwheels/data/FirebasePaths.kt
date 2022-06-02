@@ -13,6 +13,7 @@ object StoragePaths {
 }
 
 object DatabasePaths {
+	const val NOTIFICATIONS = "notifications"
 	const val MESSAGES = "messages"
 	const val CHATS = "chats"
 }

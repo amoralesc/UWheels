@@ -8,10 +8,13 @@ import android.view.inputmethod.EditorInfo
 import android.widget.Toast
 import androidx.annotation.StringRes
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.abmodel.uwheels.R
 import com.abmodel.uwheels.databinding.FragmentLoginBinding
+import com.abmodel.uwheels.ui.shared.data.SharedViewModel
+import com.abmodel.uwheels.ui.shared.data.SharedViewModelFactory
 
 class LoginFragment : Fragment() {
 
@@ -24,6 +27,9 @@ class LoginFragment : Fragment() {
 	private val binding get() = _binding!!
 
 	private val loginViewModel: LoginViewModel by viewModels()
+	private val sharedViewModel: SharedViewModel by activityViewModels {
+		SharedViewModelFactory(requireActivity().application)
+	}
 
 	override fun onCreateView(
 		inflater: LayoutInflater,
@@ -68,7 +74,7 @@ class LoginFragment : Fragment() {
 				showLoginFailed(it)
 			}
 			if (loginResult.success) {
-				goToHomeScreen()
+				loginIsSuccessful()
 			}
 		}
 	}
@@ -77,7 +83,10 @@ class LoginFragment : Fragment() {
 		Toast.makeText(requireContext(), errorString, Toast.LENGTH_LONG).show()
 	}
 
-	private fun goToHomeScreen() {
+	private fun loginIsSuccessful() {
+		sharedViewModel.startChatsUpdates()
+		sharedViewModel.startNotificationsUpdates()
+		sharedViewModel.restartUserRidesUpdates()
 		findNavController().navigate(
 			R.id.action_loginFragment_to_passengerHomeFragment
 		)

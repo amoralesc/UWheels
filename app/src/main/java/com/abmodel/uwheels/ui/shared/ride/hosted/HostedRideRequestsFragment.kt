@@ -11,6 +11,7 @@ import com.abmodel.uwheels.R
 import com.abmodel.uwheels.databinding.FragmentHostedRideRequestsBinding
 import com.abmodel.uwheels.ui.shared.data.SharedViewModel
 import com.abmodel.uwheels.ui.adapter.RideRequestItemAdapter
+import com.abmodel.uwheels.ui.shared.data.SharedViewModelFactory
 import com.abmodel.uwheels.util.formatDateFromMillis
 import com.abmodel.uwheels.util.formatTime
 
@@ -24,7 +25,9 @@ class HostedRideRequestsFragment : Fragment() {
 	private var _binding: FragmentHostedRideRequestsBinding? = null
 	private val binding get() = _binding!!
 
-	private val sharedViewModel: SharedViewModel by activityViewModels()
+	private val sharedViewModel: SharedViewModel by activityViewModels {
+		SharedViewModelFactory(requireActivity().application)
+	}
 
 	override fun onCreateView(
 		inflater: LayoutInflater,

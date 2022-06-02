@@ -5,10 +5,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.abmodel.uwheels.R
 import com.abmodel.uwheels.data.repository.auth.FirebaseAuthRepository
 import com.abmodel.uwheels.databinding.FragmentProfileDetailsBinding
+import com.abmodel.uwheels.ui.shared.data.SharedViewModel
+import com.abmodel.uwheels.ui.shared.data.SharedViewModelFactory
 import com.bumptech.glide.Glide
 
 class ProfileDetailsFragment : Fragment() {
@@ -16,6 +19,10 @@ class ProfileDetailsFragment : Fragment() {
 	// Binding objects to access the view elements
 	private var _binding: FragmentProfileDetailsBinding? = null
 	private val binding get() = _binding!!
+
+	private val sharedViewModel: SharedViewModel by activityViewModels {
+		SharedViewModelFactory(requireActivity().application)
+	}
 
 	override fun onCreateView(
 		inflater: LayoutInflater, container: ViewGroup?,
@@ -68,6 +75,10 @@ class ProfileDetailsFragment : Fragment() {
 	}
 
 	private fun onLogoutPressed() {
+		sharedViewModel.stopChatsUpdates()
+		sharedViewModel.stopNotificationsUpdates()
+		sharedViewModel.stopUserRidesUpdates()
+
 		FirebaseAuthRepository.getInstance().logout()
 		findNavController().navigate(
 			R.id.action_profileDetailsFragment_to_loginFragment

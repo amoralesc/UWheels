@@ -158,4 +158,6 @@
 	<string name="passengers">Passengers</string>
 	<string name="rating">%.1f</string>
 	<string name="date_format">%s %s</string>
+	<string name="channel_name">UWheels</string>
+	<string name="channel_description">UWheels notification channel</string>
 </resources>

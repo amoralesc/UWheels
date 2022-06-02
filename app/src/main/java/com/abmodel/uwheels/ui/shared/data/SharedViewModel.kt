@@ -1,23 +1,26 @@
 package com.abmodel.uwheels.ui.shared.data
 
+import android.app.Application
+import android.os.SystemClock
 import android.util.Log
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
 import androidx.lifecycle.*
 import com.abmodel.uwheels.R
 import com.abmodel.uwheels.data.model.*
 import com.abmodel.uwheels.data.repository.auth.FirebaseAuthRepository
 import com.abmodel.uwheels.data.repository.chat.FirebaseChatRepository
+import com.abmodel.uwheels.data.repository.notification.FirebaseNotificationRepository
 import com.abmodel.uwheels.data.repository.ride.FirebaseRidesRepository
-import com.abmodel.uwheels.util.difference
-import com.abmodel.uwheels.util.distanceTo
-import com.abmodel.uwheels.util.getCurrentDateAsCustomDate
-import com.abmodel.uwheels.util.toLatLng
+import com.abmodel.uwheels.util.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.cancellable
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
-class SharedViewModel : ViewModel() {
+
+class SharedViewModel(application: Application) : AndroidViewModel(application) {
 
 	companion object {
 		const val TAG = "SharedViewModel"
@@ -26,6 +29,7 @@ class SharedViewModel : ViewModel() {
 	private val authRepository = FirebaseAuthRepository.getInstance()
 	private val ridesRepository = FirebaseRidesRepository.getInstance()
 	private val chatRepository = FirebaseChatRepository.getInstance()
+	private val notificationRepository = FirebaseNotificationRepository.getInstance()
 
 	// TODO: TOO MUCH BOILERPLATE CODE!!!
 
@@ -181,6 +185,7 @@ class SharedViewModel : ViewModel() {
 	private var fetchSearchedRidesJob: Job? = null
 	private var fetchChatsJob: Job? = null
 	private var fetchChatJob: Job? = null
+	private var fetchNotificationsJob: Job? = null
 
 	private var _query: SearchRideQuery? = null
 	val query: SearchRideQuery?
@@ -189,13 +194,9 @@ class SharedViewModel : ViewModel() {
 	init {
 		Log.d(TAG, "SharedViewModel initialized")
 
-		if (authRepository.isDriverModeOn()) {
-			fetchUserRides(true, WheelsType.CLASSIC_WHEELS)
-		} else {
-			fetchUserRides()
-		}
+		restartUserRidesUpdates()
 		startChatsUpdates()
-
+		startNotificationsUpdates()
 		restartSearch()
 	}
 
@@ -228,15 +229,6 @@ class SharedViewModel : ViewModel() {
 	fun rejectRideRequest(request: RideRequest) {
 		viewModelScope.launch(Dispatchers.IO) {
 			ridesRepository.rejectRideRequest(selectedUserRideId.value!!, request)
-		}
-	}
-
-	fun driverModeChanged(driverMode: Boolean) {
-		fetchUserRidesJob?.cancel()
-		if (driverMode) {
-			fetchUserRides(true, WheelsType.CLASSIC_WHEELS)
-		} else {
-			fetchUserRides()
 		}
 	}
 
@@ -281,6 +273,28 @@ class SharedViewModel : ViewModel() {
 			_selectedSearchedRideId.postValue(null)
 			selectedSearchedRide.postValue(null)
 		}
+	}
+
+	fun restartUserRidesUpdates(driverMode: Boolean? = null) {
+		fetchUserRidesJob?.cancel()
+
+		if (driverMode != null) {
+			if (driverMode) {
+				fetchUserRides(true, WheelsType.CLASSIC_WHEELS)
+			} else {
+				fetchUserRides()
+			}
+		} else {
+			if (authRepository.isDriverModeOn()) {
+				fetchUserRides(true, WheelsType.CLASSIC_WHEELS)
+			} else {
+				fetchUserRides()
+			}
+		}
+	}
+
+	fun stopUserRidesUpdates() {
+		fetchUserRidesJob?.cancel()
 	}
 
 	private fun fetchUserRides(
@@ -336,11 +350,11 @@ class SharedViewModel : ViewModel() {
 	}
 
 	fun restartSearch() {
+		_requestResult.value = FormResult()
 		_query = null
 		fetchSearchedRidesJob?.cancel()
 		_searchedRides.postValue(emptyList())
 		_selectedSearchedRideId.postValue("")
-		_requestResult.postValue(FormResult())
 	}
 
 	fun startChatsUpdates() {
@@ -409,5 +423,60 @@ class SharedViewModel : ViewModel() {
 				message = message
 			)
 		}
+	}
+
+	fun startNotificationsUpdates() {
+		fetchNotificationsJob?.cancel()
+		fetchNotifications(
+			authRepository.getLoggedInUser().uid
+		)
+	}
+
+	fun stopNotificationsUpdates() {
+		fetchNotificationsJob?.cancel()
+	}
+
+	private fun fetchNotifications(userId: String) {
+
+		fetchNotificationsJob =
+			viewModelScope.launch(Dispatchers.IO) {
+				notificationRepository.fetchNotifications(userId).cancellable().collect { result ->
+
+					if (result.isSuccess) {
+						showNotification(result.getOrNull()!!)
+					} else {
+						Log.e(TAG, "Error: ${result.exceptionOrNull()}")
+					}
+				}
+			}
+	}
+
+	private fun showNotification(notification: CustomNotification) {
+
+		val oneTimeID = SystemClock.uptimeMillis().toInt()
+
+		val builder = NotificationCompat.Builder(getApplication(), CHANNEL_ID)
+			.setContentTitle(notification.title)
+			.setContentText(notification.content)
+			.setSmallIcon(R.drawable.ic_launcher_foreground)
+			//.setPriority(NotificationCompat.PRIORITY_DEFAULT)
+
+		with (NotificationManagerCompat.from(getApplication())) {
+			// notificationId is a unique int for each notification that you must define
+			notify(oneTimeID, builder.build())
+		}
+	}
+}
+
+@Suppress("UNCHECKED_CAST")
+class SharedViewModelFactory(
+	private val app: Application,
+) : ViewModelProvider.AndroidViewModelFactory(app) {
+
+	override fun <T : ViewModel> create(modelClass: Class<T>): T {
+		if (modelClass.isAssignableFrom(SharedViewModel::class.java)) {
+			return SharedViewModel(app) as T
+		}
+		throw IllegalArgumentException("Unknown ViewModel class")
 	}
 }

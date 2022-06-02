@@ -12,6 +12,7 @@ import com.abmodel.uwheels.data.model.Chat
 import com.abmodel.uwheels.databinding.FragmentChatsBinding
 import com.abmodel.uwheels.ui.adapter.ChatItemAdapter
 import com.abmodel.uwheels.ui.shared.data.SharedViewModel
+import com.abmodel.uwheels.ui.shared.data.SharedViewModelFactory
 
 class ChatsFragment : Fragment() {
 
@@ -19,7 +20,9 @@ class ChatsFragment : Fragment() {
 	private var _binding: FragmentChatsBinding? = null
 	private val binding get() = _binding!!
 
-	private val sharedViewModel: SharedViewModel by activityViewModels()
+	private val sharedViewModel: SharedViewModel by activityViewModels {
+		SharedViewModelFactory(requireActivity().application)
+	}
 
 	override fun onCreateView(
 		inflater: LayoutInflater, container: ViewGroup?,

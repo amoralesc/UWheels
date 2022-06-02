@@ -11,6 +11,7 @@ import com.abmodel.uwheels.databinding.FragmentRidesBinding
 import com.abmodel.uwheels.ui.adapter.RideItemAdapter
 import com.abmodel.uwheels.ui.shared.data.UserRidesFilter
 import com.abmodel.uwheels.ui.shared.data.SharedViewModel
+import com.abmodel.uwheels.ui.shared.data.SharedViewModelFactory
 
 class RidesFragment : Fragment() {
 
@@ -22,7 +23,9 @@ class RidesFragment : Fragment() {
 	private var _binding: FragmentRidesBinding? = null
 	private val binding get() = _binding!!
 
-	private val sharedViewModel: SharedViewModel by activityViewModels()
+	private val sharedViewModel: SharedViewModel by activityViewModels {
+		SharedViewModelFactory(requireActivity().application)
+	}
 
 	override fun onCreateView(
 		inflater: LayoutInflater,

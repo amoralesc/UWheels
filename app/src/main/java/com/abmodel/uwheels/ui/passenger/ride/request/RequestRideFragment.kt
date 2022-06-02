@@ -29,6 +29,7 @@ import com.abmodel.uwheels.data.model.*
 import com.abmodel.uwheels.databinding.FragmentRequestRideBinding
 import com.abmodel.uwheels.ui.adapter.SearchedRideItemAdapter
 import com.abmodel.uwheels.ui.shared.data.SharedViewModel
+import com.abmodel.uwheels.ui.shared.data.SharedViewModelFactory
 import com.abmodel.uwheels.ui.shared.search.SearchAddressFragment
 import com.abmodel.uwheels.util.*
 import com.google.android.gms.common.api.ResolvableApiException
@@ -53,7 +54,9 @@ class RequestRideFragment : Fragment(), OnMapReadyCallback {
 	private val binding get() = _binding!!
 
 	private val viewModel: RequestRideViewModel by viewModels()
-	private val sharedViewModel: SharedViewModel by activityViewModels()
+	private val sharedViewModel: SharedViewModel by activityViewModels {
+		SharedViewModelFactory(requireActivity().application)
+	}
 
 	private var mMap: GoogleMap? = null
 	private var sourceMarker: Marker? = null
