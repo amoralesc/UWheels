@@ -126,10 +126,12 @@ class DriverHomeFragment : Fragment() {
 				)
 			}
 			FromDriverHomeFragmentDestination.CONTACTS -> {
-
+				Log.i(TAG, "Not implemented yet")
 			}
 			FromDriverHomeFragmentDestination.CHATS -> {
-
+				findNavController().navigate(
+					R.id.action_driverHomeFragment_to_chatsFragment
+				)
 			}
 			FromDriverHomeFragmentDestination.CREATE_RIDE -> {
 

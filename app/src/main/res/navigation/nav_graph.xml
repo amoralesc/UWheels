@@ -176,6 +176,9 @@
 		<action
 			android:id="@+id/action_driverHomeFragment_to_hostedRidesFragment"
 			app:destination="@id/hostedRidesFragment" />
+		<action
+			android:id="@+id/action_driverHomeFragment_to_chatsFragment"
+			app:destination="@id/chatsFragment" />
 	</fragment>
 	<fragment
 		android:id="@+id/profileDetailsFragment"

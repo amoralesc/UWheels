@@ -151,6 +151,7 @@
 		android:elevation="4dp"
 		android:gravity="center_vertical"
 		android:text="@string/contacts"
+		android:visibility="gone"
 		app:icon="@drawable/ic_account_circle"
 		app:iconPadding="@dimen/margin_between_elements"
 		app:iconSize="24dp"
@@ -169,8 +170,7 @@
 		android:visibility="gone"
 		app:layout_constraintBottom_toBottomOf="@+id/contacts"
 		app:layout_constraintEnd_toEndOf="@+id/contacts"
-		app:layout_constraintTop_toTopOf="@+id/contacts"
-		tools:visibility="visible" />
+		app:layout_constraintTop_toTopOf="@+id/contacts" />
 
 	<Button
 		android:id="@+id/chats"
