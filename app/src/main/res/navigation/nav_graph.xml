@@ -210,11 +210,20 @@
 		android:name="com.abmodel.uwheels.ui.shared.ride.hosted.HostedRidesFragment"
 		android:label="fragment_hosted_rides" >
 		<action
-			android:id="@+id/action_hostedRidesFragment_to_hostedRideRequestsFragment"
-			app:destination="@id/hostedRideRequestsFragment" />
+			android:id="@+id/action_hostedRidesFragment_to_hostedRideDetailFragment"
+			app:destination="@id/hostedRideDetailFragment" />
 	</fragment>
 	<fragment
 		android:id="@+id/hostedRideRequestsFragment"
 		android:name="com.abmodel.uwheels.ui.shared.ride.hosted.HostedRideRequestsFragment"
 		android:label="HostedRideRequestsFragment" />
+	<fragment
+		android:id="@+id/hostedRideDetailFragment"
+		android:name="com.abmodel.uwheels.ui.shared.ride.hosted.HostedRideDetailFragment"
+		android:label="fragment_hosted_ride_detail"
+		tools:layout="@layout/fragment_hosted_ride_detail" >
+		<action
+			android:id="@+id/action_hostedRideDetailFragment_to_hostedRideRequestsFragment"
+			app:destination="@id/hostedRideRequestsFragment" />
+	</fragment>
 </navigation>

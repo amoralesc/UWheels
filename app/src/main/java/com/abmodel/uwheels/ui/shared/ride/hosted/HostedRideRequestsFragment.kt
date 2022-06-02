@@ -55,40 +55,13 @@ class HostedRideRequestsFragment : Fragment() {
 				}
 			)
 
-			// Load the hosted ride info
 			sharedViewModel.selectedUserRide.observe(viewLifecycleOwner) {
 				it?.let { ride ->
-					wheelsType.text = ride.wheelsType
-					source.text = ride.source.mainText
-					destination.text = ride.destination.mainText
-					capacity.text = capacity.context.getString(
+					capacity.text = getString(
 						R.string.hosted_ride_capacity,
 						ride.currentCapacity,
 						ride.totalCapacity
 					)
-
-					ride.creationDate.apply {
-						info.text = getString(
-							R.string.hosted_ride_info,
-							this.millis?.let { formatDateFromMillis(it) } ?: "",
-							this.hour?.let { hour ->
-								this.minute?.let { minute ->
-									formatTime(hour, minute)
-								} ?: ""
-							} ?: ""
-						)
-					}
-					ride.date.apply {
-						date.text = getString(
-							R.string.ride_date,
-							this.millis?.let { formatDateFromMillis(it) } ?: "",
-							this.hour?.let { hour ->
-								this.minute?.let { minute ->
-									formatTime(hour, minute)
-								} ?: ""
-							} ?: ""
-						)
-					}
 				}
 			}
 		}

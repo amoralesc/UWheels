@@ -61,7 +61,7 @@ class HostedRidesFragment : Fragment() {
 	private fun onRideSelected(rideId: String) {
 		sharedViewModel.selectUserRide(rideId)
 		findNavController().navigate(
-			R.id.action_hostedRidesFragment_to_hostedRideRequestsFragment
+			R.id.action_hostedRidesFragment_to_hostedRideDetailFragment
 		)
 	}
 }

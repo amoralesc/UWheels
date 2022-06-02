@@ -151,4 +151,10 @@
 	<string name="request_sent">Ride request sent</string>
 	<string name="ride_requested">Ride requested</string>
 	<string name="ride_requested_message">You may see the status of the request in your rides</string>
+	<string name="hosted_ride">Hosted Ride</string>
+	<string name="start_ride">Start Ride</string>
+	<string name="cancel_ride">Cancel Ride</string>
+	<string name="view_requests">View Requests</string>
+	<string name="passengers">Passengers</string>
+	<string name="rating">%.1f</string>
 </resources>

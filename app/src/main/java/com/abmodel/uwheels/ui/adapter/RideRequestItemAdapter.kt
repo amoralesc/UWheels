@@ -38,7 +38,9 @@ class RideRequestItemAdapter(
 				name.text = name.context.getString(
 					R.string.full_name, rideRequest.user.name, rideRequest.user.lastName
 				)
-				rating.text = rideRequest.user.rating.value.toString()
+				rating.text = rating.context.getString(
+					R.string.rating, rideRequest.user.rating.value
+				)
 
 				source.text = source.context.getString(
 					R.string.ride_request_address,
