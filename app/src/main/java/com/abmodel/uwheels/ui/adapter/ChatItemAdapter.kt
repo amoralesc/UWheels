@@ -1,4 +1,4 @@
-package com.abmodel.uwheels.ui.shared.chat.adapter
+package com.abmodel.uwheels.ui.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

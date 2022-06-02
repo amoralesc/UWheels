@@ -12,7 +12,7 @@ import com.abmodel.uwheels.R
 import com.abmodel.uwheels.databinding.FragmentHostedRidesBinding
 import com.abmodel.uwheels.ui.shared.data.UserRidesFilter
 import com.abmodel.uwheels.ui.shared.data.SharedViewModel
-import com.abmodel.uwheels.ui.shared.ride.adapter.HostedRideItemAdapter
+import com.abmodel.uwheels.ui.adapter.HostedRideItemAdapter
 import com.abmodel.uwheels.ui.shared.ride.rides.RidesFragment
 
 class HostedRidesFragment : Fragment() {

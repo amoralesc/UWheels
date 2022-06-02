@@ -18,7 +18,7 @@ import com.abmodel.uwheels.BuildConfig
 import com.abmodel.uwheels.R
 import com.abmodel.uwheels.data.model.UploadedFile
 import com.abmodel.uwheels.databinding.FragmentDriverApplicationBinding
-import com.abmodel.uwheels.ui.driver.apply.adapter.UploadedFileItemAdapter
+import com.abmodel.uwheels.ui.adapter.UploadedFileItemAdapter
 import com.abmodel.uwheels.ui.driver.apply.data.DriverApplicationView
 import com.abmodel.uwheels.util.TEMP_IMG_FILE_EXT
 import com.abmodel.uwheels.util.TEMP_IMG_FILE_NAME

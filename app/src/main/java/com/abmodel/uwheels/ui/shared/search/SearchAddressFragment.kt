@@ -13,7 +13,7 @@ import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.viewModels
 import com.abmodel.uwheels.data.model.CustomAddress
 import com.abmodel.uwheels.databinding.FragmentSearchAddressBinding
-import com.abmodel.uwheels.ui.shared.search.adapter.AddressItemAdapter
+import com.abmodel.uwheels.ui.adapter.AddressItemAdapter
 
 class SearchAddressFragment : Fragment() {
 

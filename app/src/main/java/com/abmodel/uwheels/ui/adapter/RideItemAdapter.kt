@@ -1,4 +1,4 @@
-package com.abmodel.uwheels.ui.shared.ride.adapter
+package com.abmodel.uwheels.ui.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -7,16 +7,16 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.abmodel.uwheels.R
 import com.abmodel.uwheels.data.model.Ride
-import com.abmodel.uwheels.databinding.HostedRideListItemBinding
+import com.abmodel.uwheels.databinding.RideListItemBinding
 import com.abmodel.uwheels.util.formatDateFromMillis
 import com.abmodel.uwheels.util.formatTime
 
-class HostedRideItemAdapter(
+class RideItemAdapter(
 	private val onItemClicked: (Ride) -> Unit
-) : ListAdapter<Ride, HostedRideItemAdapter.HostedRideItemViewHolder>(DiffCallback) {
+) : ListAdapter<Ride, RideItemAdapter.RideItemViewHolder>(DiffCallback) {
 
-	class HostedRideItemViewHolder(
-		private var binding: HostedRideListItemBinding
+	class RideItemViewHolder(
+		private var binding: RideListItemBinding
 	) : RecyclerView.ViewHolder(binding.root) {
 
 		fun bind(ride: Ride) {
@@ -25,13 +25,8 @@ class HostedRideItemAdapter(
 				source.text = ride.source.mainText
 				destination.text = ride.destination.mainText
 				capacity.text = capacity.context.getString(
-					R.string.hosted_ride_capacity,
-					ride.currentCapacity,
-					ride.totalCapacity
-				)
-				requests.text = requests.context.getString(
-					R.string.hosted_ride_requests,
-					ride.requests.size
+					R.string.ride_capacity,
+					ride.currentCapacity
 				)
 
 				ride.date.apply {
@@ -49,7 +44,8 @@ class HostedRideItemAdapter(
 				ride.creationDate.apply {
 					info.text =
 						info.context.getString(
-							R.string.hosted_ride_info,
+							R.string.ride_info,
+							ride.host.name,
 							this.millis?.let { formatDateFromMillis(it) } ?: "",
 							this.hour?.let { hour ->
 								this.minute?.let { minute ->
@@ -64,9 +60,9 @@ class HostedRideItemAdapter(
 
 	override fun onCreateViewHolder(
 		parent: ViewGroup, viewType: Int
-	): HostedRideItemViewHolder {
-		return HostedRideItemViewHolder(
-			HostedRideListItemBinding.inflate(
+	): RideItemViewHolder {
+		return RideItemViewHolder(
+			RideListItemBinding.inflate(
 				LayoutInflater.from(parent.context),
 				parent,
 				false
@@ -75,7 +71,7 @@ class HostedRideItemAdapter(
 	}
 
 	override fun onBindViewHolder(
-		holder: HostedRideItemViewHolder, position: Int
+		holder: RideItemViewHolder, position: Int
 	) {
 		val current = getItem(position)
 		holder.itemView.setOnClickListener {

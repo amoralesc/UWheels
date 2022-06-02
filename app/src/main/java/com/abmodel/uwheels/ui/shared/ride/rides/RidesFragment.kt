@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.abmodel.uwheels.databinding.FragmentRidesBinding
-import com.abmodel.uwheels.ui.shared.ride.adapter.RideItemAdapter
+import com.abmodel.uwheels.ui.adapter.RideItemAdapter
 import com.abmodel.uwheels.ui.shared.data.UserRidesFilter
 import com.abmodel.uwheels.ui.shared.data.SharedViewModel
 

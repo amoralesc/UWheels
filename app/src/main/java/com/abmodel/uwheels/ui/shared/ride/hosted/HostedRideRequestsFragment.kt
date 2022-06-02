@@ -9,7 +9,7 @@ import androidx.fragment.app.activityViewModels
 import com.abmodel.uwheels.R
 import com.abmodel.uwheels.databinding.FragmentHostedRideRequestsBinding
 import com.abmodel.uwheels.ui.shared.data.SharedViewModel
-import com.abmodel.uwheels.ui.shared.ride.adapter.RideRequestItemAdapter
+import com.abmodel.uwheels.ui.adapter.RideRequestItemAdapter
 import com.abmodel.uwheels.util.formatDateFromMillis
 import com.abmodel.uwheels.util.formatTime
 
