@@ -19,7 +19,7 @@ const val TEMP_IMG_FILE_NAME = "temp_img"
 const val TEMP_IMG_FILE_EXT = ".png"
 
 // Debug properties
-const val DEBUG_USE_SENSORS = false
+const val DEBUG_USE_SENSORS = true
 
 const val CHANNEL_ID = "com.abmodel.uwheels.channel"
 const val CHANNEL_NAME = "UWheels"
