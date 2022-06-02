@@ -15,6 +15,11 @@
 
 	<color name="black">#FF000000</color>
 
+	<color name="color_primary_80">#CCAD00E2</color>
+	<color name="color_primary_60">#99AD00E2</color>
+	<color name="color_primary_40">#66AD00E2</color>
+	<color name="color_primary_20">#33AD00E2</color>
+
 	<color name="dark_gray">#303030</color>
 	<color name="dark_gray_80">#CC303030</color>
 	<color name="dark_gray_60">#99303030</color>

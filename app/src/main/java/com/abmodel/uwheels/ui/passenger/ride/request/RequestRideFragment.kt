@@ -155,6 +155,8 @@ class RequestRideFragment : Fragment(), OnMapReadyCallback {
 			dataViewModel = sharedViewModel
 			lifecycleOwner = viewLifecycleOwner
 
+			sharedViewModel.restartSearch()
+
 			date.showSoftInputOnFocus = false
 			date.setOnClickListener {
 				hideKeyboard()
@@ -192,6 +194,10 @@ class RequestRideFragment : Fragment(), OnMapReadyCallback {
 				)
 			}
 
+			request.setOnClickListener {
+				onRequestPressed()
+			}
+
 			// Set the adapter for the recycler view
 			searchResults.adapter = SearchedRideItemAdapter(
 				onItemClicked = {
@@ -211,6 +217,16 @@ class RequestRideFragment : Fragment(), OnMapReadyCallback {
 		viewModel.destinationAddress.observe(viewLifecycleOwner) {
 			binding.destination.setText(it?.mainText)
 			drawDestinationMarker(it?.latLng?.toLatLng())
+		}
+		sharedViewModel.selectedSearchedRide.observe(viewLifecycleOwner) { }
+		sharedViewModel.requestResult.observe(viewLifecycleOwner) { result ->
+			result ?: return@observe
+			result.message?.let {
+				showMessage(it)
+			}
+			if (result.success) {
+				onRideRequested()
+			}
 		}
 	}
 
@@ -279,7 +295,19 @@ class RequestRideFragment : Fragment(), OnMapReadyCallback {
 	}
 
 	private fun onRideSelected(ride: Ride) {
+		sharedViewModel.selectSearchedRide(ride.id)
+	}
 
+	private fun onRequestPressed() {
+		sharedViewModel.requestRide()
+	}
+
+	private fun onRideRequested() {
+		AlertDialog.Builder(requireContext())
+			.setTitle(R.string.ride_requested)
+			.setMessage(R.string.ride_requested_message)
+			.setPositiveButton(R.string.ok) { _, _ -> }
+			.show()
 	}
 
 	private val datePicker =

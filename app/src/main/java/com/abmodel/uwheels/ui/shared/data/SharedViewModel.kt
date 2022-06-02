@@ -2,14 +2,20 @@ package com.abmodel.uwheels.ui.shared.data
 
 import android.util.Log
 import androidx.lifecycle.*
+import com.abmodel.uwheels.R
 import com.abmodel.uwheels.data.model.*
 import com.abmodel.uwheels.data.repository.auth.FirebaseAuthRepository
 import com.abmodel.uwheels.data.repository.ride.FirebaseRidesRepository
+import com.abmodel.uwheels.util.difference
+import com.abmodel.uwheels.util.distanceTo
+import com.abmodel.uwheels.util.getCurrentDateAsCustomDate
+import com.abmodel.uwheels.util.toLatLng
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.cancellable
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import java.text.Normalizer
 
 class SharedViewModel : ViewModel() {
 
@@ -27,7 +33,11 @@ class SharedViewModel : ViewModel() {
 	private val activeUserRides: LiveData<List<Ride>>
 		get() = Transformations.switchMap(_userRides) { rides ->
 			val filteredRides = rides.filter { ride ->
-				ride.status != RideStatus.COMPLETED.toString()
+				ride.status != RideStatus.COMPLETED.toString() &&
+						ride.status != RideStatus.CANCELLED.toString() &&
+						ride.requests.none { request ->
+							request.user.uid == authRepository.getLoggedInUser().uid
+						}
 			}
 			MutableLiveData(filteredRides)
 		}
@@ -75,7 +85,7 @@ class SharedViewModel : ViewModel() {
 		}
 
 	private val _selectedUserRideId: MutableLiveData<String> = MutableLiveData()
-	val selectedUserRideId: LiveData<String>
+	private val selectedUserRideId: LiveData<String>
 		get() = _selectedUserRideId
 
 	val selectedUserRide: LiveData<Ride> =
@@ -127,6 +137,24 @@ class SharedViewModel : ViewModel() {
 			}
 		}
 
+	private val _selectedSearchedRideId: MutableLiveData<String?> = MutableLiveData()
+	val selectedSearchedRideId: LiveData<String?>
+		get() = _selectedSearchedRideId
+
+	val selectedSearchedRide: MediatorLiveData<Ride?> =
+		MediatorLiveData<Ride?>().apply {
+			addSource(selectedSearchedRideId) {
+				val ride = filteredSearchedRides.value?.find { ride ->
+					ride.id == it
+				}
+				value = ride
+			}
+		}
+
+	private val _requestResult = MutableLiveData<FormResult>()
+	val requestResult: LiveData<FormResult>
+		get() = _requestResult
+
 	private var fetchUserRidesJob: Job? = null
 	private var fetchSearchedRidesJob: Job? = null
 
@@ -142,6 +170,8 @@ class SharedViewModel : ViewModel() {
 		} else {
 			fetchUserRides()
 		}
+
+		restartSearch()
 	}
 
 	fun setUserRidesFilter(filter: UserRidesFilter) {
@@ -154,6 +184,10 @@ class SharedViewModel : ViewModel() {
 
 	fun setSearchedRidesFilter(filter: WheelsType) {
 		_searchedRidesFilter.postValue(filter)
+	}
+
+	fun selectSearchedRide(rideId: String) {
+		_selectedSearchedRideId.value = rideId
 	}
 
 	fun acceptRideRequest(request: RideRequest) {
@@ -174,6 +208,49 @@ class SharedViewModel : ViewModel() {
 			fetchUserRides(true, WheelsType.CLASSIC_WHEELS)
 		} else {
 			fetchUserRides()
+		}
+	}
+
+	fun requestRide() {
+		viewModelScope.launch(Dispatchers.IO) {
+			if (selectedSearchedRideId.value == null ||
+				selectedSearchedRide.value == null ||
+				query == null
+			) {
+				return@launch
+			}
+
+			_requestResult.postValue(
+				FormResult(message = R.string.requesting_ride)
+			)
+
+			ridesRepository.requestRide(
+				selectedSearchedRideId.value!!,
+				RideRequest(
+					user = RideUser.fromLoggedInUser(
+						authRepository.getLoggedInUser()
+					),
+					sentDate = getCurrentDateAsCustomDate(),
+					source = query!!.source,
+					destination = query!!.destination,
+					sourceDistance = query!!.source.latLng!!.toLatLng().distanceTo(
+						selectedSearchedRide.value!!.source.latLng!!.toLatLng()
+					),
+					destinationDistance = query!!.destination.latLng!!.toLatLng().distanceTo(
+						selectedSearchedRide.value!!.destination.latLng!!.toLatLng()
+					),
+					date = query!!.date,
+					dateDifference = query!!.date.difference(
+						selectedSearchedRide.value!!.date
+					)
+				)
+			)
+
+			_requestResult.postValue(
+				FormResult(success = true, message = R.string.request_sent)
+			)
+			_selectedSearchedRideId.postValue(null)
+			selectedSearchedRide.postValue(null)
 		}
 	}
 
@@ -227,5 +304,13 @@ class SharedViewModel : ViewModel() {
 					}
 				}
 			}
+	}
+
+	fun restartSearch() {
+		_query = null
+		fetchSearchedRidesJob?.cancel()
+		_searchedRides.postValue(emptyList())
+		_selectedSearchedRideId.postValue("")
+		_requestResult.postValue(FormResult())
 	}
 }

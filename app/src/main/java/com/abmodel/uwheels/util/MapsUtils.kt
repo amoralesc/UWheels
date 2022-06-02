@@ -8,7 +8,7 @@ import kotlin.math.*
 const val RADIUS_OF_EARTH_KM = 6371.0       // km
 const val RADIUS_OF_EARTH_M = 6371000.0     // meters
 
-fun LatLng.distanceTo(other: LatLng, units: String = "M"): Double {
+fun LatLng.distanceTo(other: LatLng, units: String = "KM"): Double {
 	assert(units == "M" || units == "KM")
 
 	val latDistance = Math.toRadians(this.latitude - other.latitude)

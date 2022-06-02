@@ -1,5 +1,6 @@
 package com.abmodel.uwheels.ui.adapter
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -19,6 +20,8 @@ class SearchedRideItemAdapter(
 	private val onItemClicked: (Ride) -> Unit,
 	private val query: SearchRideQuery?
 ) : ListAdapter<Ride, SearchedRideItemAdapter.SearchedRideItemViewHolder>(DiffCallback) {
+
+	private var selectedIndex = -1
 
 	class SearchedRideItemViewHolder(
 		private var binding: SearchedRideListItemBinding
@@ -95,14 +98,27 @@ class SearchedRideItemAdapter(
 		)
 	}
 
+	@SuppressLint("NotifyDataSetChanged")
 	override fun onBindViewHolder(
 		holder: SearchedRideItemViewHolder, position: Int
 	) {
 		val current = getItem(position)
 		holder.itemView.setOnClickListener {
 			onItemClicked(current)
+			selectedIndex = holder.adapterPosition
+			notifyDataSetChanged()
 		}
 		holder.bind(current, query)
+
+		if (selectedIndex == position) {
+			holder.itemView.setBackgroundResource(
+				R.color.color_primary_20
+			)
+		} else {
+			holder.itemView.setBackgroundResource(
+				0
+			)
+		}
 	}
 
 	companion object {

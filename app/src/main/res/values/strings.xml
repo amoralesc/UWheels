@@ -147,4 +147,8 @@
 	<string name="payment_method">Payment method</string>
 	<string name="ride_capacity_short">%d/%d</string>
 	<string name="address_with_distance">(%.1f km) %s</string>
+	<string name="requesting_ride">Requesting ride…</string>
+	<string name="request_sent">Ride request sent</string>
+	<string name="ride_requested">Ride requested</string>
+	<string name="ride_requested_message">You may see the status of the request in your rides</string>
 </resources>

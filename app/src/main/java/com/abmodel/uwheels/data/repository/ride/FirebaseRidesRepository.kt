@@ -4,15 +4,14 @@ import android.util.Log
 import com.abmodel.uwheels.data.DatabasePaths
 import com.abmodel.uwheels.data.FirestorePaths
 import com.abmodel.uwheels.data.model.*
+import com.abmodel.uwheels.util.compareDates
 import com.abmodel.uwheels.util.difference
 import com.abmodel.uwheels.util.distanceTo
 import com.abmodel.uwheels.util.toLatLng
+import com.google.common.graph.ElementOrder.sorted
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ktx.database
-import com.google.firebase.firestore.DocumentSnapshot
-import com.google.firebase.firestore.EventListener
-import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.QuerySnapshot
+import com.google.firebase.firestore.*
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -185,7 +184,14 @@ class FirebaseRidesRepository internal constructor(
 
 				if (snapshot != null) {
 					val rides = snapshot.toObjects(Ride::class.java)
-					trySend(Result.success(rides))
+					rides.stream()
+						.sorted { ride1, ride2 ->
+							ride1.date.compareDates(ride2.date)
+						}
+						.collect(Collectors.toList())
+						.let {
+							trySend(Result.success(it))
+						}
 				}
 			}
 
@@ -240,8 +246,13 @@ class FirebaseRidesRepository internal constructor(
 						.filter { ride ->
 							!ride.subscribers.contains(query.userId) &&
 									ride.date.difference(query.date) < query.maxTimeDifference &&
-									ride.source.latLng!!.toLatLng().distanceTo(query.source.latLng!!.toLatLng()) < query.maxDistance &&
-									ride.destination.latLng!!.toLatLng().distanceTo(query.destination.latLng!!.toLatLng()) < query.maxDistance
+									ride.source.latLng!!.toLatLng()
+										.distanceTo(query.source.latLng!!.toLatLng()) < query.maxDistance &&
+									ride.destination.latLng!!.toLatLng()
+										.distanceTo(query.destination.latLng!!.toLatLng()) < query.maxDistance
+						}
+						.sorted { ride1, ride2 ->
+							ride1.date.compareDates(ride2.date)
 						}
 						.collect(Collectors.toList())
 						.let { filteredRides ->
@@ -287,7 +298,7 @@ class FirebaseRidesRepository internal constructor(
 		val ride = getRide(rideId)!!
 			.toObject(Ride::class.java)!!
 
-		ride.requests.remove(request)
+		ride.requests.removeIf { it.user.uid == request.user.uid }
 		addPassengerToRide(ride, request)
 
 		// TODO: NOTIFY USER
@@ -297,7 +308,7 @@ class FirebaseRidesRepository internal constructor(
 		val ride = getRide(rideId)!!
 			.toObject(Ride::class.java)!!
 
-		ride.requests.remove(request)
+		ride.requests.removeIf { it.user.uid == request.user.uid }
 		ride.subscribers.remove(request.user.uid)
 
 		mFirestore
@@ -309,13 +320,18 @@ class FirebaseRidesRepository internal constructor(
 
 	private suspend fun addPassengerToRide(ride: Ride, request: RideRequest) {
 
+		// The above for loop can be replaced with the following line
+		if (ride.passengers.any { passenger -> passenger.uid == request.user.uid }) {
+			Log.d(TAG, "User is already a passenger")
+			return
+		}
+
 		ride.passengers.add(request.user)
 		if (request.user.uid !in ride.subscribers)
 			ride.subscribers.add(request.user.uid)
 		ride.currentCapacity++
-		if (ride.currentCapacity == ride.totalCapacity) {
+		if (ride.currentCapacity == ride.totalCapacity)
 			ride.status = RideStatus.FULL.toString()
-		}
 
 		if (ride.status != RideStatus.FULL.toString()) {
 			mFirestore
