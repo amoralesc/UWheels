@@ -50,26 +50,17 @@ MAPS_API_KEY=[your_api_key]
 Si desea visualizar o modificar el código fuente, debe tener en cuenta las siguientes recomendaciones:
 
 - Debido al manejo de Splash screens, el tema por defecto es ```UWheels.Starting``` (es cambiado a ```Theme.UWheels``` después que el Splash screen desaparece). Cuando quiera ver visualmente los layouts de la aplicación, en la pestaña _Design_ debe cambiar el tema a ```Theme.UWheels``` para poderlos visualizar correctamente.
-
-## Wiki 📖
-
-Para más información sobre el proyecto, refiérase a la [wiki](https://github.com/IntroCompuMovil202210J/UWheels/wiki).
+ el proyecto, refiérase a la [wiki](https://github.com/IntroCompuMovil202210J/UWheels/wiki).
 
 ## Equipo ✒️
 
 _El equipo de ABMODEL pertenece a la Pontificia Universidad Javeriana y está conformado por:_
 
 * **María Camila Aguirre Collante** - [CamilaAguirreCollante](https://github.com/CamilaAguirreCollante)
-* **Johanna Lisette Bolívar Calderón** - [Johabc](https://github.com/Johabc)
 * **Fabio Alejandro Camargo Díaz** - [alejo2300](https://github.com/alejo2300)
 * **Alejandro Morales Contreras** - [amoralesc](https://github.com/amoralesc)
 * **Jessica Tatiana Naizaque Guevara** - [JessicaNaizaque](https://github.com/JessicaNaizaque)
-* **David Santiago Suárez Barragán** - [sdsuarez](https://github.com/sdsuarez)
 
 ### Licencia 📝
 
 Este proyecto está bajo licencia Apache 2.0. Una copia de la licencia es adjuntada. El uso de la marca, el logo y el nombre de la aplicación (UWheels) bajo cualquier motivo está explícitamente prohibido sin previa autorización.
-
----
-
-⌨️con ❤️por [ABMODEL](https://github.com/orgs/IntroCompuMovil202210J/teams/abmodel) 😊
