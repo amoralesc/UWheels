@@ -1,6 +1,6 @@
 # UWheels
 
-UWheels es una aplicación móvil para dispositivos Android que permite a usuarios conectar con otras usuarios para utilizar servicios de movilidad compartida. Permite a los usuarios comunicarse, crear y unirse a rutas compartidas y mucho más.
+UWheels es una aplicación móvil para dispositivos Android que permite a usuarios conectar con otras usuarios para utilizar servicios de movilidad compartida. Permite a los usuarios comunicarse, crear y unirse a rutas compartidas, chat en tiempo real y mucho más.
 
 ## Especificaciones 📋
 
@@ -34,7 +34,7 @@ Este proyecto está construido con tecnologías Firebase y de Google Maps Platfo
 4. Clone el repositorio y entre al proyecto de Android Studio.
 
 ```
-git clone https://github.com/IntroCompuMovil202210J/UWheels.git
+git clone https://github.com/amoralesc/UWheels.git
 ```
 
 5. Coloque su Google Maps API en el archivo _local.properties_ bajo el nombre ```MAPS_API_KEY```.
