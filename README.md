@@ -50,7 +50,6 @@ MAPS_API_KEY=[your_api_key]
 Si desea visualizar o modificar el código fuente, debe tener en cuenta las siguientes recomendaciones:
 
 - Debido al manejo de Splash screens, el tema por defecto es ```UWheels.Starting``` (es cambiado a ```Theme.UWheels``` después que el Splash screen desaparece). Cuando quiera ver visualmente los layouts de la aplicación, en la pestaña _Design_ debe cambiar el tema a ```Theme.UWheels``` para poderlos visualizar correctamente.
- el proyecto, refiérase a la [wiki](https://github.com/IntroCompuMovil202210J/UWheels/wiki).
 
 ## Equipo ✒️
 
