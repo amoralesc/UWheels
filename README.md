@@ -2,6 +2,16 @@
 
 UWheels es una aplicación móvil para dispositivos Android que permite a usuarios conectar con otras usuarios para utilizar servicios de movilidad compartida. Permite a los usuarios comunicarse, crear y unirse a rutas compartidas, chat en tiempo real y mucho más.
 
+<div style="float: left">
+  <img src="https://raw.githubusercontent.com/amoralesc/UWheels/main/screenshots/screenshot_1.jpg" width="200">
+  <img src="https://raw.githubusercontent.com/amoralesc/UWheels/main/screenshots/screenshot_2.jpg" width="200">
+  <img src="https://raw.githubusercontent.com/amoralesc/UWheels/main/screenshots/screenshot_3.jpg" width="200">
+  <img src="https://raw.githubusercontent.com/amoralesc/UWheels/main/screenshots/screenshot_4.jpg" width="200">
+  <img src="https://raw.githubusercontent.com/amoralesc/UWheels/main/screenshots/screenshot_5.jpg" width="200">
+  <img src="https://raw.githubusercontent.com/amoralesc/UWheels/main/screenshots/screenshot_6.jpg" width="200">
+  <img src="https://raw.githubusercontent.com/amoralesc/UWheels/main/screenshots/screenshot_7.jpg" width="200">
+</div>
+
 ## Especificaciones 📋
 
 La aplicación está desarrollada para dispositivos Android con una versión SDK mínima de 24.
